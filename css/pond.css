@@ -1,0 +1,94 @@
+@import url(http://fonts.googleapis.com/css?family=Quicksand:400,300,700);
+
+a { outline: none; }
+
+body { background: #e4e4e4 url(../img/bg-noise.png) repeat scroll center top; font: normal 13px/1.4em "Quicksand", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+/* header */
+header h1 { background: transparent url(../img/logo.png) no-repeat scroll 0 0; height: 141px; margin: 1em auto; text-indent: -9999px; width: 134px; }
+
+
+/* contact me */
+
+
+.contact { background: #c7a6d0; display: none; position: absolute; top: 0; left: 0; width: 100%; }
+.contact .container { font-size: 1.6923em; padding-top: 2em; padding-bottom: 0; text-align: center; }
+
+.contact .container h3,
+.contact .container p { font-size: inherit; }
+
+.contact .container h3 { margin: 0 0 .2em; text-transform: uppercase; }
+
+.contact .container a { color: #614261; }
+.contact .container a:hover { color: #522d52; text-decoration: none; }
+
+
+.contact .container .span4 { margin-bottom: 2em; }
+
+.contact .icon { background: transparent url(../img/sprite-contact.png) no-repeat scroll 0 0; height: 64px; margin: 0 auto .5em; opacity: .7; width: 64px; }
+	.contact .phone .icon { background-position: 0 0; }
+	.contact .email .icon { background-position: -64px 0; }
+	.contact .twitter .icon { background-position: -128px 0; }
+.contact .container a:hover .icon { opacity: 1; }
+
+.contact .hire-me { background-color: #c7a6d0; bottom: -40px; color: #fff; font-size: 1.6923em; font-weight: 400; padding: .5em 1em; position: absolute; text-transform: uppercase; right: 10%;
+	border-radius: 0px 0px .3846em .3846em; }
+	.hire-me:hover { /* background-color: #9f67af; */ color: #fff; text-decoration: none; }
+
+.contact:hover,
+.contact:hover .hire-me { background: #a572b2; }
+
+.show-hire-me .contact:hover,
+.show-hire-me .contact:hover .hire-me { background: #c7a6d0; }
+
+
+/* main */
+section { clear: both; }
+
+section h1,
+section h2,
+footer h2,
+section h3 { line-height: 1em; text-align: center; text-transform: uppercase; }
+
+section h1 { color: #1e917f; font-size: 5.84615384em; font-weight: 400; margin-bottom: .15em }
+section h2,
+footer h2 { color: #84d0b4; font-size: 1.846154em; font-weight: 300; margin-bottom: 1.5em; }
+section h3 { color: #666; font-size: 2.4615em; font-weight: normal; margin-bottom: .5em; }
+
+
+
+/* let's make websites */
+.sites ul.projects { margin: 0 0 1em; }
+.sites ul.projects > li { float: left; font-size: 1.384615em; line-height: 1.4em; list-style: none; margin: 0 7.5px 2em; text-align: center; text-align: center; text-transform: uppercase;
+
+	width: 220px;
+ }
+.sites a:hover { text-decoration: none; /* temporary */ cursor: default; }
+
+.sites h4 { color: #9f67af; font-size: inherit; line-height: inherit; }
+.sites i { color: #999; font-style: normal; }
+
+.sites .screenshot {
+background: #84d0b4 none;
+display: block;
+height: 220px;
+width: 220px;
+margin-bottom: 1em;
+border-radius: 50%;
+opacity: .7;
+}
+.sites a:hover .screenshot { opacity: 1; }
+
+
+
+/* skills */
+.skills ul { margin: 0 0 2em; }
+.skills li { color: #666; font-size: 1.6923em; font-weight: 300; line-height: 1.4em; list-style: none; margin: 0 0 .5em; text-align: center; text-transform: lowercase; }
+.skills .core { background: transparent url(../img/banner-core.png) no-repeat scroll center center; color: #1e917f; font-size: 1.3846em; font-weight: 600; text-align: center; text-transform: uppercase; margin: 0 auto .5em; }
+
+
+/* photography */
+.photography { display: none; }
+
+/* footer */
+footer .copyright { margin-top: 2em; text-align: center; }
