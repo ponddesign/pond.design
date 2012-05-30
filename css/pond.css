@@ -196,35 +196,26 @@ video {
 
 /* === Layout */
 html { background: #e4e4e4 url(../img/bg-noise.png) repeat scroll center top; overflow-y: auto; }
-
 body { min-width: 220px; }
 
-#header {
-	clear:both;
-	overflow: hidden;
-}
-#header h1 {
-	margin: 2.5% 0;
-}
 
 /* === Typography */
 
 body { 
-	font-size: 100%;
+	font-size: 85%;
  	line-height: 1.4em;
 	color: #222; 
 	font-family: "Quicksand", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
-
-
-p	{ margin: 0 0 1.5em; }
+p	{ margin: 0 0 1em; }
 strong	{ font-weight: bold; }
 em	{ font-style: italic; }
 
 
 /* === Headings */
 
-h1,h2,h3,h4,h5,h6 { font-weight: bold; color: #111; line-height: 1; margin-bottom: 0.25em; margin-top: 0; }
+h1,h2,h3,h4,h5,h6 { font-weight: 600; color: #111; line-height: 1; margin-bottom: 0.25em; margin-top: 0; }
+
 
 h1 { font-size: 3em;}
 h2 { font-size: 2em;}
@@ -232,6 +223,7 @@ h3 { font-size: 1.5em; }
 h4 { font-size: 1.2em; }
 h5 { font-size: 1em; }
 h6 { font-size: 1em; }
+
 
 h1 img, h2 img, h3 img, 
 h4 img, h5 img, h6 img {
@@ -283,13 +275,13 @@ pre,code,tt { font: 1em 'andale mono', 'lucida console', monospace; line-height:
 
 
 /* header */
-header { padding: 4em 0; }
+header { padding: 4em 0 3em; }
 header h1 { background: transparent url(../img/logo.png) no-repeat scroll 0 0; height: 141px; margin: 0 auto; text-indent: -9999px; width: 134px; }
 
 
 /* contact/hire me */
 .contact { background: #c7a6d0; display: none; position: absolute; top: 0; left: 0; width: 100%; }
-.contact .container { font-size: 1.53846153846154em; /* 20 / 13 */ padding-top: 2em; padding-bottom: 0; text-align: center; }
+.contact .container { font-size: 1.53846153846154em; /* 20px / 13px */ padding-top: 2em; padding-bottom: 0; text-align: center; }
 
 .contact .container h3,
 .contact .container p { font-size: inherit; }
@@ -330,7 +322,7 @@ section h3 { line-height: 1em; text-align: center; text-transform: uppercase; }
 section h1 { color: #1e917f; font-size: 5.84615384em; font-weight: 400; margin-bottom: .15em }
 section h2,
 footer h2 { color: #84d0b4; font-size: 1.846154em; font-weight: 300; margin-bottom: 1.5em; }
-section h3 { color: #666; font-size: 2.4615em; font-weight: normal; margin-bottom: .5em; }
+section h3 { color: #666; font-size: 2.4615em; /* 32 / 13 */ font-weight: normal; margin-bottom: .5em; }
 
 
 
@@ -346,7 +338,7 @@ section h3 { color: #666; font-size: 2.4615em; font-weight: normal; margin-botto
 .sites h4 { color: #9f67af; font-size: inherit; line-height: inherit; }
 .sites i { color: #999; font-style: normal; }
 
-.sites img.screenshot {
+.sites img {
 background: #84d0b4 none;
 display: block;
 max-width: 220px;
@@ -355,7 +347,7 @@ border-radius: 50%;
 opacity: .7;
 width: 100%;
 }
-.sites a:hover .screenshot { opacity: 1; }
+.sites a:hover img { opacity: 1; }
 
 
 
