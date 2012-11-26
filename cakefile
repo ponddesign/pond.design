@@ -1,0 +1,164 @@
+###
+
+ Web Toolkit v0.4 (by M@ McCray)
+ http://gist.github.com/515035
+
+ NOTE: This is meant to be used as a Cakefile (Coffee's RAKE equivalent).
+
+###
+
+COFFEE_SRC="source/coffee"
+LESS_SRC="source/less"
+
+JS_OUT= "extension/app"
+CSS_OUT= "extension/theme"
+MEDIA_OUT= "extension/media" # used for SIZE task
+
+YUIC_CMD= "/usr/bin/java -jar $HOME/Library/bin/yuicompressor-2.4.2.jar"
+
+COMPRESS_IN_PLACE= no
+
+# You don't need to change anything below this line - - - -
+
+options= # These will get overwritten by the commandline
+  compress: no
+  quiet: no
+  watch: no
+  inplace: no
+
+option '-q', '--quiet',    'Only diplay errors'
+option '-w', '--watch',    'Watch files for change and automatically recompile'
+option '-c', '--compress', 'Compress files via YUIC'
+option '-i', '--inplace',  'Compress files in-place'
+
+task 'compile', "Compiles all source files into dist files...", (opts) ->
+  options = opts
+  task_compile_js()
+  task_compile_css()
+
+task 'compile:js', "Compiles all coffee files into js files...", (opts) ->
+  options = opts
+  task_compile_js()
+
+task 'compile:css', "Compiles all less files into css files...", (opts) ->
+  options = opts
+  task_compile_css()
+
+task 'size', "Calculates the total file size(s)...", (opts) ->
+  options = opts
+  task_size()
+
+fs = cs = less = exec = null
+
+compile_to_js= (filename) ->
+  temp = filename.split('/').last()
+  out_filename = "#{JS_OUT}/#{ temp.replace('.coffee', '.js') }"
+  try
+    src = fs.readFileSync filename, 'utf8'
+    js = cs.compile src
+    fs.writeFileSync out_filename, js
+    compress_file out_filename
+    puts " - #{out_filename}" unless options.quiet
+  catch err
+    puts " - #{out_filename}"
+    puts "   ^ #{err}"
+  watch_file( filename, compile_to_js )
+
+compile_to_css = (filename) ->
+  temp = filename.split('/').last()
+  out_filename = "#{CSS_OUT}/#{ temp.replace('.less', '.css') }"
+  try
+    src = fs.readFileSync filename, 'utf8'
+    less.render src, (e, css) ->
+      throw e if(e)
+      fs.writeFileSync out_filename, css
+      compress_file out_filename
+      watch_file( filename, compile_to_css )
+      puts " - #{out_filename}" unless options.quiet
+  catch err
+    puts " - #{out_filename}"
+    puts "   ^ #{err.message} (col #{err.column})"
+    puts "     Near: #{err.extract}"
+    watch_file( filename, compile_to_css )
+
+watch_file = (filename, callback)->
+  return unless options.watch
+  fs.watchFile filename, persistent:true, interval:1500 , (curr, prev) ->
+    fs.unwatchFile filename
+    try
+      callback(filename)
+    catch err
+      null
+
+compress_file= (filename) ->
+  return unless options.compress
+  {exec}= require 'child_process' unless exec?
+  outfile= unless options.inplace or COMPRESS_IN_PLACE
+    if filename.endsWith '.js'
+      filename.replace '.js', '.min.js'
+    else
+      filename.replace '.css', '.min.css'
+  else
+    filename
+  cmd= "#{YUIC_CMD} -o '#{outfile}' '#{filename}'"
+  exec cmd, (err, stdout, stderr) ->
+    if err
+      puts " - #{outfile}"
+      puts "   ^ #{err}"
+    else
+      puts " - #{outfile}" unless options.quiet
+
+task_compile_js =  ->
+  fs = require('fs')
+  cs = require('coffee-script')
+  fs.readdir COFFEE_SRC, (err, files) ->
+    for file in files
+      file = "#{COFFEE_SRC}/#{file}"
+      compile_to_js file
+
+task_compile_css = ->
+  fs = require('fs')
+  less = require('less')
+  fs.readdir LESS_SRC, (err, files) ->
+    for file in files
+      continue if file[0] == '_'
+      file = "#{LESS_SRC}/#{file}"
+      compile_to_css file
+
+b2kb= (bytes) ->
+  (bytes / 1024).toFixed(2)
+
+b2mb= (bytes) ->
+  (bytes / 1048576).toFixed(2)
+
+task_size= ->
+  puts ""
+  fs = require('fs')
+  total=0
+
+  for file in fs.readdirSync JS_OUT
+    stat = fs.statSync "#{JS_OUT}/#{file}"
+    #puts " #{stat.size}B (#{b2kb stat.size}K) -> #{file}"
+    puts " #{b2kb stat.size}K -> #{file}"
+    total += stat.size
+
+  for file in fs.readdirSync CSS_OUT
+    stat = fs.statSync "#{CSS_OUT}/#{file}"
+    #puts " #{stat.size}B (#{b2kb stat.size}K) -> #{file}"
+    puts " #{b2kb stat.size}K -> #{file}"
+    total += stat.size
+
+  for file in fs.readdirSync MEDIA_OUT
+    stat = fs.statSync "#{MEDIA_OUT}/#{file}"
+    #puts " #{stat.size}B (#{b2kb stat.size}K) -> #{file}"
+    puts " #{b2kb stat.size}K -> #{file}"
+    total += stat.size
+
+  puts " ----"
+  puts " #{b2kb total}K (#{total}B) in TOTAL"
+  puts ""
+
+
+# Helpers
+String::endsWith= (str) -> this.substr(this.length - str.length) == str
+Array::last= -> this[this.length -1]
