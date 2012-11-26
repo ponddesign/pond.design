@@ -1,6 +1,3 @@
-@import 'retina.less';
-@import url('http://fonts.googleapis.com/css?family=Quicksand:400,300,700');
-
 /*
 	Christopher Pond
 	chris@ponddesign.me
@@ -14,6 +11,8 @@
 		LESS
 */
 
+@import 'retina.less';
+@import url('http://fonts.googleapis.com/css?family=Quicksand:400,300,700');
 @import 'normalize.less';
 
 
@@ -54,7 +53,7 @@ video {
 }
 
 /* === Layout */
-html { background: #e4e4e4 none repeat scroll center top; .at2x('../img/bg-noise.png'); overflow-y: auto; }
+html { background: #e4e4e4 none repeat scroll center top; .at2x('../img/bg-noise.png', 500px, 500px); overflow-y: auto; }
 body { min-width: 220px; }
 
 
@@ -171,7 +170,7 @@ header h1 { background: transparent none no-repeat scroll 0 0; .at2x('../img/log
 
 
 /* main */
-section { clear: both; }
+section { clear: both; margin-bottom: 2em; }
 
 section h1,
 section h2,
@@ -184,8 +183,9 @@ footer h2 { color: #84d0b4; font-size: 36/13em; font-weight: 400; margin-bottom:
 section h3 { color: #666; font-size: 32/13em; font-weight: normal; margin-bottom: .5em; }
 
 // footer
-footer { clear: both; padding: 2em 0 1em; }
-footer .copyright {}
+footer { background: #42b39c none repeat-x scroll 200px top; .at2x('../img/footer-ripple.png', 900px, 17px); color: #fff; clear: both; font-size: 18/13em; overflow: hidden; padding: 2.5em 0 1em; }
+footer .copyright { float: left; }
+footer .location { float: right; }
 
 
 
@@ -193,7 +193,7 @@ footer .copyright {}
 
 // homepage
 // "let's make websites"
-.sites ul.projects { margin: 0 0 1em; padding: 0; }
+.sites ul.projects { margin: 0 0 1em; padding: 0; overflow: hidden; }
 .sites ul.projects > li { float: left; font-size: 18/13em; line-height: 1.4em; list-style: none; margin: 0 1.04166666666666667% 2em; /* 10px / 960px */ text-align: center; text-align: center; text-transform: uppercase;
 	max-width: 220px;
 	width: 22.916666666666666667%; /* 220px / 960px */
@@ -208,6 +208,7 @@ footer .copyright {}
 .sites a:hover img { opacity: 1; }
 
 // skills
+.skills { overflow: hidden; }
 .skills ul { margin: 0 0 2em; padding: 0; }
 .skills li { color: #666; font-size: 1.6923em; font-weight: 300; line-height: 1.4em; list-style: none; margin: 0 0 .5em; text-align: center; text-transform: lowercase; }
 .skills .core { background: transparent none no-repeat scroll center center; .at2x('../img/banner-core.png', 152px, 39px); color: #1e917f; font-size: 1.3846em; font-weight: 600; text-align: center; text-transform: uppercase; margin: 0 auto .5em; }
