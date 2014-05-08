@@ -1,8 +1,12 @@
 .DS_Store
-css/.DS_Store
+
 www/images
 www/wordpress
 www/tumblr
 www/google8bee999b575bb980.html
 
-.DS_Store
+# node
+npm-debug.log
+node_modules/
+!/node_modules/
+!src/node_modules/
