@@ -1,0 +1,59 @@
+// "let's make websites"
+.sites {
+
+	.projects {
+		margin: 0 0 1em; padding: 0; overflow: hidden;
+		> li { float: left; font-size: 18/13em; line-height: 1.4em; list-style: none; margin: 0 1.04166666666666667% 2em; /* 10px / 960px */ text-align: center; text-align: center; text-transform: uppercase;
+		max-width: 220px; width: 22.916666666666666667%; /* 220px / 960px */ }
+
+		// a:hover { text-decoration: none; /* temporary */ cursor: default; }
+
+		h4 { color: #9f67af; font-size: inherit; line-height: inherit; }
+		i { color: #999; font-style: normal; }
+
+		img { background: #84d0b4 none; border-radius: 50%; display: block; margin-bottom: 1em; max-width: 220px; opacity: 0.6; width: 100%; }
+		a:hover img { opacity: 1; }
+
+	 }
+
+	// viewer to show projects, hidden by default
+	.viewer {
+		background: #70cdab; color: #fff; /* display: none; */ font-size: 18/13em;
+
+
+		@media screen and (max-width:640px) {
+			min-height:100%;
+			min-width:100%;
+			position:fixed;
+			left:0;
+			top:0;
+			z-index:1 !important;
+		}
+
+		a { color: #fff; font-weight: bold; }
+		nav.top {
+			background: #1e917f; display: block; min-height: 44px; overflow-y: scroll; text-transform: uppercase;
+			a { line-height: 44px; padding: 13px; }
+			a.back:before { content: '< '; }
+		}
+
+	} // .viewer
+
+
+	@media screen and (min-width:480px) {
+
+	}
+
+
+	@media screen and (min-width: 640px) {
+
+		.viewer { min-height: 400px; overflow: hidden;
+			nav { display: none; }
+		}
+
+	}
+
+
+
+} // /.sites
+.viewer-show .viewer { display: block; }
