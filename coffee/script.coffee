@@ -31,4 +31,22 @@ jQuery ->
 
 	# temp disable as links don't work yet
 	$('.projects li a').click (e) ->
-		e.preventDefault
+		e.preventDefault()
+
+
+	# project viewer
+	viewer =
+		node: $('.sites .viewer')
+		show: ->
+			@node.show()
+		hide: ->
+			@node.hide()
+
+	# show viewer when a site is clicked
+	$('.projects > li > a').click (e) ->
+		e.preventDefault()
+		viewer.show()
+
+	$('a.close-viewer').click (e) ->
+		e.preventDefault()
+		viewer.hide()

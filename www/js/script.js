@@ -25,6 +25,7 @@
   };
 
   jQuery(function() {
+    var viewer;
     $('.contact').css('top', 0 - contactHeight).show();
     $('.hire-me').click(function(e) {
       e.preventDefault;
@@ -35,8 +36,25 @@
       contactHeight = $('.contact').height() - 5;
       return manageContact(contactHeight, 0);
     });
-    return $('.projects li a').click(function(e) {
-      return e.preventDefault;
+    $('.projects li a').click(function(e) {
+      return e.preventDefault();
+    });
+    viewer = {
+      node: $('.sites .viewer'),
+      show: function() {
+        return this.node.show();
+      },
+      hide: function() {
+        return this.node.hide();
+      }
+    };
+    $('.projects > li > a').click(function(e) {
+      e.preventDefault();
+      return viewer.show();
+    });
+    return $('a.close-viewer').click(function(e) {
+      e.preventDefault();
+      return viewer.hide();
     });
   });
 
