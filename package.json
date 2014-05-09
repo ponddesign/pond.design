@@ -23,5 +23,8 @@
     "grunt": "^0.4.4",
     "nodemon": "^1.0.17",
     "express-partials": "^0.2.0"
+  },
+  "engines": {
+    "node": "0.10.x"
   }
 }
