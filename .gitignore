@@ -1,4 +1,7 @@
+# common os files
 .DS_Store
+.DS_Store?
+._*
 
 www/images
 www/wordpress
