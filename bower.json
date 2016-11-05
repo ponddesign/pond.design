@@ -1,0 +1,14 @@
+{
+  "name": "pond-design",
+  "private": true,
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "modernizr": "~2.8.1",
+    "foldy960": "*",
+    "normalize-css": "^5.0.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.1.2"
+  }
+}
