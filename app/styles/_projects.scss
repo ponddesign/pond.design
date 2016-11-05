@@ -1,0 +1,14 @@
+// "let's make websites"
+.sites {
+
+  .projects {
+    margin: 0 0 1em; padding: 0; overflow: hidden;
+    > li { float: left; font-size: (18/13) * 1em; line-height: 1.4em; list-style: none; margin: 0 1.04166666666666667% 2em; /* 10px / 960px */ text-align: center; text-align: center; text-transform: uppercase;
+    max-width: 220px; width: 22.916666666666666667%; /* 220px / 960px */ }
+
+    i { color: #999; font-style: normal; }
+
+    img { background: #84d0b4 none; border-radius: 50%; display: block; margin-bottom: 1em; max-width: 220px; width: 100%; }
+
+   }
+}

@@ -1,15 +1,6 @@
-# common os files
+node_modules
+dist
+.tmp
+bower_components
+test/bower_components
 .DS_Store
-.DS_Store?
-._*
-
-www/images
-www/wordpress
-www/tumblr
-www/google8bee999b575bb980.html
-
-# node
-npm-debug.log
-node_modules/
-!/node_modules/
-!src/node_modules/
