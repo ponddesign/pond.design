@@ -8,6 +8,7 @@
   },
   "main": "index.js",
   "scripts": {
+    "postinstall": "bower install && gulp",
     "start": "node index.js"
   },
   "devDependencies": {
