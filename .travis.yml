@@ -2,7 +2,6 @@ sudo: false
 language: node_js
 node_js:
 - v6
-- v5
 deploy:
   provider: heroku
   api_key:
