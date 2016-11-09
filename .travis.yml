@@ -1,6 +1,13 @@
 sudo: false
 language: node_js
 node_js:
-  - v6
-  - v5
-  - v4
+- v6
+deploy:
+  provider: heroku
+  api_key:
+    secure: V6ZRLRWrBSTTEzDV7JJTrTmn45WXezj9u4jUft7YX25LtWnryccKwr7ElD940j3IGfETK/4qrne7FfvkFeL9+DdU2aBq96c1+I+1Csl++UbLJ1bQBb9flzsDgPx1Ir6SOT3Pp5HJlv9zFzofgIRcG1UAaOiG6kHbThxDLTr+/gNNSckkVPFmKcDy7c2a9LvbEhJgjU6Np4H6cF9r9SvDd6zHdGvdR7KVTLWEEm/MBxVi4LILdAcUz+QqkiNzj9UVBJ9N/NResw1uOAp4Zj8PGOMG1cmWqLOPFC6AXn9/lQImNrBya2ZHljYiEJJ8EzPXzmA1AJkK+GF3q17KwI9knxsdQQhyK4aSd7YIQmkZ/FWjmUt+h43kz0hobsP0wqwmux6tTSZ3ocgnhUDlSe606nmsvBfL40D6acI8cwH0HURU8cR4GXzFGy54bT82qMBdReMGfzWBgL3vHPikobU4oVBkvHUJmsrN5kBNlpUSX+B+wLzQlQDexmFYLENaE9letiP0Ot//1cxcDm3gGSeQv/U9oFj4SKo+Hl1rIi0svj1CaBAI2TFq9VMY9FN0V+LNPP7hqATuT3eP1aDV1CbNB614AApa+weEZDsETWmnpUikcz7ztBxxDSJVrtbm3HjpmVbjGEzT+W+q3JnkxNi/yjY4m0J2pWAXjXenz1xA7VU=
+    before_deploy: "echo 'ready?'"
+    deploy: "echo 'now deploying...'"
+    after_deploy: "echo 'deploy complete'"
+      # - ./after_deploy_1.sh
+      # - ./after_deploy_2.sh

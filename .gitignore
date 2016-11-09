@@ -1,6 +1,12 @@
+# node
 node_modules
+npm-debug.log
+
+# build files
 dist
 .tmp
 bower_components
 test/bower_components
+
+# system
 .DS_Store
