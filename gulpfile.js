@@ -9,6 +9,25 @@ const runSequence = require('run-sequence');
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
 
+
+gulp.task('cdn', () => {
+  return gulp.src("./app/**/*.html")
+    .pipe(cdnizer({
+      defaultCDNBase: "//cdn.pond.design/",
+      allowRev: true,
+      allowMin: true,
+      files: [
+        // This file is on the default CDN, and will replaced with //my.cdn.host/base/js/app.js
+        'scripts/**/*.js',
+        'images/**/*',
+        'styles/**/*',
+        '*.ico',
+        '*.png'
+      ]
+    }))
+    .pipe(gulp.dest("./dist"));
+});
+
 gulp.task('styles', () => {
   return gulp.src('app/styles/*.scss')
     .pipe($.plumber())
