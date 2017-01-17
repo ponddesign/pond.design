@@ -1,0 +1,54 @@
+==================================================================
+https://keybase.io/pond
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://pond.design
+  * I am pond (https://keybase.io/pond) on keybase.
+  * I have a public key ASBq1RZ-OdWvD_fQETuk99T7tbqI2E6a3DHgNPZSdqAg9go
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "eldest_kid": "01206ad5167e39d5af0ff7d0113ba4f7d4fbb5ba88d84e9adc31e034f65276a020f60a",
+            "host": "keybase.io",
+            "kid": "01206ad5167e39d5af0ff7d0113ba4f7d4fbb5ba88d84e9adc31e034f65276a020f60a",
+            "uid": "4e7914b0df8068b79cdc10d387f29419",
+            "username": "pond"
+        },
+        "service": {
+            "hostname": "pond.design",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "client": {
+        "name": "keybase.io go client",
+        "version": "1.0.18"
+    },
+    "ctime": 1484610158,
+    "expire_in": 504576000,
+    "merkle_root": {
+        "ctime": 1484610110,
+        "hash": "f3681ce1828970d55fb3748c3f511f6b5fdf43d6a35c2581a5147f7f9758d2ab8fe1c51de381e3e21840821f87cef7fb163b0e74250e982b380d1876231465ac",
+        "seqno": 802677
+    },
+    "prev": "ddb1c3c8a87369a7acfdd3441e32c3f27d2b7910d0db59a471d3060457d99860",
+    "seqno": 8,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgatUWfjnVrw/30BE7pPfU+7W6iNhOmtwx4DT2UnagIPYKp3BheWxvYWTFAu57ImJvZHkiOnsia2V5Ijp7ImVsZGVzdF9raWQiOiIwMTIwNmFkNTE2N2UzOWQ1YWYwZmY3ZDAxMTNiYTRmN2Q0ZmJiNWJhODhkODRlOWFkYzMxZTAzNGY2NTI3NmEwMjBmNjBhIiwiaG9zdCI6ImtleWJhc2UuaW8iLCJraWQiOiIwMTIwNmFkNTE2N2UzOWQ1YWYwZmY3ZDAxMTNiYTRmN2Q0ZmJiNWJhODhkODRlOWFkYzMxZTAzNGY2NTI3NmEwMjBmNjBhIiwidWlkIjoiNGU3OTE0YjBkZjgwNjhiNzljZGMxMGQzODdmMjk0MTkiLCJ1c2VybmFtZSI6InBvbmQifSwic2VydmljZSI6eyJob3N0bmFtZSI6InBvbmQuZGVzaWduIiwicHJvdG9jb2wiOiJodHRwOiJ9LCJ0eXBlIjoid2ViX3NlcnZpY2VfYmluZGluZyIsInZlcnNpb24iOjF9LCJjbGllbnQiOnsibmFtZSI6ImtleWJhc2UuaW8gZ28gY2xpZW50IiwidmVyc2lvbiI6IjEuMC4xOCJ9LCJjdGltZSI6MTQ4NDYxMDE1OCwiZXhwaXJlX2luIjo1MDQ1NzYwMDAsIm1lcmtsZV9yb290Ijp7ImN0aW1lIjoxNDg0NjEwMTEwLCJoYXNoIjoiZjM2ODFjZTE4Mjg5NzBkNTVmYjM3NDhjM2Y1MTFmNmI1ZmRmNDNkNmEzNWMyNTgxYTUxNDdmN2Y5NzU4ZDJhYjhmZTFjNTFkZTM4MWUzZTIxODQwODIxZjg3Y2VmN2ZiMTYzYjBlNzQyNTBlOTgyYjM4MGQxODc2MjMxNDY1YWMiLCJzZXFubyI6ODAyNjc3fSwicHJldiI6ImRkYjFjM2M4YTg3MzY5YTdhY2ZkZDM0NDFlMzJjM2YyN2QyYjc5MTBkMGRiNTlhNDcxZDMwNjA0NTdkOTk4NjAiLCJzZXFubyI6OCwidGFnIjoic2lnbmF0dXJlIn2jc2lnxECB/I9O4jjcXS5oTIAUR5JC4GhijDO1j1fgS8E4oj5c3Y88esxMQWVnPrdGEjPGXkAztMzOvtVV/fIy4gs8inkNqHNpZ190eXBlIKRoYXNogqR0eXBlCKV2YWx1ZcQgP5GBqA+SftRPujFB/hU/wRs2gzOjavZpL9cz48swYnujdGFnzQICp3ZlcnNpb24B
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/pond
+
+==================================================================
