@@ -11,9 +11,18 @@
 @import "bower_components/foldy960/style.scss";
 // endbower
 
+/* part of fixing footer to stick to bottom of page */
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
 /* === Layout */
 html {
   background: #e4e4e4 url('../images/bg-noise.png') repeat scroll center top;
+  box-sizing: border-box;
+  height: 100%;
   overflow-y: auto;
 }
 body {
@@ -21,7 +30,10 @@ body {
   font-family: "Quicksand", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 85%;
   line-height: 1.4em;
+  min-height: 100%;
   min-width: 220px;
+  padding-bottom: 6rem;
+  position: relative;
 }
 p  { margin: 0 0 1em; }
 strong  { font-weight: bold; }
@@ -90,7 +102,7 @@ pre,code,tt { font: 1em 'andale mono', 'lucida console', monospace; line-height:
 
 
 /* header */
-header { padding: 4em 0 3em; }
+header { padding: 10em 0 3em; }
 header h1 { background: transparent url('../images/logo.png') no-repeat scroll 0 0;
   height: 141px; margin: 0 auto; text-indent: -9999px; width: 134px; }
 
@@ -154,6 +166,10 @@ footer {
   border-top: 0;
   color: #fff; clear: both; font-size: (18/13) * 1em; overflow: hidden; padding: 2.5em 0 1em;
 
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
 
   .copyright { float: left; }
   .location { float: right; }
