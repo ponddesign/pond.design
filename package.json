@@ -1,10 +1,11 @@
 {
   "name": "ponddesign-portfolio-website",
-  "version": "2.0.1",
+  "version": "2.0.3",
   "description": "The simple (yet outdated) portfolio for Christopher Pond.",
   "private": true,
   "engines": {
-    "node": ">=6"
+    "node": ">=10",
+    "yarn": "^1.19.0"
   },
   "main": "index.js",
   "scripts": {
