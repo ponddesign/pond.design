@@ -22,6 +22,7 @@
     "@remix-run/serve": "^1.16.0",
     "@types/react": "^18.0.35",
     "@types/react-dom": "^18.0.11",
+    "dayjs": "^1.11.9",
     "eslint": "^8.38.0",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.0.4"
