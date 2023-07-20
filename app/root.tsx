@@ -9,9 +9,27 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
+import favicon from "./assets/favicon.svg";
+import appleTouchIcon from "./assets/apple-touch-icon.png";
 import styles from "./tailwind.css";
 
 export const links: LinksFunction = () => [
+  // favicon svg
+  {
+    rel: "favicon",
+    href: favicon,
+  },
+  // safari
+  {
+    rel: "mask-icon",
+    href: favicon,
+    color: "#6A726F",
+  },
+  // apple touch icon
+  {
+    rel: "apple-touch-icon",
+    href: appleTouchIcon,
+  },
   {
     rel: "stylesheet",
     href: styles,
@@ -23,6 +41,10 @@ export const links: LinksFunction = () => [
   {
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,400;0,700;0,900;1,100;1,400;1,700;1,900&display=swap",
+  },
+  {
+    rel: "manifest",
+    href: "/site.webmanifest",
   },
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
