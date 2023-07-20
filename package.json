@@ -14,7 +14,7 @@
     "test": "bower install && gulp"
   },
   "dependencies": {
-    "express": "^4.14.0"
+    "express": "^4.17.3"
   },
   "devDependencies": {
     "babel-core": "^6.4.0",
