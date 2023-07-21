@@ -8,6 +8,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import { Analytics } from "@vercel/analytics/react";
 
 import favicon from "./assets/favicon.svg";
 import appleTouchIcon from "./assets/apple-touch-icon.png";
@@ -59,6 +60,7 @@ export default function App() {
         <Links />
       </head>
       <body className="bg-zinc-800">
+        <Analytics />
         <Outlet />
         <ScrollRestoration />
         <Scripts />
