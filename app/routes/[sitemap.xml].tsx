@@ -4,8 +4,8 @@ export const loader = () => {
   const content = `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://pond.design/</loc>
-
-    <priority>${buildTime}</priority>
+    <lastmod>${buildTime}</lastmod>
+    <priority>1.0</priority>
   </url>
 </urlset>
     `;
