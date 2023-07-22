@@ -1,10 +1,11 @@
-import logoText from "../../assets/logo-text.svg";
+import LogoText from "~/components/icons/LogoText";
 
 export default function Header() {
   return (
     <header className="container mx-auto min-h-[90vh] flex flex-col items-center justify-center">
-      <h1>
-        <img src={logoText} alt="Pond Design" />
+      <h1 className="text-black dark:text-white">
+        <span className="hidden">Pond Design</span>
+        <LogoText />
       </h1>
     </header>
   );

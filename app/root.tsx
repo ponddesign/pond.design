@@ -10,8 +10,8 @@ import {
 } from "@remix-run/react";
 import { Analytics } from "@vercel/analytics/react";
 
-import favicon from "./assets/favicon.svg";
-import appleTouchIcon from "./assets/apple-touch-icon.png";
+import favicon from "./icons/favicon.svg";
+import appleTouchIcon from "./icons/apple-touch-icon.png";
 import styles from "./tailwind.css";
 
 export const links: LinksFunction = () => [
@@ -59,7 +59,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="bg-zinc-800">
+      <body className="bg-white dark:bg-zinc-800 min-h-screen">
         <Analytics />
         <Outlet />
         <ScrollRestoration />

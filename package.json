@@ -3,8 +3,21 @@
   "sideEffects": false,
   "scripts": {
     "build": "remix build",
-    "dev": "remix dev",
+    "icons": "npx @svgr/cli --out-dir app/components/icons -- app/icons",
+    "icons:watch": "npm-watch icons",
+    "dev:svg": "run-s icons icons:watch",
+    "dev:remix": "remix dev",
+    "dev": "run-p dev:*",
     "typecheck": "tsc"
+  },
+  "watch": {
+    "icons": {
+      "patterns": [
+        "icons"
+      ],
+      "extensions": "svg",
+      "quiet": false
+    }
   },
   "dependencies": {
     "@remix-run/css-bundle": "^1.16.0",
@@ -19,12 +32,18 @@
     "@remix-run/dev": "^1.16.0",
     "@remix-run/eslint-config": "^1.16.0",
     "@remix-run/serve": "^1.16.0",
+    "@svgr/cli": "^8.0.1",
+    "@svgr/plugin-jsx": "^8.0.1",
+    "@svgr/plugin-prettier": "^8.0.1",
+    "@svgr/plugin-svgo": "^8.0.1",
     "@types/react": "^18.0.35",
     "@types/react-dom": "^18.0.11",
     "@vercel/analytics": "^1.0.1",
     "classnames": "^2.3.2",
     "dayjs": "^1.11.9",
     "eslint": "^8.38.0",
+    "npm-run-all": "^4.1.5",
+    "npm-watch": "^0.11.0",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.0.4"
   },
