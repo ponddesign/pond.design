@@ -1,5 +1,5 @@
-import androidChrome192x192 from "../icons/android-chrome-192x192.png";
-import androidChrome512x512 from "../icons/android-chrome-512x512.png";
+import androidChrome192x192 from "../assets/android-chrome-192x192.png";
+import androidChrome512x512 from "../assets/android-chrome-512x512.png";
 
 export const loader = () => {
   const content = JSON.stringify({
