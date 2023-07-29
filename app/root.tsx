@@ -56,6 +56,7 @@ export default function App() {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' 'vitals.vercel-insights.com'; font-src 'fonts.googleapis.com' 'fonts.gstatic.com'; style-src: 'self' 'fonts.googleapis.com'" />
         <Meta />
         <Links />
       </head>
