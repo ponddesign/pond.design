@@ -27,7 +27,7 @@ export const loader = async () =>
     },
     {
       headers: {
-        "Cache-Control": "no-store",
+        "Content-Type": "application/jrd+json; charset=utf-8",
       },
     }
   );
