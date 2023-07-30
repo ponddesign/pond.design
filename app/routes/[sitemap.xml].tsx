@@ -1,4 +1,4 @@
-const buildTime = new Date();
+const buildTime = new Date().toISOString();
 
 export const loader = () => {
   const content = `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
