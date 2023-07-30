@@ -1,5 +1,5 @@
 import { cssBundleHref } from "@remix-run/css-bundle";
-import type { LinksFunction } from "@remix-run/node";
+import type { LinksFunction, V2_MetaFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -49,6 +49,20 @@ export const links: LinksFunction = () => [
   },
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
+
+// TODO:
+export const meta: V2_MetaFunction = () => {
+  return [
+    {
+      name: "viewport",
+      content: "width=device-width,initial-scale=1",
+    },
+    {
+      httpEquiv: 'Content-Security-Policy',
+      content: "default-src 'self'; connect-src 'self' https://vitals.vercel-insights.com; font-src https://fonts.gstatic.com; style-src: 'self' https://fonts.googleapis.com; img-src https://*; child-src 'none';"
+    }
+  ];
+};
 
 export default function App() {
   return (
