@@ -1,0 +1,378 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
+  "basics": {
+    "name": "Christopher Pond",
+    "label": "UX Engineering Director, Architect, Developer",
+    "image": "",
+    "email": "chris@pond.design",
+    "phone": "",
+    "url": "https://pond.design",
+    "summary": "Austin-based UX Engineer focused on Design Systems, UX-Engineering-Product collaboration, and React-based front end development.",
+    "location": {
+      "countryCode": "US",
+      "address": "Austin, TX"
+    },
+    "profiles": [
+      {
+        "network": "LinkedIn",
+        "username": "ponddesign",
+        "url": "https://www.linkedin.com/in/ponddesign/"
+      },
+      {
+        "network": "Twitter",
+        "username": "ponddesign",
+        "url": "https://twitter.com/ponddesign"
+      }
+    ]
+  },
+  "work": [
+    {
+      "name": "Newfold Digital",
+      "position": "Director of Software Engineering",
+      "startDate": "2023-09-30",
+      "endDate": "",
+      "highlights": [],
+      "summary": "Directly leading four full-stack software engineering teams to deliver web hosting applications that allow Newfold's users to manage their online presence. We focus on maintainability, performance and user experience.\n\nCollaborating with Product, UX and Engineering teams to architect, identify and plan product requirements.\n\nEvaluating and refining our software development lifecycle with a focus on improving collaboration, consistency, and coordination across departments.\n\nFostering an open and collaborative front end development community across Newfold's many teams.",
+      "url": "https://www.linkedin.com/company/newfold/"
+    },
+    {
+      "name": "Newfold Digital",
+      "position": "Senior Principal Software Engineer",
+      "startDate": "2021-09-30",
+      "endDate": "2023-08-31",
+      "highlights": [],
+      "summary": "Defined and maintained front-end architecture and design patterns that ensure consistency, maintainability, and performance across projects. Collaborated with multiple UX, Product and Engineering teams to refine and plan major new initiatives. Represented the Newfold Hosting Experience Team in cross-departmental presentations.",
+      "url": "https://www.linkedin.com/company/newfold/",
+      "location": "Austin, Texas, United States"
+    },
+    {
+      "name": "Newfold Digital",
+      "position": "Principal Software Engineer",
+      "startDate": "2020-03-31",
+      "endDate": "2022-09-30",
+      "highlights": [],
+      "summary": "Aided in multi-brand platform consolidation strategy. Principal front end consultant to multiple product and development teams.",
+      "url": "https://www.linkedin.com/company/newfold/",
+      "location": "Austin, Texas, United States"
+    },
+    {
+      "name": "Bluehost",
+      "position": "Software Engineering Manager",
+      "startDate": "2016-01-31",
+      "endDate": "2020-03-31",
+      "highlights": [],
+      "summary": "Hybrid management, Product Engineer and UX Developer role working to bridge UX and Engineering teams to deliver improved web hosting products and experiences.\n\nBuilt React-based proof of concept that evolved into the future product platform for Bluehost that is now contributed to by over a dozen product engineering teams.\n\nWorked with engineering and design community to establish a scalable design system and component library based in React, SCSS. Maintainer of CICD workflows related to front-end build systems including interfacing with Webpack, Lerna, NPM, Github, Stash, Bamboo, Travis CI and more.",
+      "url": "https://www.linkedin.com/company/bluehost-com/",
+      "location": "Austin, TX"
+    },
+    {
+      "name": "Endurance International Group",
+      "position": "Director Of Web Development",
+      "startDate": "2013-07-31",
+      "endDate": "2015-12-31",
+      "highlights": [],
+      "summary": "Grew marketing-focused web development team into four new scalable Agile-based teams delivering work across three major brands (HostGator, Bluehost, Domain.com and iPage). \n\nLed full redesign and overhaul efforts for each major brand, while moving each into a common platform. \n\nImplemented cross-department and cross-brand Google Tag Manager implementation to enable end-to-end tracking across marketing and product applications.",
+      "url": "https://www.linkedin.com/company/endurance-international-group/",
+      "location": "Austin, TX"
+    },
+    {
+      "name": "Pond Design",
+      "position": "Frontend Web Developer",
+      "startDate": "2011-01-31",
+      "endDate": "2013-06-30",
+      "highlights": [],
+      "summary": "Freelance-based web development and design for a variety of clients focusing on front-of-site redesigns for marketing and e-commerce websites. Client list included United Natural Foods, NuRoo, HostGator, StartLogic and Endurance International Group.",
+      "url": "",
+      "location": "Austin, TX"
+    },
+    {
+      "name": "Endurance International Group",
+      "position": "Web Designer",
+      "startDate": "2008-03-31",
+      "endDate": "2010-12-31",
+      "highlights": [],
+      "summary": "Designed and developed e-commerce websites in a fast-paced marketing environment. Led efforts to design branding and site experiences for new and existing web hosting companies. Created web templates that allowed a very small team of web designers to manage over 20 distinctly branded websites with reduced engineering effort.",
+      "url": "https://www.linkedin.com/company/endurance-international-group/",
+      "location": "Boston, MA"
+    },
+    {
+      "name": "Association of Health Care Journalists",
+      "position": "Web Designer",
+      "startDate": "2005-11-30",
+      "endDate": "2007-04-30",
+      "highlights": [],
+      "summary": "Published and managed daily changes in layout, content, and functionality to a continually address evolving website. Managed comprehensive site transfer to a new server, ensuring functionality through the transition. (Part-time role while studying Journalism at University of Missouri.)",
+      "url": "https://www.linkedin.com/company/association-of-health-care-journalists/",
+      "location": "Columbia, Missouri Area"
+    },
+    {
+      "name": "Missouri Attorney General's Office",
+      "position": "Web Designer",
+      "startDate": "2002-05-31",
+      "endDate": "2005-09-30",
+      "highlights": [],
+      "summary": "Served in Communications Department to redesign the agency website with a focus on improving user friendliness, maintainability, and overall design.",
+      "url": "https://www.linkedin.com/company/missouri-attorney-general/",
+      "location": "Jefferson City, MO"
+    }
+  ],
+  "volunteer": [],
+  "education": [
+    {
+      "institution": "University of Missouri-Columbia",
+      "area": "Journalism",
+      "studyType": "Bachelor of Journalism",
+      "startDate": "2004-01-31",
+      "endDate": "2007-12-31",
+      "score": "",
+      "courses": []
+    },
+    {
+      "institution": "Rhodes College",
+      "area": "",
+      "studyType": "",
+      "startDate": "2003-08-31",
+      "endDate": "2003-12-31",
+      "score": "",
+      "courses": []
+    }
+  ],
+  "awards": [],
+  "certificates": [],
+  "publications": [],
+  "skills": [
+    {
+      "name": "Design Tokens",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Figma (Software)",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "TypeScript",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Web Design",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "(Inactive profile) Endurance Group is Newfold Digital",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "HTML",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "WordPress",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Illustrator",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Jest",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "JIRA",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Node.js",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "User Experience",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Photoshop",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Multivariate Testing",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Google Tag Manager",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "React.js",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Perl",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Atom",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Google Analytics",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Web Analytics",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Management",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Design Systems",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Graphic Design",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Github",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Web Development",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Travel Photography",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "npm",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Confluence",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Git",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "vim",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Single Page Applications",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "SASS",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Team Leadership",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "UX",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Project Management",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "E-commerce",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Webpack",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Agile Project Management",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "CSS",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "Responsive Web Design",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "User Interface Design",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "JavaScript",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "SEO",
+      "level": "",
+      "keywords": []
+    },
+    {
+      "name": "React",
+      "level": "",
+      "keywords": []
+    }
+  ],
+  "languages": [
+    {
+      "language": "English",
+      "fluency": "Native Speaker"
+    }
+  ],
+  "interests": [],
+  "references": [],
+  "projects": [],
+  "meta": {
+    "version": "v1.0.0",
+    "canonical": "https://github.com/jsonresume/resume-schema/blob/v1.0.0/schema.json"
+  }
+}

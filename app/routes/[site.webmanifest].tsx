@@ -1,3 +1,4 @@
+import theme from "tailwind.config";
 import androidChrome192x192 from "../assets/android-chrome-192x192.png";
 import androidChrome512x512 from "../assets/android-chrome-512x512.png";
 
@@ -18,8 +19,8 @@ export const loader = () => {
         type: "image/png",
       },
     ],
-    theme_color: "#6A726F",
-    background_color: "#323835",
+    theme_color: theme.theme.colors.primary[700], // "#6A726F",
+    background_color: theme.theme.colors.primary[700], // "#323835",
     display: "standalone",
   });
 
