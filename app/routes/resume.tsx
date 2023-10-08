@@ -50,12 +50,12 @@ export default function Index() {
             <div>
               <h1 className={clsx(resumeStyles.h1, "text-2xl mb-4 font-serif")}>{resume.basics.name}</h1>
               <h2 className={clsx(resumeStyles.h2)}>{resume.basics.label}</h2>
-              <p className={clsx('dark:text-secondary-200')}>
-                <a href={`mailto:${resume.basics.email}`} className={clsx('text-secondary-400 dark:text-secondary-200', 'hover:text-orange-400')}>
+              <p className={clsx('dark:text-secondary-500')}>
+                <a href={`mailto:${resume.basics.email}`} className={clsx('text-secondary-500 dark:text-secondary-200', 'hover:text-orange-500 hover:dark:text-orange-400')}>
                   {resume.basics.email}
                 </a>
               </p>
-              <p className={clsx('text-secondary-400 dark:text-secondary-200')}>
+              <p className={clsx('text-secondary-500 dark:text-secondary-200')}>
                 {resume.basics.location.address}
               </p>
             </div>
