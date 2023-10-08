@@ -6,7 +6,15 @@ import clsx from "clsx";
 import resume from '../data/resume.json'
 
 export const meta: MetaFunction = () => {
-  return [{ title: "Pond Design" }];
+  return [
+    {
+      title: `${resume.basics.name}'s Resumé — ${resume.basics.label}`,
+    },
+    {
+      name: "description",
+      content: `${resume.basics.name}'s professional resumé as ${resume.basics.label}.`,
+    }
+  ];
 };
 
 const resumeStyles = {
