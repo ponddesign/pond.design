@@ -1,7 +1,7 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss';
 
-import defaultTheme from "tailwindcss/defaultTheme";
-import colors from "tailwindcss/colors";
+import defaultTheme from 'tailwindcss/defaultTheme';
+import colors from 'tailwindcss/colors';
 import {
   colorPrimary100,
   colorPrimary200,
@@ -21,26 +21,26 @@ import {
   colorSecondary700,
   colorSecondary800,
   colorSecondary900,
-} from "./figma.vars";
+} from './figma.vars';
 
 const theme = {
-  content: ["./app/**/*.{js,jsx,ts,tsx}"],
+  content: ['./app/**/*.{js,jsx,ts,tsx}'],
   // darkMode: "class",
   theme: {
     // extensions
     extend: {
       fontFamily: {
-        sans: ["DM Sans", ...defaultTheme.fontFamily.sans],
-        serif: ["DM Serif Display", ...defaultTheme.fontFamily.serif],
-        mono: ["DM Mono", ...defaultTheme.fontFamily.mono],
+        sans: ['DM Sans', ...defaultTheme.fontFamily.sans],
+        serif: ['DM Serif Display', ...defaultTheme.fontFamily.serif],
+        mono: ['DM Mono', ...defaultTheme.fontFamily.mono],
       },
     },
 
     // overrides
     colors: {
       // tw defaults reduced
-      transparent: "transparent",
-      current: "currentColor",
+      transparent: 'transparent',
+      current: 'currentColor',
       black: colors.black,
       white: colors.white,
       gray: colors.zinc, // remap

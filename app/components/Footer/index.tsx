@@ -1,6 +1,6 @@
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
-const currentYear = dayjs().format("YYYY");
+const currentYear = dayjs().format('YYYY');
 
 export default function Footer() {
   return (

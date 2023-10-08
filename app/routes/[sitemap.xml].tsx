@@ -13,9 +13,9 @@ export const loader = () => {
   return new Response(content, {
     status: 200,
     headers: {
-      "Content-Type": "application/xml",
-      "xml-version": "1.0",
-      encoding: "UTF-8",
+      'Content-Type': 'application/xml',
+      'xml-version': '1.0',
+      encoding: 'UTF-8',
     },
   });
 };
