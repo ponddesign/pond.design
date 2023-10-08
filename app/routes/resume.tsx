@@ -22,7 +22,7 @@ const resumeStyles = {
   h2: `font-extrabold mb-1`,
   tag: `text-sm py-1 px-5 mb-3 inline-block rounded`,
   tagDateRange: `uppercase tracking-widest bg-primary-300 dark:bg-primary-500 dark:text-primary-100`,
-  tagHighlight: "uppercase tracking-widest bg-orange-300 dark:bg-orange-400 text-orange-800",
+  tagHighlight: "uppercase tracking-widest bg-orange-300 text-orange-800",
   section: [
     "py-12 sm:grid sm:grid-cols-4 sm:grid-flow-col sm:gap-4",
     'container',
