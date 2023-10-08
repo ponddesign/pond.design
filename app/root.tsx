@@ -45,8 +45,9 @@ export const links: LinksFunction = () => [
     crossOrigin: "anonymous",
   },
   {
-    rel: "stylesheet",
+    rel: "preload",
     href: "https://fonts.googleapis.com/css2?family=DM+Mono&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,800;1,9..40,400;1,9..40,800&family=DM+Serif+Display:ital@0;1&display=swap",
+    as: "style",
   },
   {
     rel: "manifest",
