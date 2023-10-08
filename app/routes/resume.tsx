@@ -3,10 +3,6 @@ import type { MetaFunction } from "@remix-run/react";
 import { Link } from "@remix-run/react";
 import clsx from "clsx";
 
-
-// import Header from "../components/Header";
-// import Footer from "../components/Footer";
-
 import resume from '../data/resume.json'
 
 export const meta: MetaFunction = () => {
@@ -27,28 +23,6 @@ const resumeStyles = {
   sectionContent: `sm:col-span-3`,
 }
 
-
-
-// type ParagraphProps = HTMLProps<HTMLParagraphElement>;
-// const P = ({ children, className, ...props }: ParagraphProps) => <p className={clsx('', className)} {...props}>{children}</p>
-
-type SectionProps = { noDivider?: boolean } & HTMLProps<HTMLTableSectionElement>;
-const Section = ({ children, className, noDivider = false, ...props }: SectionProps) => (
-  <section
-    {...props}
-    className={clsx(resumeStyles.section, [
-      className,
-      {
-        'pt-0': noDivider,
-        'border-t': !noDivider,
-        'border-t-secondary-200': !noDivider,
-        'dark:border-t-secondary-500': !noDivider,
-      }
-    ])}>
-    {children}
-  </section>
-);
-
 export default function Index() {
   if (process.env.NODE_ENV === 'development')
     console.log('resume', resume);
@@ -61,7 +35,6 @@ export default function Index() {
         'mx-auto',
         'max-w-3xl'
       ])}>
-        {/* <Header short /> */}
 
         {/* INTRO */}
         <header className="container mx-auto mb-6">
@@ -155,8 +128,24 @@ export default function Index() {
           </div>
         </Section>
 
-        {/* <Footer /> */}
       </div>
     </main>
   );
 }
+
+type SectionProps = { noDivider?: boolean } & HTMLProps<HTMLTableSectionElement>;
+const Section = ({ children, className, noDivider = false, ...props }: SectionProps) => (
+  <section
+    {...props}
+    className={clsx(resumeStyles.section, [
+      className,
+      {
+        'pt-0': noDivider,
+        'border-t': !noDivider,
+        'border-t-secondary-200': !noDivider,
+        'dark:border-t-secondary-500': !noDivider,
+      }
+    ])}>
+    {children}
+  </section>
+);
