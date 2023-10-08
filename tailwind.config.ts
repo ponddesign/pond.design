@@ -25,11 +25,14 @@ import {
 
 const theme = {
   content: ["./app/**/*.{js,jsx,ts,tsx}"],
+  // darkMode: "class",
   theme: {
     // extensions
     extend: {
       fontFamily: {
-        sans: ["Noto Sans", ...defaultTheme.fontFamily.sans],
+        sans: ["DM Sans", ...defaultTheme.fontFamily.sans],
+        serif: ["DM Serif Display", ...defaultTheme.fontFamily.serif],
+        mono: ["DM Mono", ...defaultTheme.fontFamily.mono],
       },
     },
 

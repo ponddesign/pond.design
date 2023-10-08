@@ -1,5 +1,5 @@
 import { cssBundleHref } from "@remix-run/css-bundle";
-import type { LinksFunction, V2_MetaFunction } from "@remix-run/node";
+import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -40,8 +40,14 @@ export const links: LinksFunction = () => [
     href: "https://fonts.googleapis.com",
   },
   {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,400;0,700;0,900;1,100;1,400;1,700;1,900&display=swap",
+    rel: "preconnect",
+    href: "https://fonts.gstatic.com",
+    crossOrigin: "anonymous",
+  },
+  {
+    rel: "preload",
+    href: "https://fonts.googleapis.com/css2?family=DM+Mono&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,800;1,9..40,400;1,9..40,800&family=DM+Serif+Display:ital@0;1&display=swap",
+    as: "style",
   },
   {
     rel: "manifest",
@@ -51,7 +57,7 @@ export const links: LinksFunction = () => [
 ];
 
 // TODO:
-export const meta: V2_MetaFunction = () => {
+export const meta: MetaFunction = () => {
   return [
     {
       name: "viewport",
@@ -73,7 +79,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="bg-primary-500 text-primary-300 min-h-screen">
+      <body className="min-h-screen dark:bg-primary-700 text-primary-600 dark:text-primary-300">
         <Analytics />
         <Outlet />
         <ScrollRestoration />
