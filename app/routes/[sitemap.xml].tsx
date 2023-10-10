@@ -7,6 +7,11 @@ export const loader = () => {
     <lastmod>${buildTime}</lastmod>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://pond.design/resume</loc>
+    <lastmod>${buildTime}</lastmod>
+    <priority>1.0</priority>
+  </url>
 </urlset>
     `;
 
