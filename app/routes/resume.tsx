@@ -1,9 +1,15 @@
 import type { HTMLProps } from 'react';
 import type { MetaFunction } from '@remix-run/react';
-import { Link } from '@remix-run/react';
+import { Link, useLoaderData } from '@remix-run/react';
+import { json, type LoaderFunction } from '@remix-run/node';
+
 import clsx from 'clsx';
 
 import resume from '../data/resume.json';
+
+type Resume = typeof resume
+
+export const loader: LoaderFunction = async () => json(resume);
 
 export const meta: MetaFunction = () => {
   return [
@@ -32,6 +38,8 @@ const resumeStyles = {
 };
 
 export default function Index() {
+  const resume = useLoaderData() as Resume;
+
   if (process.env.NODE_ENV === 'development') console.log('resume', resume);
 
   return (
