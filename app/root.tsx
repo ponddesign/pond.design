@@ -1,17 +1,16 @@
-import { cssBundleHref } from '@remix-run/css-bundle';
-import type { LinksFunction, MetaFunction } from '@remix-run/node';
+import type { LinksFunction, MetaFunction } from 'react-router';
 import {
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
-} from '@remix-run/react';
+} from 'react-router';
 import { Analytics } from '@vercel/analytics/react';
 
 import favicon from './assets/favicon.svg';
 import appleTouchIcon from './assets/apple-touch-icon.png';
-import styles from './tailwind.css';
+import tailwindHref from './tailwind.css?url';
 
 export const links: LinksFunction = () => [
   // favicon svg
@@ -32,7 +31,7 @@ export const links: LinksFunction = () => [
   },
   {
     rel: 'stylesheet',
-    href: styles,
+    href: tailwindHref,
   },
   {
     rel: 'preconnect',
@@ -52,7 +51,6 @@ export const links: LinksFunction = () => [
     rel: 'manifest',
     href: '/site.webmanifest',
   },
-  ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
 ];
 
 // TODO:

@@ -1,6 +1,6 @@
 import type { HTMLProps } from 'react';
-import type { MetaFunction } from '@remix-run/react';
-import { Link } from '@remix-run/react';
+import type { MetaFunction } from 'react-router';
+import { Link } from 'react-router';
 import clsx from 'clsx';
 
 import resume from '../data/resume.json';
