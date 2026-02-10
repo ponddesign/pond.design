@@ -1,1 +1,4 @@
-{ "version": 2, "builds": [ { "use": "@vercel/static-build", "src": "package.json" } ], "routes": [ { "src": "/(.*)", "dest": "/index.html" } ] }
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "react-router"
+}
