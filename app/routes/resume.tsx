@@ -99,7 +99,9 @@ export default function Index() {
                 })
                 : 'Present';
               return (
-                <article key={`${job.name}-${job.position}`}>
+                <article
+                  key={`${job.name}-${job.position}-${job.startDate}-${job.endDate ?? 'present'}`}
+                >
                   {/* heading */}
                   <div className="mb-6">
                     {/* date ranges / badges */}

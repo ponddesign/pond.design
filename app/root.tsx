@@ -10,6 +10,7 @@ import { Analytics } from '@vercel/analytics/react';
 
 import favicon from './assets/favicon.svg';
 import appleTouchIcon from './assets/apple-touch-icon.png';
+import './tailwind.css';
 import tailwindHref from './tailwind.css?url';
 
 export const links: LinksFunction = () => [
@@ -29,10 +30,14 @@ export const links: LinksFunction = () => [
     rel: 'apple-touch-icon',
     href: appleTouchIcon,
   },
-  {
-    rel: 'stylesheet',
-    href: tailwindHref,
-  },
+  ...(process.env.NODE_ENV === 'production'
+    ? [
+      {
+        rel: 'stylesheet',
+        href: tailwindHref,
+      },
+    ]
+    : []),
   {
     rel: 'preconnect',
     href: 'https://fonts.googleapis.com',
