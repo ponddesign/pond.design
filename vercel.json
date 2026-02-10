@@ -1,1 +1,1 @@
-{\n  "version": 2,\n  "builds": [\n    {\n      "src": "vite.config.js",\n      "use": "@vercel/static-build"\n    }\n  ],\n  "routes": [\n    {\n      "src": "/(.*)\",\n      "dest": "/index.html"\n    }\n  ]\n}
+{ "version": 2, "builds": [ { "use": "@vercel/static-build", "src": "package.json" } ], "routes": [ { "src": "/(.*)", "dest": "/index.html" } ] }
