@@ -1,1 +1,1 @@
-{\n  "version": 2,\n  "builds": [],\n  "routes": [\n    {\n      "src": "/(.*),\n      "dest": "/index.html"\n    }\n  ]\n}
+{"version":2,"build":{"command":"npm run build","outputDirectory":"dist"},"routes":[{"src":"/(.*)","dest":"/index.html"}]}
