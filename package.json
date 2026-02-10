@@ -2,11 +2,11 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
-    "build": "remix build",
+    "build": "remix vite:build",
     "icons": "npx @svgr/cli --out-dir app/components/icons -- app/icons",
     "icons:watch": "npm-watch icons",
     "dev:svg": "run-s icons icons:watch",
-    "dev:remix": "remix dev",
+    "dev:remix": "remix vite:dev",
     "dev": "run-p dev:*",
     "typecheck": "tsc"
   },
@@ -20,18 +20,18 @@
     }
   },
   "dependencies": {
-    "@remix-run/css-bundle": "2.0.1",
-    "@remix-run/node": "2.17.2",
-    "@remix-run/react": "2.17.3",
+    "@remix-run/css-bundle": "2.17.0",
+    "@remix-run/node": "2.17.0",
+    "@remix-run/react": "2.17.0",
     "isbot": "^3.6.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@heroicons/react": "^2.0.18",
-    "@remix-run/dev": "2.0.1",
-    "@remix-run/eslint-config": "2.0.1",
-    "@remix-run/serve": "2.0.1",
+    "@remix-run/dev": "2.17.0",
+    "@remix-run/eslint-config": "2.17.0",
+    "@remix-run/serve": "2.17.0",
     "@svgr/cli": "^8.0.1",
     "@svgr/plugin-jsx": "^8.0.1",
     "@svgr/plugin-prettier": "^8.0.1",
@@ -50,7 +50,8 @@
     "prettier": "^3.0.3",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.0.4",
-    "usehooks-ts": "^2.9.1"
+    "usehooks-ts": "^2.9.1",
+    "vite": "^7.1.4"
   },
   "engines": {
     "node": "22.x"
