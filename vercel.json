@@ -1,1 +1,1 @@
-{"version":2,"build":{"command":"npm run build","outputDirectory":"dist"},"routes":[{"src":"/(.*)","dest":"/index.html"}]}
+{\n  "version": 2,\n  "builds": [\n    {\n      "src": "vite.config.js",\n      "use": "@vercel/static-build"\n    }\n  ],\n  "routes": [\n    {\n      "src": "/(.*)\",\n      "dest": "/index.html"\n    }\n  ]\n}
