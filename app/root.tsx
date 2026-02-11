@@ -1,18 +1,17 @@
-import { cssBundleHref } from '@remix-run/css-bundle';
-import type { LinksFunction, MetaFunction } from '@remix-run/node';
+import type { LinksFunction, MetaFunction } from 'react-router';
 import {
   Links,
-  LiveReload,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
-} from '@remix-run/react';
+} from 'react-router';
 import { Analytics } from '@vercel/analytics/react';
 
 import favicon from './assets/favicon.svg';
 import appleTouchIcon from './assets/apple-touch-icon.png';
-import styles from './tailwind.css';
+import './tailwind.css';
+import tailwindHref from './tailwind.css?url';
 
 export const links: LinksFunction = () => [
   // favicon svg
@@ -31,10 +30,14 @@ export const links: LinksFunction = () => [
     rel: 'apple-touch-icon',
     href: appleTouchIcon,
   },
-  {
-    rel: 'stylesheet',
-    href: styles,
-  },
+  ...(process.env.NODE_ENV === 'production'
+    ? [
+      {
+        rel: 'stylesheet',
+        href: tailwindHref,
+      },
+    ]
+    : []),
   {
     rel: 'preconnect',
     href: 'https://fonts.googleapis.com',
@@ -53,7 +56,6 @@ export const links: LinksFunction = () => [
     rel: 'manifest',
     href: '/site.webmanifest',
   },
-  ...(cssBundleHref ? [{ rel: 'stylesheet', href: cssBundleHref }] : []),
 ];
 
 // TODO:
@@ -85,7 +87,6 @@ export default function App() {
         <Outlet />
         <ScrollRestoration />
         <Scripts />
-        <LiveReload />
       </body>
     </html>
   );

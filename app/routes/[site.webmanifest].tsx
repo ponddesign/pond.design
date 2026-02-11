@@ -1,4 +1,4 @@
-import theme from 'tailwind.config';
+import theme from '../../tailwind.config';
 import androidChrome192x192 from '../assets/android-chrome-192x192.png';
 import androidChrome512x512 from '../assets/android-chrome-512x512.png';
 
