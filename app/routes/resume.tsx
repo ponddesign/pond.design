@@ -31,6 +31,21 @@ const resumeStyles = {
   sectionContent: `sm:col-span-3`,
 };
 
+const formatMonthYearUTC = (dateString: string) => {
+  const date = new Date(dateString);
+  return new Intl.DateTimeFormat('en-US', {
+    month: '2-digit',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(date);
+};
+
+const formatYearUTC = (dateString: string) =>
+  new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(new Date(dateString));
+
 export default function Index() {
   if (process.env.NODE_ENV === 'development') console.log('resume', resume);
 
@@ -86,17 +101,9 @@ export default function Index() {
 
           <div className={clsx(resumeStyles.sectionContent, 'space-y-12')}>
             {resume.work.map((job) => {
-              const startDate = new Date(job.startDate);
-              const formattedStartDate = startDate.toLocaleDateString('en-US', {
-                month: '2-digit',
-                year: 'numeric',
-              });
-              const endDate = job.endDate ? new Date(job.endDate) : null;
-              const formattedEndDate = endDate
-                ? endDate.toLocaleDateString('en-US', {
-                  month: '2-digit',
-                  year: 'numeric',
-                })
+              const formattedStartDate = formatMonthYearUTC(job.startDate);
+              const formattedEndDate = job.endDate
+                ? formatMonthYearUTC(job.endDate)
                 : 'Present';
               return (
                 <article
@@ -114,9 +121,9 @@ export default function Index() {
                         )}
                       >
                         {formattedStartDate}
-                        {endDate && ` - ${formattedEndDate}`}
+                        {job.endDate && ` - ${formattedEndDate}`}
                       </span>
-                      {!endDate && (
+                      {!job.endDate && (
                         <span
                           className={clsx(
                             resumeStyles.tag,
@@ -197,9 +204,9 @@ export default function Index() {
             {resume.education.map((school) => {
               if (!school.studyType) return null;
 
-              const schoolStartDate = new Date(school.startDate).getFullYear();
+              const schoolStartDate = formatYearUTC(school.startDate);
               const schoolEndDate = school.endDate
-                ? new Date(school.endDate).getFullYear()
+                ? formatYearUTC(school.endDate)
                 : 'Current';
 
               return (
