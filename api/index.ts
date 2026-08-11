@@ -1,3 +1,7 @@
+// Placeholder for future custom API endpoints. Not currently wired up to
+// anything and excluded from deployment via .vercelignore — remove that
+// entry once this is actually implemented.
+
 import { createRequestListener } from '@react-router/node';
 import type { ServerBuild } from 'react-router';
 

@@ -1,0 +1,4 @@
+# Placeholder for future custom API endpoints — not wired up to anything yet
+# and would 500 if deployed as-is. Excluded so Vercel doesn't provision it as
+# a live serverless function. Remove this line once it's actually implemented.
+api/index.ts
