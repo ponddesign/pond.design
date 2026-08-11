@@ -5,12 +5,13 @@ let build: ServerBuild;
 
 try {
   // Prefer the production build output when it exists.
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  build = require('../build/server/index.js');
+  // @ts-expect-error - only present after `react-router build` has run
+  build = (await import('../build/server/index.js')) as unknown as ServerBuild;
 } catch (error) {
   // Fallback for environments that can resolve the virtual module.
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  build = require('virtual:react-router/server-build');
+  build = (await import(
+    'virtual:react-router/server-build'
+  )) as unknown as ServerBuild;
 }
 
 export default createRequestListener({
