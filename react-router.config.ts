@@ -4,6 +4,5 @@ import { vercelPreset } from '@vercel/react-router/vite';
 export default {
   appDirectory: 'app',
   ssr: true,
-  serverModuleFormat: 'cjs',
   presets: [vercelPreset()],
 } satisfies Config;

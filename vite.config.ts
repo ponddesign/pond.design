@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [reactRouter()],
   resolve: {
     alias: {
-      '~': path.resolve(__dirname, 'app'),
+      '~': path.resolve(import.meta.dirname, 'app'),
     },
   },
 });
