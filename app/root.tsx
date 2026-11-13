@@ -1,4 +1,4 @@
-import type { LinksFunction, MetaFunction } from 'react-router';
+import type { LinksFunction } from 'react-router';
 import {
   Links,
   Meta,
@@ -11,12 +11,12 @@ import { Analytics } from '@vercel/analytics/react';
 import favicon from './assets/favicon.svg';
 import appleTouchIcon from './assets/apple-touch-icon.png';
 import './tailwind.css';
-import tailwindHref from './tailwind.css?url';
 
 export const links: LinksFunction = () => [
   // favicon svg
   {
-    rel: 'favicon',
+    rel: 'icon',
+    type: 'image/svg+xml',
     href: favicon,
   },
   // safari
@@ -30,14 +30,6 @@ export const links: LinksFunction = () => [
     rel: 'apple-touch-icon',
     href: appleTouchIcon,
   },
-  ...(process.env.NODE_ENV === 'production'
-    ? [
-      {
-        rel: 'stylesheet',
-        href: tailwindHref,
-      },
-    ]
-    : []),
   {
     rel: 'preconnect',
     href: 'https://fonts.googleapis.com',
@@ -56,21 +48,6 @@ export const links: LinksFunction = () => [
     href: '/site.webmanifest',
   },
 ];
-
-// TODO:
-export const meta: MetaFunction = () => {
-  return [
-    {
-      name: 'viewport',
-      content: 'width=device-width,initial-scale=1',
-    },
-    {
-      httpEquiv: 'Content-Security-Policy',
-      content:
-        "default-src 'self'; connect-src 'self' https://vitals.vercel-insights.com; font-src https://fonts.gstatic.com; style-src: 'self' https://fonts.googleapis.com; img-src https://*; child-src 'none';",
-    },
-  ];
-};
 
 export default function App() {
   return (
