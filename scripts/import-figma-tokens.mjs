@@ -15,7 +15,9 @@ import fs from 'node:fs';
 
 const [exportPath, summaryPath] = process.argv.slice(2);
 if (!exportPath) {
-  console.error('Usage: node scripts/import-figma-tokens.mjs <export.json> [summary.md]');
+  console.error(
+    'Usage: node scripts/import-figma-tokens.mjs <export.json> [summary.md]',
+  );
   process.exit(1);
 }
 
@@ -36,14 +38,17 @@ const fail = (message) => {
   console.error(`Invalid Figma export: ${message}`);
   process.exit(1);
 };
-const readJson = (path) => (fs.existsSync(path) ? JSON.parse(fs.readFileSync(path, 'utf8')) : {});
-const writeJson = (path, data) => fs.writeFileSync(path, `${JSON.stringify(data, null, 2)}\n`);
+const readJson = (path) =>
+  fs.existsSync(path) ? JSON.parse(fs.readFileSync(path, 'utf8')) : {};
+const writeJson = (path, data) =>
+  fs.writeFileSync(path, `${JSON.stringify(data, null, 2)}\n`);
 const text = (s) => (typeof s === 'string' ? s.trim().slice(0, 300) : '');
 
 // ---------- validate ----------
 const data = readJson(exportPath);
 if (data.version !== 1) fail('unsupported version');
-if (!data.primitives || typeof data.primitives !== 'object') fail('missing primitives');
+if (!data.primitives || typeof data.primitives !== 'object')
+  fail('missing primitives');
 if (!data.modes?.light) fail('missing light mode');
 
 const colors = {};
@@ -51,10 +56,12 @@ const fonts = {};
 for (const [name, token] of Object.entries(data.primitives)) {
   if (!NAME.test(name)) fail(`bad primitive name "${name}"`);
   if (name.startsWith('font/')) {
-    if (token.type !== 'string' || !FONT.test(token.value)) fail(`bad font "${name}"`);
+    if (token.type !== 'string' || !FONT.test(token.value))
+      fail(`bad font "${name}"`);
     fonts[name.slice(5)] = token;
   } else {
-    if (token.type !== 'color' || !HEX.test(token.value)) fail(`bad color "${name}"`);
+    if (token.type !== 'color' || !HEX.test(token.value))
+      fail(`bad color "${name}"`);
     colors[name] = token;
   }
 }
@@ -62,15 +69,19 @@ for (const [mode, tokens] of Object.entries(data.modes)) {
   if (!['light', 'dark'].includes(mode)) fail(`unknown mode "${mode}"`);
   for (const [name, token] of Object.entries(tokens)) {
     if (!NAME.test(name)) fail(`bad semantic name "${name}"`);
-    if (colors[name]) fail(`"${name}" is both a primitive and a semantic color`);
+    if (colors[name])
+      fail(`"${name}" is both a primitive and a semantic color`);
     if (token.alias !== undefined) {
-      if (!colors[token.alias]) fail(`"${name}" (${mode}) aliases unknown color "${token.alias}"`);
-    } else if (!HEX.test(token.value ?? '')) fail(`bad value for "${name}" (${mode})`);
+      if (!colors[token.alias])
+        fail(`"${name}" (${mode}) aliases unknown color "${token.alias}"`);
+    } else if (!HEX.test(token.value ?? ''))
+      fail(`bad value for "${name}" (${mode})`);
   }
 }
 
 // ---------- helpers ----------
-const ref = (token) => (token.alias ? `{color.${token.alias.replaceAll('/', '.')}}` : token.value);
+const ref = (token) =>
+  token.alias ? `{color.${token.alias.replaceAll('/', '.')}}` : token.value;
 
 // Nest "a/b/c" names into DTCG groups. A group gets a $description when all of
 // its direct tokens share the same one.
@@ -86,7 +97,11 @@ function nest(entries) {
     const children = Object.entries(group).filter(([k]) => !k.startsWith('$'));
     const leaves = children.filter(([, v]) => '$value' in v);
     const descs = new Set(leaves.map(([, v]) => v.$description ?? ''));
-    if (leaves.length > 1 && leaves.length === children.length && descs.size === 1) {
+    if (
+      leaves.length > 1 &&
+      leaves.length === children.length &&
+      descs.size === 1
+    ) {
       const [desc] = descs;
       for (const [, leaf] of leaves) delete leaf.$description;
       if (desc) return { $description: desc, ...group };
@@ -107,7 +122,8 @@ function flatten(obj, prefix = [], out = {}) {
   for (const [k, v] of Object.entries(obj ?? {})) {
     if (k.startsWith('$') || typeof v !== 'object') continue;
     const path = [...prefix, k];
-    if ('$value' in v) out[path.join('.')] = JSON.stringify([v.$value, v.$extensions ?? null]);
+    if ('$value' in v)
+      out[path.join('.')] = JSON.stringify([v.$value, v.$extensions ?? null]);
     else flatten(v, path, out);
   }
   return out;
@@ -128,7 +144,9 @@ const colorEntries = (brand) =>
     .filter(([name]) => BRAND_GROUPS.has(name.split('/')[0]) === brand)
     .map(([name, t]) => [name, leaf(t.value, t.description)]);
 
-writeJson(FILES.brand, { color: { $type: 'color', ...nest(colorEntries(true)) } });
+writeJson(FILES.brand, {
+  color: { $type: 'color', ...nest(colorEntries(true)) },
+});
 writeJson(FILES.palette, {
   color: {
     $type: 'color',
@@ -145,9 +163,13 @@ writeJson(FILES.semantic, {
     ...nest(
       Object.entries(light).map(([name, t]) => [
         name,
-        leaf(ref(t), t.description, dark[name] && {
-          $extensions: { [MODES_KEY]: { dark: ref(dark[name]) } },
-        }),
+        leaf(
+          ref(t),
+          t.description,
+          dark[name] && {
+            $extensions: { [MODES_KEY]: { dark: ref(dark[name]) } },
+          },
+        ),
       ]),
     ),
   },
@@ -163,17 +185,28 @@ writeJson(FILES.font, {
       Object.entries(fonts).map(([name, t]) => {
         const fallbacks = (oldFonts[name]?.$value ?? []).slice(1);
         const desc = text(t.description) || oldFonts[name]?.$description;
-        return [name, { ...(desc && { $description: desc }), $value: [t.value, ...fallbacks] }];
+        return [
+          name,
+          {
+            ...(desc && { $description: desc }),
+            $value: [t.value, ...fallbacks],
+          },
+        ];
       }),
     ),
   },
 });
 
 // ---------- summary ----------
-const after = Object.assign({}, ...Object.values(FILES).map((f) => flatten(readJson(f))));
+const after = Object.assign(
+  {},
+  ...Object.values(FILES).map((f) => flatten(readJson(f))),
+);
 const added = Object.keys(after).filter((k) => !(k in before));
 const removed = Object.keys(before).filter((k) => !(k in after));
-const changed = Object.keys(after).filter((k) => k in before && before[k] !== after[k]);
+const changed = Object.keys(after).filter(
+  (k) => k in before && before[k] !== after[k],
+);
 const fmt = (src) => {
   const [value, ext] = JSON.parse(src);
   const shown = Array.isArray(value) ? value[0] : value;
@@ -190,11 +223,21 @@ const lines = [
   `| Changed | ${changed.length} |`,
   `| Removed | ${removed.length} |`,
   '',
-  ...(added.length ? ['**Added**', ...added.map((k) => `- ${show(k, after)}`), ''] : []),
-  ...(changed.length
-    ? ['**Changed**', ...changed.map((k) => `- \`${k}\` ${fmt(before[k])} → ${fmt(after[k])}`), '']
+  ...(added.length
+    ? ['**Added**', ...added.map((k) => `- ${show(k, after)}`), '']
     : []),
-  ...(removed.length ? ['**Removed**', ...removed.map((k) => `- ${show(k, before)}`), ''] : []),
+  ...(changed.length
+    ? [
+        '**Changed**',
+        ...changed.map(
+          (k) => `- \`${k}\` ${fmt(before[k])} → ${fmt(after[k])}`,
+        ),
+        '',
+      ]
+    : []),
+  ...(removed.length
+    ? ['**Removed**', ...removed.map((k) => `- ${show(k, before)}`), '']
+    : []),
 ];
 const summary = lines.join('\n');
 if (summaryPath) fs.writeFileSync(summaryPath, `${summary}\n`);

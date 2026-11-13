@@ -1,15 +1,8 @@
-import type { LinksFunction } from 'react-router';
-import {
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from 'react-router';
 import { Analytics } from '@vercel/analytics/react';
-
-import favicon from './assets/favicon.svg';
+import type { LinksFunction } from 'react-router';
+import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 import appleTouchIcon from './assets/apple-touch-icon.png';
+import favicon from './assets/favicon.svg';
 import './tailwind.css';
 
 export const links: LinksFunction = () => [

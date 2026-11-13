@@ -47,7 +47,7 @@
 <label for="note">Change note (optional)</label>
 <input id="note" placeholder="e.g. Darken fg/subtle for contrast" />
 
-<button id="send">Send tokens to GitHub</button>
+<button id="send" type="button">Send tokens to GitHub</button>
 <div id="status"></div>
 
 <script>
@@ -73,7 +73,7 @@
     post({ type: 'export' });
   };
 
-  onmessage = async (event) => {
+  window.addEventListener('message', async (event) => {
     const msg = event.data.pluginMessage;
     if (msg.type === 'settings') {
       $('repo').value = msg.settings.repo || 'ponddesign/pond.design';
@@ -130,5 +130,5 @@
         $('send').disabled = false;
       }
     }
-  };
+  });
 </script>

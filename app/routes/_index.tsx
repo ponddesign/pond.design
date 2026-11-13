@@ -1,7 +1,6 @@
 import type { MetaFunction } from 'react-router';
-
-import Header from '../components/Header';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
 
 export const meta: MetaFunction = () => {
   return [{ title: 'Pond Design' }];

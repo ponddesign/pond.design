@@ -3,63 +3,42 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
+    "dev": "react-router dev",
     "build": "react-router build",
-    "icons": "npx @svgr/cli --out-dir app/components/icons -- app/icons",
-    "icons:watch": "npm-watch icons",
-    "dev:svg": "run-s icons icons:watch",
-    "dev:remix": "react-router dev",
-    "dev": "run-p dev:*",
     "typecheck": "react-router typegen && tsc",
-    "lint": "eslint app --max-warnings 0",
+    "lint": "biome check .",
+    "format": "biome check --write .",
     "tokens": "node scripts/build-tokens.mjs"
   },
-  "watch": {
-    "icons": {
-      "patterns": [
-        "icons"
-      ],
-      "extensions": "svg",
-      "quiet": false
-    }
-  },
   "dependencies": {
-    "@react-router/node": "7.18.2",
-    "@vercel/analytics": "^1.0.1",
+    "@react-router/node": "7.18.5",
+    "@vercel/analytics": "^2.0.1",
     "clsx": "^2.0.0",
     "dayjs": "^1.11.9",
-    "isbot": "^5.1.17",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8",
-    "react-router": "7.18.2"
+    "isbot": "^5.2.3",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router": "7.18.5"
   },
   "devDependencies": {
-    "@react-router/dev": "7.18.2",
-    "@react-router/fs-routes": "7.18.2",
-    "@remix-run/eslint-config": "2.17.0",
-    "@svgr/cli": "^8.0.1",
-    "@svgr/plugin-jsx": "^8.0.1",
-    "@svgr/plugin-prettier": "^8.0.1",
-    "@svgr/plugin-svgo": "^8.0.1",
+    "@biomejs/biome": "^2.6.7",
+    "@react-router/dev": "7.18.5",
+    "@react-router/fs-routes": "7.18.5",
+    "@svgr/plugin-jsx": "^8.1.0",
+    "@svgr/plugin-svgo": "^8.1.0",
     "@tailwindcss/vite": "^4.3.5",
-    "@trivago/prettier-plugin-sort-imports": "^4.2.0",
-    "@types/node": "^22.10.0",
-    "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.4",
-    "@vercel/react-router": "^1.1.0",
-    "eslint": "^8.38.0",
-    "eslint-config-prettier": "^8.10.0",
-    "npm-run-all": "^4.1.5",
-    "npm-watch": "^0.11.0",
-    "prettier": "^3.0.3",
+    "@types/node": "^24.19.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vercel/react-router": "^1.3.7",
     "style-dictionary": "^5.8.0",
     "tailwindcss": "^4.3.5",
-    "typescript": "^5.9.3",
-    "vite": "^7.3.7"
+    "typescript": "^6.0.3",
+    "vite": "^8.3.8",
+    "vite-plugin-svgr": "^5.2.0"
   },
   "engines": {
-    "node": "22.x"
+    "node": "24.x"
   },
-  "volta": {
-    "node": "22.22.0"
-  }
+  "packageManager": "yarn@1.22.22"
 }

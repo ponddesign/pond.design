@@ -10,7 +10,8 @@
 // Run with `yarn tokens`. Both outputs are committed; CI fails if they are stale.
 import StyleDictionary from 'style-dictionary';
 
-const HEADER = '/**\n * Do not edit directly — generated from ./tokens by `yarn tokens`.\n */';
+const HEADER =
+  '/**\n * Do not edit directly — generated from ./tokens by `yarn tokens`.\n */';
 const MODES_KEY = 'design.pond.modes';
 
 StyleDictionary.registerFormat({
@@ -29,7 +30,8 @@ StyleDictionary.registerFormat({
       const ref = token.original.$extensions?.[MODES_KEY]?.dark;
       if (!ref) return [];
       const target = byPath.get(ref.replace(/^\{|\}$/g, ''));
-      if (!target) throw new Error(`${token.name}: unknown dark reference ${ref}`);
+      if (!target)
+        throw new Error(`${token.name}: unknown dark reference ${ref}`);
       return [`      --${token.name}: ${target.$value};`];
     });
     const dark = darkLines.length
