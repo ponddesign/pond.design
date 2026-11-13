@@ -20,7 +20,7 @@ export const meta: MetaFunction = () => {
 const resumeStyles = {
   h1: `font-serif text-2xl mb-4`,
   h2: `font-extrabold mb-1`,
-  tag: `text-sm py-1 px-5 mb-3 inline-block rounded`,
+  tag: `text-sm py-1 px-5 mb-3 inline-block rounded-sm`,
   tagDateRange: `uppercase tracking-widest bg-primary-300 dark:bg-primary-500 dark:text-primary-100`,
   tagHighlight: 'uppercase tracking-widest bg-orange-300 text-orange-800',
   section: [
@@ -73,7 +73,7 @@ export default function Index() {
                   href={`mailto:${resume.basics.email}`}
                   className={clsx(
                     'text-secondary-500 dark:text-secondary-200',
-                    'hover:text-orange-500 hover:dark:text-orange-400',
+                    'hover:text-orange-500 dark:hover:text-orange-400',
                   )}
                 >
                   {resume.basics.email}

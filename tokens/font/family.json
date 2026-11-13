@@ -1,0 +1,17 @@
+{
+  "font": {
+    "$type": "fontFamily",
+    "sans": {
+      "$description": "Body and UI text.",
+      "$value": ["DM Sans", "ui-sans-serif", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "Noto Sans", "sans-serif", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"]
+    },
+    "serif": {
+      "$description": "Display headings.",
+      "$value": ["DM Serif Display", "ui-serif", "Georgia", "Cambria", "Times New Roman", "Times", "serif"]
+    },
+    "mono": {
+      "$description": "Code and tabular text.",
+      "$value": ["DM Mono", "ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace"]
+    }
+  }
+}

@@ -1,0 +1,233 @@
+{
+  "color": {
+    "$type": "color",
+    "transparent": {
+      "$value": "transparent"
+    },
+    "current": {
+      "$value": "currentColor"
+    },
+    "black": {
+      "$value": "#000000"
+    },
+    "white": {
+      "$value": "#FFFFFF"
+    },
+    "gray": {
+      "50": {
+        "$value": "#FAFAFA"
+      },
+      "100": {
+        "$value": "#F4F4F5"
+      },
+      "200": {
+        "$value": "#E4E4E7"
+      },
+      "300": {
+        "$value": "#D4D4D8"
+      },
+      "400": {
+        "$value": "#A1A1AA"
+      },
+      "500": {
+        "$value": "#71717A"
+      },
+      "600": {
+        "$value": "#52525B"
+      },
+      "700": {
+        "$value": "#3F3F46"
+      },
+      "800": {
+        "$value": "#27272A"
+      },
+      "900": {
+        "$value": "#18181B"
+      },
+      "950": {
+        "$value": "#09090B"
+      },
+      "$description": "Tailwind v3 zinc, exposed as gray."
+    },
+    "teal": {
+      "50": {
+        "$value": "#F0FDFA"
+      },
+      "100": {
+        "$value": "#CCFBF1"
+      },
+      "200": {
+        "$value": "#99F6E4"
+      },
+      "300": {
+        "$value": "#5EEAD4"
+      },
+      "400": {
+        "$value": "#2DD4BF"
+      },
+      "500": {
+        "$value": "#14B8A6"
+      },
+      "600": {
+        "$value": "#0D9488"
+      },
+      "700": {
+        "$value": "#0F766E"
+      },
+      "800": {
+        "$value": "#115E59"
+      },
+      "900": {
+        "$value": "#134E4A"
+      },
+      "950": {
+        "$value": "#042F2E"
+      },
+      "$description": "Tailwind v3 teal."
+    },
+    "orange": {
+      "50": {
+        "$value": "#FFF7ED"
+      },
+      "100": {
+        "$value": "#FFEDD5"
+      },
+      "200": {
+        "$value": "#FED7AA"
+      },
+      "300": {
+        "$value": "#FDBA74"
+      },
+      "400": {
+        "$value": "#FB923C"
+      },
+      "500": {
+        "$value": "#F97316"
+      },
+      "600": {
+        "$value": "#EA580C"
+      },
+      "700": {
+        "$value": "#C2410C"
+      },
+      "800": {
+        "$value": "#9A3412"
+      },
+      "900": {
+        "$value": "#7C2D12"
+      },
+      "950": {
+        "$value": "#431407"
+      },
+      "$description": "Tailwind v3 orange."
+    },
+    "rose": {
+      "50": {
+        "$value": "#FFF1F2"
+      },
+      "100": {
+        "$value": "#FFE4E6"
+      },
+      "200": {
+        "$value": "#FECDD3"
+      },
+      "300": {
+        "$value": "#FDA4AF"
+      },
+      "400": {
+        "$value": "#FB7185"
+      },
+      "500": {
+        "$value": "#F43F5E"
+      },
+      "600": {
+        "$value": "#E11D48"
+      },
+      "700": {
+        "$value": "#BE123C"
+      },
+      "800": {
+        "$value": "#9F1239"
+      },
+      "900": {
+        "$value": "#881337"
+      },
+      "950": {
+        "$value": "#4C0519"
+      },
+      "$description": "Tailwind v3 rose."
+    },
+    "violet": {
+      "50": {
+        "$value": "#F5F3FF"
+      },
+      "100": {
+        "$value": "#EDE9FE"
+      },
+      "200": {
+        "$value": "#DDD6FE"
+      },
+      "300": {
+        "$value": "#C4B5FD"
+      },
+      "400": {
+        "$value": "#A78BFA"
+      },
+      "500": {
+        "$value": "#8B5CF6"
+      },
+      "600": {
+        "$value": "#7C3AED"
+      },
+      "700": {
+        "$value": "#6D28D9"
+      },
+      "800": {
+        "$value": "#5B21B6"
+      },
+      "900": {
+        "$value": "#4C1D95"
+      },
+      "950": {
+        "$value": "#2E1065"
+      },
+      "$description": "Tailwind v3 violet."
+    },
+    "cyan": {
+      "50": {
+        "$value": "#ECFEFF"
+      },
+      "100": {
+        "$value": "#CFFAFE"
+      },
+      "200": {
+        "$value": "#A5F3FC"
+      },
+      "300": {
+        "$value": "#67E8F9"
+      },
+      "400": {
+        "$value": "#22D3EE"
+      },
+      "500": {
+        "$value": "#06B6D4"
+      },
+      "600": {
+        "$value": "#0891B2"
+      },
+      "700": {
+        "$value": "#0E7490"
+      },
+      "800": {
+        "$value": "#155E75"
+      },
+      "900": {
+        "$value": "#164E63"
+      },
+      "950": {
+        "$value": "#083344"
+      },
+      "$description": "Tailwind v3 cyan."
+    }
+  }
+}

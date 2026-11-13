@@ -1,5 +1,4 @@
-@tailwind base; /* Preflight will be injected here */
+@import 'tailwindcss';
 
-@tailwind components;
-
-@tailwind utilities;
+/* Design tokens: generated from ./tokens by `yarn tokens` — do not edit. */
+@import './styles/theme.css';

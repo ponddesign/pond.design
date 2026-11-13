@@ -1,0 +1,65 @@
+{
+  "color": {
+    "$type": "color",
+    "primary": {
+      "100": {
+        "$value": "#E2EEEB"
+      },
+      "200": {
+        "$value": "#D7DEDC"
+      },
+      "300": {
+        "$value": "#B9C0BE"
+      },
+      "400": {
+        "$value": "#909895"
+      },
+      "500": {
+        "$value": "#6A726F"
+      },
+      "600": {
+        "$value": "#56635E"
+      },
+      "700": {
+        "$value": "#404644"
+      },
+      "800": {
+        "$value": "#303533"
+      },
+      "900": {
+        "$value": "#1E2321"
+      },
+      "$description": "Pond brand green-gray ramp."
+    },
+    "secondary": {
+      "100": {
+        "$value": "#F0F0E5"
+      },
+      "200": {
+        "$value": "#DADAD3"
+      },
+      "300": {
+        "$value": "#AEAEA3"
+      },
+      "400": {
+        "$value": "#8E8E81"
+      },
+      "500": {
+        "$value": "#68685C"
+      },
+      "600": {
+        "$value": "#58584C"
+      },
+      "700": {
+        "$value": "#515144"
+      },
+      "800": {
+        "$value": "#3C3C31"
+      },
+      "900": {
+        "$value": "#25251D"
+      },
+      "$description": "Pond brand warm-gray ramp."
+    }
+  }
+}
