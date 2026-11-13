@@ -5,6 +5,17 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 10
+    # Hold majors we can't take yet: @vercel/react-router (1.3.7) only supports
+    # React Router 7, and React Router 7 only supports TypeScript <= 6. The
+    # adapter itself is NOT ignored; when Dependabot proposes a version that
+    # supports React Router 8, remove these rules and upgrade (see #111).
+    ignore:
+      - dependency-name: 'react-router'
+        versions: ['>=8']
+      - dependency-name: '@react-router/*'
+        versions: ['>=8']
+      - dependency-name: 'typescript'
+        versions: ['>=7']
     groups:
       # These packages are released in lockstep and must stay on the same
       # version — never let them be bumped independently.

@@ -4,6 +4,9 @@ on:
   pull_request:
   push:
     branches: [main]
+  # Lets the Figma token sync start CI on its PR branch: PRs opened with
+  # GITHUB_TOKEN don't trigger `pull_request`, but workflow_dispatch works.
+  workflow_dispatch:
 
 permissions:
   contents: read
