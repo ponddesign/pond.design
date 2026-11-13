@@ -11,6 +11,7 @@ Vercel, styled with Tailwind CSS 4 and design tokens synced from Figma.
 | Build | Vite 8, TypeScript 6 |
 | Styling | Tailwind CSS 4, with the theme generated from [design tokens](tokens/README.md) |
 | Design tokens | W3C DTCG JSON, built with Style Dictionary, sourced from the [Pond Design System](https://www.figma.com/design/OQAuXo6GwDBMN5QIsoJdWJ/Pond-Design-System) Figma file via the [sync plugin](figma-plugin/README.md) |
+| Fonts | DM Sans, DM Serif Display and DM Mono, self-hosted via [Fontsource](https://fontsource.org) (`app/styles/fonts.css`) |
 | Lint and format | [Biome](https://biomejs.dev) |
 | Hosting | Vercel. Static pages are pre-rendered at build time; server rendering stays on for future dynamic routes. |
 

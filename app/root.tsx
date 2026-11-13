@@ -1,3 +1,4 @@
+import dmSansLatin from '@fontsource-variable/dm-sans/files/dm-sans-latin-opsz-normal.woff2?url';
 import { Analytics } from '@vercel/analytics/react';
 import type { LinksFunction } from 'react-router';
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
@@ -23,18 +24,13 @@ export const links: LinksFunction = () => [
     rel: 'apple-touch-icon',
     href: appleTouchIcon,
   },
+  // Preload the body font so text renders in DM Sans without a swap.
   {
-    rel: 'preconnect',
-    href: 'https://fonts.googleapis.com',
-  },
-  {
-    rel: 'preconnect',
-    href: 'https://fonts.gstatic.com',
+    rel: 'preload',
+    href: dmSansLatin,
+    as: 'font',
+    type: 'font/woff2',
     crossOrigin: 'anonymous',
-  },
-  {
-    rel: 'stylesheet',
-    href: 'https://fonts.googleapis.com/css2?family=DM+Mono&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,800;1,9..40,400;1,9..40,800&family=DM+Serif+Display:ital@0;1&display=swap',
   },
   {
     rel: 'manifest',
