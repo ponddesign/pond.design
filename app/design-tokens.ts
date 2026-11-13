@@ -90,6 +90,20 @@ export const ColorCyan700 = "#0e7490";
 export const ColorCyan800 = "#155e75";
 export const ColorCyan900 = "#164e63";
 export const ColorCyan950 = "#083344";
+export const ColorSurfaceDefault = "#ffffff"; // Default page background.
+export const ColorSurfaceSubtle = "#d7dedc"; // Tinted page background (resume).
+export const ColorFgDefault = "#56635e"; // Default body text.
+export const ColorFgStrong = "#1e2321"; // High-emphasis body text.
+export const ColorFgHeading = "#1e2321"; // Large headings.
+export const ColorFgSubtle = "#68685c"; // Secondary info, e.g. contact details.
+export const ColorFgFaint = "#909895"; // Lowest-emphasis text, e.g. footer.
+export const ColorFgAccent = "#f97316"; // Link hover and accents.
+export const ColorBorderDefault = "#dadad3"; // Section dividers.
+export const ColorTagNeutralBg = "#b9c0be"; // Date-range tag background.
+export const ColorTagNeutralFg = "#1e2321"; // Date-range tag text.
+export const ColorTagMutedBg = "#aeaea3"; // Skill tag background.
+export const ColorTagHighlightBg = "#fdba74"; // Highlight tag background (e.g. Current Role).
+export const ColorTagHighlightFg = "#9a3412"; // Highlight tag text.
 export const FontSans = [
   "DM Sans",
   "ui-sans-serif",

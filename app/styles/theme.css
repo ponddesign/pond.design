@@ -91,7 +91,44 @@
   --color-cyan-800: #155e75;
   --color-cyan-900: #164e63;
   --color-cyan-950: #083344;
+  --color-surface-default: #ffffff;
+  --color-surface-subtle: #d7dedc;
+  --color-fg-default: #56635e;
+  --color-fg-strong: #1e2321;
+  --color-fg-heading: #1e2321;
+  --color-fg-subtle: #68685c;
+  --color-fg-faint: #909895;
+  --color-fg-accent: #f97316;
+  --color-border-default: #dadad3;
+  --color-tag-neutral-bg: #b9c0be;
+  --color-tag-neutral-fg: #1e2321;
+  --color-tag-muted-bg: #aeaea3;
+  --color-tag-highlight-bg: #fdba74;
+  --color-tag-highlight-fg: #9a3412;
   --font-sans: 'DM Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   --font-serif: 'DM Serif Display', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
   --font-mono: 'DM Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+}
+
+/* Dark mode: Tailwind utilities read these variables, so overriding them
+   switches every semantic class at once. */
+@layer base {
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-surface-default: #404644;
+      --color-surface-subtle: #404644;
+      --color-fg-default: #b9c0be;
+      --color-fg-strong: #e2eeeb;
+      --color-fg-heading: #d7dedc;
+      --color-fg-subtle: #dadad3;
+      --color-fg-faint: #909895;
+      --color-fg-accent: #fb923c;
+      --color-border-default: #68685c;
+      --color-tag-neutral-bg: #6a726f;
+      --color-tag-neutral-fg: #e2eeeb;
+      --color-tag-muted-bg: #68685c;
+      --color-tag-highlight-bg: #fdba74;
+      --color-tag-highlight-fg: #9a3412;
+    }
+  }
 }

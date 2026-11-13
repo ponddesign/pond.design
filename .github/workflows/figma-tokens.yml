@@ -1,0 +1,79 @@
+name: Sync design tokens from Figma
+
+# Started by the "Pond Tokens → GitHub" Figma plugin (figma-plugin/). It sends
+# the file's variables as a base64 JSON payload; this workflow imports them
+# into ./tokens, rebuilds the generated files, verifies the site still builds,
+# and opens (or updates) a pull request on the `figma/tokens` branch.
+
+on:
+  workflow_dispatch:
+    inputs:
+      payload:
+        description: Base64-encoded JSON export from the Figma plugin
+        required: true
+        type: string
+      note:
+        description: Optional note from the designer
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: figma-tokens
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version-file: package.json
+          cache: yarn
+      - run: yarn install --frozen-lockfile
+
+      - name: Import tokens from Figma
+        env:
+          PAYLOAD: ${{ inputs.payload }}
+        run: |
+          printf '%s' "$PAYLOAD" | base64 --decode > "$RUNNER_TEMP/figma-export.json"
+          node scripts/import-figma-tokens.mjs "$RUNNER_TEMP/figma-export.json" "$RUNNER_TEMP/summary.md"
+          cat "$RUNNER_TEMP/summary.md" >> "$GITHUB_STEP_SUMMARY"
+
+      - run: yarn tokens
+
+      # PRs opened with GITHUB_TOKEN don't trigger the CI workflow, so verify here.
+      - run: yarn lint
+      - run: yarn typecheck
+      - run: yarn build
+
+      - name: Write PR body
+        env:
+          NOTE: ${{ inputs.note }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          {
+            echo "Design tokens exported from Figma by the **Pond Tokens → GitHub** plugin."
+            if [ -n "$NOTE" ]; then printf '\n> %s\n' "$NOTE"; fi
+            echo
+            cat "$RUNNER_TEMP/summary.md"
+            echo
+            echo "Lint, typecheck and build passed in [the sync run]($RUN_URL)."
+          } > "$RUNNER_TEMP/pr-body.md"
+
+      - uses: peter-evans/create-pull-request@22a9089034f40e5a961c8808d113e2c98fb63676 # v7.0.11
+        with:
+          branch: figma/tokens
+          delete-branch: true
+          commit-message: 'Sync design tokens from Figma'
+          title: 'Sync design tokens from Figma'
+          body-path: ${{ runner.temp }}/pr-body.md
+          labels: design-tokens
+          add-paths: |
+            tokens/**
+            app/styles/theme.css
+            app/design-tokens.ts

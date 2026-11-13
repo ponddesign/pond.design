@@ -1,0 +1,145 @@
+{
+  "color": {
+    "$type": "color",
+    "surface": {
+      "default": {
+        "$description": "Default page background.",
+        "$value": "{color.white}",
+        "$extensions": {
+          "design.pond.modes": {
+            "dark": "{color.primary.700}"
+          }
+        }
+      },
+      "subtle": {
+        "$description": "Tinted page background (resume).",
+        "$value": "{color.primary.200}",
+        "$extensions": {
+          "design.pond.modes": {
+            "dark": "{color.primary.700}"
+          }
+        }
+      }
+    },
+    "fg": {
+      "default": {
+        "$description": "Default body text.",
+        "$value": "{color.primary.600}",
+        "$extensions": {
+          "design.pond.modes": {
+            "dark": "{color.primary.300}"
+          }
+        }
+      },
+      "strong": {
+        "$description": "High-emphasis body text.",
+        "$value": "{color.primary.900}",
+        "$extensions": {
+          "design.pond.modes": {
+            "dark": "{color.primary.100}"
+          }
+        }
+      },
+      "heading": {
+        "$description": "Large headings.",
+        "$value": "{color.primary.900}",
+        "$extensions": {
+          "design.pond.modes": {
+            "dark": "{color.primary.200}"
+          }
+        }
+      },
+      "subtle": {
+        "$description": "Secondary info, e.g. contact details.",
+        "$value": "{color.secondary.500}",
+        "$extensions": {
+          "design.pond.modes": {
+            "dark": "{color.secondary.200}"
+          }
+        }
+      },
+      "faint": {
+        "$description": "Lowest-emphasis text, e.g. footer.",
+        "$value": "{color.primary.400}",
+        "$extensions": {
+          "design.pond.modes": {
+            "dark": "{color.primary.400}"
+          }
+        }
+      },
+      "accent": {
+        "$description": "Link hover and accents.",
+        "$value": "{color.orange.500}",
+        "$extensions": {
+          "design.pond.modes": {
+            "dark": "{color.orange.400}"
+          }
+        }
+      }
+    },
+    "border": {
+      "default": {
+        "$description": "Section dividers.",
+        "$value": "{color.secondary.200}",
+        "$extensions": {
+          "design.pond.modes": {
+            "dark": "{color.secondary.500}"
+          }
+        }
+      }
+    },
+    "tag": {
+      "neutral": {
+        "bg": {
+          "$description": "Date-range tag background.",
+          "$value": "{color.primary.300}",
+          "$extensions": {
+            "design.pond.modes": {
+              "dark": "{color.primary.500}"
+            }
+          }
+        },
+        "fg": {
+          "$description": "Date-range tag text.",
+          "$value": "{color.primary.900}",
+          "$extensions": {
+            "design.pond.modes": {
+              "dark": "{color.primary.100}"
+            }
+          }
+        }
+      },
+      "muted": {
+        "bg": {
+          "$description": "Skill tag background.",
+          "$value": "{color.secondary.300}",
+          "$extensions": {
+            "design.pond.modes": {
+              "dark": "{color.secondary.500}"
+            }
+          }
+        }
+      },
+      "highlight": {
+        "bg": {
+          "$description": "Highlight tag background (e.g. Current Role).",
+          "$value": "{color.orange.300}",
+          "$extensions": {
+            "design.pond.modes": {
+              "dark": "{color.orange.300}"
+            }
+          }
+        },
+        "fg": {
+          "$description": "Highlight tag text.",
+          "$value": "{color.orange.800}",
+          "$extensions": {
+            "design.pond.modes": {
+              "dark": "{color.orange.800}"
+            }
+          }
+        }
+      }
+    }
+  }
+}
