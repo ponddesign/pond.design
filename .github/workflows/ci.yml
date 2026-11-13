@@ -21,6 +21,10 @@ jobs:
       - run: yarn install --frozen-lockfile
       - run: npm ls --omit=optional > /dev/null
         name: Check dependency tree is consistent
+      - name: Check generated design tokens are up to date
+        run: |
+          yarn tokens
+          git diff --exit-code -- app/styles/theme.css app/design-tokens.ts
       - run: yarn lint
       - run: yarn typecheck
       - run: yarn build
