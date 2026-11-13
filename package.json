@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@react-router/node": "7.18.2",
-    "@vercel/analytics": "^1.0.1",
+    "@vercel/analytics": "^2.0.1",
     "clsx": "^2.0.0",
     "dayjs": "^1.11.9",
     "isbot": "^5.1.17",
