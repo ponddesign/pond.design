@@ -1,6 +1,6 @@
-import dayjs from 'dayjs';
-
-const currentYear = dayjs().format('YYYY');
+// Evaluated at build time for pre-rendered pages, so the year updates on the
+// next deploy.
+const currentYear = new Date().getFullYear();
 
 export default function Footer() {
   return (

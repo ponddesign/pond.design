@@ -1,7 +1,6 @@
 export const loader = () => {
   const robotText = `User-agent: *
-Allow: 
-Disallow: /api
+Allow: /
 
 Sitemap: https://pond.design/sitemap.xml
 `;

@@ -1,7 +1,6 @@
 import clsx from 'clsx';
 import type { HTMLProps } from 'react';
 import type { MetaFunction } from 'react-router';
-import { Link } from 'react-router';
 
 import resume from '../data/resume.json';
 
@@ -40,6 +39,14 @@ const formatMonthYearUTC = (dateString: string) => {
     timeZone: 'UTC',
   }).format(date);
 };
+
+// Summaries separate paragraphs with blank lines; split on any run of line
+// breaks so blank lines don't render as empty <p> elements.
+const toParagraphs = (text: string) =>
+  text
+    .split(/\n+/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean);
 
 const formatYearUTC = (dateString: string) =>
   new Intl.DateTimeFormat('en-US', {
@@ -139,23 +146,25 @@ export default function Index() {
                       {job.position}
                     </h2>
                     <p className="font-serif text-2xl italic">
-                      <Link
-                        to={job.url}
-                        target="_blank"
-                        rel="noreferrer nofollow"
-                      >
-                        {job.name}
-                      </Link>
+                      {job.url ? (
+                        <a
+                          href={job.url}
+                          target="_blank"
+                          rel="noreferrer nofollow"
+                        >
+                          {job.name}
+                        </a>
+                      ) : (
+                        job.name
+                      )}
                     </p>
                   </div>
 
                   {/* description */}
                   {job.summary && (
                     <div>
-                      {/* TODO: break job.summary into separate paragraphs per break */}
-                      {job.summary.split('\n').map((paragraph, i) => (
-                        // biome-ignore lint/suspicious/noArrayIndexKey: static content; replaced by the paragraph fix in #91
-                        <p key={i} className="mb-4">
+                      {toParagraphs(job.summary).map((paragraph) => (
+                        <p key={paragraph} className="mb-4">
                           {paragraph}
                         </p>
                       ))}
