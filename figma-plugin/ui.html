@@ -1,0 +1,134 @@
+<style>
+  body {
+    font: 12px/1.5 Inter, system-ui, sans-serif;
+    margin: 0;
+    padding: 16px;
+    color: var(--figma-color-text);
+    background: var(--figma-color-bg);
+  }
+  label { display: block; margin: 0 0 4px; font-weight: 600; }
+  input {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0 0 12px;
+    padding: 6px 8px;
+    border: 1px solid var(--figma-color-border);
+    border-radius: 4px;
+    background: var(--figma-color-bg);
+    color: var(--figma-color-text);
+  }
+  button {
+    width: 100%;
+    padding: 8px;
+    border: 0;
+    border-radius: 6px;
+    background: var(--figma-color-bg-brand);
+    color: var(--figma-color-text-onbrand);
+    font-weight: 600;
+    cursor: pointer;
+  }
+  button:disabled { opacity: 0.5; cursor: default; }
+  .hint { color: var(--figma-color-text-secondary); margin: -8px 0 12px; }
+  #status { margin-top: 12px; white-space: pre-wrap; }
+  #status.error { color: var(--figma-color-text-danger); }
+  a { color: var(--figma-color-text-brand); }
+</style>
+
+<label for="repo">Repository</label>
+<input id="repo" placeholder="owner/repo" />
+
+<label for="token">GitHub token</label>
+<input id="token" type="password" placeholder="github_pat_…" />
+<p class="hint">
+  Fine-grained token with <b>Actions: Read and write</b> on this repository
+  only. Stored locally by Figma on this device.
+</p>
+
+<label for="note">Change note (optional)</label>
+<input id="note" placeholder="e.g. Darken fg/subtle for contrast" />
+
+<button id="send">Send tokens to GitHub</button>
+<div id="status"></div>
+
+<script>
+  const WORKFLOW = 'figma-tokens.yml';
+  const MAX_INPUT = 60000; // GitHub limits workflow_dispatch inputs to 65,535 chars
+  const $ = (id) => document.getElementById(id);
+  const status = (text, isError = false) => {
+    $('status').textContent = text;
+    $('status').className = isError ? 'error' : '';
+  };
+  const post = (msg) => parent.postMessage({ pluginMessage: msg }, '*');
+  const settings = () => ({ repo: $('repo').value.trim(), token: $('token').value.trim() });
+
+  post({ type: 'init' });
+
+  $('send').onclick = () => {
+    const { repo, token } = settings();
+    if (!/^[\w.-]+\/[\w.-]+$/.test(repo)) return status('Enter the repository as owner/repo.', true);
+    if (!token) return status('Enter a GitHub token.', true);
+    post({ type: 'save-settings', settings: { repo, token } });
+    $('send').disabled = true;
+    status('Reading variables…');
+    post({ type: 'export' });
+  };
+
+  onmessage = async (event) => {
+    const msg = event.data.pluginMessage;
+    if (msg.type === 'settings') {
+      $('repo').value = msg.settings.repo || 'ponddesign/pond.design';
+      $('token').value = msg.settings.token || '';
+    } else if (msg.type === 'error') {
+      $('send').disabled = false;
+      status(msg.message, true);
+    } else if (msg.type === 'payload') {
+      const { repo, token } = settings();
+      const json = JSON.stringify(msg.payload);
+      const payload = btoa(unescape(encodeURIComponent(json)));
+      if (payload.length > MAX_INPUT) {
+        $('send').disabled = false;
+        return status(`Too many tokens to send in one run (${payload.length} chars).`, true);
+      }
+      const counts = [
+        `${Object.keys(msg.payload.primitives).length} primitives`,
+        ...Object.entries(msg.payload.modes).map(([m, v]) => `${Object.keys(v).length} ${m}`),
+      ].join(', ');
+      status(`Sending ${counts}…`);
+      try {
+        const res = await fetch(
+          `https://api.github.com/repos/${repo}/actions/workflows/${WORKFLOW}/dispatches`,
+          {
+            method: 'POST',
+            headers: {
+              Accept: 'application/vnd.github+json',
+              Authorization: `Bearer ${token}`,
+              'X-GitHub-Api-Version': '2022-11-28',
+            },
+            body: JSON.stringify({
+              ref: 'main',
+              inputs: { payload, note: $('note').value.trim() },
+            }),
+          },
+        );
+        if (res.status !== 204) {
+          const body = await res.json().catch(() => ({}));
+          throw new Error(`GitHub returned ${res.status}: ${body.message || res.statusText}`);
+        }
+        $('status').innerHTML = '';
+        $('status').append(
+          `Sent ${counts}. GitHub is building a pull request — `,
+          Object.assign(document.createElement('a'), {
+            href: `https://github.com/${repo}/actions/workflows/${WORKFLOW}`,
+            target: '_blank',
+            textContent: 'follow the run',
+          }),
+          '.',
+        );
+      } catch (error) {
+        status(String(error.message || error), true);
+      } finally {
+        $('send').disabled = false;
+      }
+    }
+  };
+</script>

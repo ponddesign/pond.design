@@ -21,8 +21,8 @@ const resumeStyles = {
   h1: `font-serif text-2xl mb-4`,
   h2: `font-extrabold mb-1`,
   tag: `text-sm py-1 px-5 mb-3 inline-block rounded-sm`,
-  tagDateRange: `uppercase tracking-widest bg-primary-300 dark:bg-primary-500 dark:text-primary-100`,
-  tagHighlight: 'uppercase tracking-widest bg-orange-300 text-orange-800',
+  tagDateRange: `uppercase tracking-widest bg-tag-neutral-bg text-tag-neutral-fg`,
+  tagHighlight: 'uppercase tracking-widest bg-tag-highlight-bg text-tag-highlight-fg',
   section: [
     'py-12 sm:grid sm:grid-cols-4 sm:grid-flow-col sm:gap-4',
     'container',
@@ -52,8 +52,8 @@ export default function Index() {
   return (
     <main
       className={clsx(
-        'bg-primary-200 dark:bg-primary-700',
-        'text-primary-900 dark:text-primary-100',
+        'bg-surface-subtle',
+        'text-fg-strong',
         'space-y-20',
         'px-6',
         'py-24',
@@ -68,18 +68,18 @@ export default function Index() {
                 {resume.basics.name}
               </h1>
               <h2 className={clsx(resumeStyles.h2)}>{resume.basics.label}</h2>
-              <p className={clsx('dark:text-secondary-500')}>
+              <p>
                 <a
                   href={`mailto:${resume.basics.email}`}
                   className={clsx(
-                    'text-secondary-500 dark:text-secondary-200',
-                    'hover:text-orange-500 dark:hover:text-orange-400',
+                    'text-fg-subtle',
+                    'hover:text-fg-accent',
                   )}
                 >
                   {resume.basics.email}
                 </a>
               </p>
-              <p className={clsx('text-secondary-500 dark:text-secondary-200')}>
+              <p className="text-fg-subtle">
                 {resume.basics.location.address}
               </p>
             </div>
@@ -137,7 +137,7 @@ export default function Index() {
                     <h2
                       className={clsx(
                         resumeStyles.h2,
-                        'font-extrabold space-y-4 text-4xl mb-0 dark:text-primary-200',
+                        'font-extrabold space-y-4 text-4xl mb-0 text-fg-heading',
                       )}
                     >
                       {job.position}
@@ -183,7 +183,7 @@ export default function Index() {
                 key={skill.name}
                 className={clsx(
                   resumeStyles.tag,
-                  'tracking-wide bg-secondary-300 dark:bg-secondary-500 mb-1 mr-2',
+                  'tracking-wide bg-tag-muted-bg mb-1 mr-2',
                 )}
               >
                 {skill.name}
@@ -259,8 +259,7 @@ const Section = ({
       {
         'pt-0': noDivider,
         'border-t': !noDivider,
-        'border-t-secondary-200': !noDivider,
-        'dark:border-t-secondary-500': !noDivider,
+        'border-t-border-default': !noDivider,
       },
     ])}
   >
