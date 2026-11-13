@@ -1161,6 +1161,13 @@
   dependencies:
     "@mjackson/node-fetch-server" "^0.2.0"
 
+"@react-router/node@8.5.1":
+  version "8.5.1"
+  resolved "https://registry.yarnpkg.com/@react-router/node/-/node-8.5.1.tgz#6f5ac8fb627f85e43510bba21c7882e2d73cc8b8"
+  integrity sha512-hEr3YFQaSoQL8T85+DqNOpdDLfuD2mKEeGdQAEvfix2bQdCtcpatE0uzB3zYidIUex0iEJG/eOZdAjLrzlJrjA==
+  dependencies:
+    "@remix-run/node-fetch-server" "^0.14.1"
+
 "@remix-run/eslint-config@2.17.0":
   version "2.17.0"
   resolved "https://registry.npmjs.org/@remix-run/eslint-config/-/eslint-config-2.17.0.tgz#644de693b6d92c5b8d19667e2498a7ce6b89a8ab"
@@ -1187,6 +1194,16 @@
   version "0.13.0"
   resolved "https://registry.npmjs.org/@remix-run/node-fetch-server/-/node-fetch-server-0.13.0.tgz#93be9c2e0e6f12512be471501e3a86dda295b178"
   integrity sha512-1EsNo0ZpgXu/90AWoRZf/oE3RVTUS80tiTUpt+hv5pjtAkw7icN4WskDwz/KdAw5ARbJLMhZBrO1NqThmy/McA==
+
+"@remix-run/node-fetch-server@^0.14.1":
+  version "0.14.2"
+  resolved "https://registry.yarnpkg.com/@remix-run/node-fetch-server/-/node-fetch-server-0.14.2.tgz#a5d27e3b80dbaf2a421ceaeaa3eb6a8b55aa6357"
+  integrity sha512-1cpM/f5i1ka/9CUMBwZXZp7Bn92x8VQjzg+F4eEe88DlVdNHkAKrf/vvbZoYgdkfy2bWHtGC6LQGLmojEqOF4Q==
+
+"@remix-run/route-pattern@^0.22.1":
+  version "0.22.1"
+  resolved "https://registry.yarnpkg.com/@remix-run/route-pattern/-/route-pattern-0.22.1.tgz#4937466528a59a7c9d882f725aac92536d20e010"
+  integrity sha512-czdGJWh09Lapvcqt7Vb09KlrU2PhRJ8xQaI+AItTuD9aDJ5MAgxnS38lnys6Ll+6RJEqPiaUqTwIQhVLwFvv+w==
 
 "@rollup/rollup-android-arm-eabi@4.59.0":
   version "4.59.0"
@@ -2226,10 +2243,10 @@ convert-source-map@^2.0.0:
   resolved "https://registry.npmjs.org/convert-source-map/-/convert-source-map-2.0.0.tgz#4b560f649fc4e918dd0ab75cf4961e8bc882d82a"
   integrity sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==
 
-cookie@^1.0.1:
-  version "1.1.1"
-  resolved "https://registry.npmjs.org/cookie/-/cookie-1.1.1.tgz#3bb9bdfc82369db9c2f69c93c9c3ceb310c88b3c"
-  integrity sha512-ei8Aos7ja0weRpFzJnEA9UHJ/7XQmqglbRwnf2ATjcB9Wq874VKH9kfjjirM6UhU2/E5fFYadylyhFldcqSidQ==
+cookie-es@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/cookie-es/-/cookie-es-3.1.1.tgz#c4a8a16cf88cb5a185b23f4a61d6e9a85eb53287"
+  integrity sha512-UaXxwISYJPTr9hwQxMFYZ7kNhSXboMXP+Z3TRX6f1/NyaGPfuNUZOWP1pUEb75B2HjfklIYLVRfWiFZJyC6Npg==
 
 cosmiconfig@^8.1.3:
   version "8.2.0"
@@ -4627,13 +4644,13 @@ react-refresh@^0.14.0:
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.14.0.tgz#4e02825378a5f227079554d4284889354e5f553e"
   integrity sha512-wViHqhAd8OHeLS/IRMJjTSDHF3U9eWi62F/MledQGPdJGDhodXJ9PBLNGr6WWL7qlH12Mt3TyTpbS+hGXMjCzQ==
 
-react-router@7.18.2:
-  version "7.18.2"
-  resolved "https://registry.yarnpkg.com/react-router/-/react-router-7.18.2.tgz#a76c46ce9e5edacd4f51289d5a71f71305db9152"
-  integrity sha512-aUVMjFm3GAPTTZL7oYr5E7ETiqfQCHRLH+B+5afnICvf0r7kkK4eR6SMuwbSTJw/7t+12khT/Kahij49fqOCIg==
+react-router@8.5.1:
+  version "8.5.1"
+  resolved "https://registry.yarnpkg.com/react-router/-/react-router-8.5.1.tgz#930df69ce3444240a4a6285c29aeb89aa493814b"
+  integrity sha512-5u1eQ46QjuXjNfEnLwzrnou1Bm5dquO3xjVYkkMYCudtkicD2AQHtx+fvXzPATtPJx8TW6DR1x1TDRqsfHyZBw==
   dependencies:
-    cookie "^1.0.1"
-    set-cookie-parser "^2.6.0"
+    "@remix-run/route-pattern" "^0.22.1"
+    cookie-es "^3.1.1"
 
 react@^19.2.8:
   version "19.2.8"
@@ -4851,11 +4868,6 @@ semver@~7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.0.0.tgz#5f3ca35761e47e05b206c6daff2cf814f0316b8e"
   integrity sha512-+GB6zVA9LWh6zovYQLALHwv5rb2PHGlJi3lfiqIHxR0uuwCgefcOJc59v9fv1w8GbStwxuuqqAjI9NMAOOgq1A==
-
-set-cookie-parser@^2.6.0:
-  version "2.7.2"
-  resolved "https://registry.npmjs.org/set-cookie-parser/-/set-cookie-parser-2.7.2.tgz#ccd08673a9ae5d2e44ea2a2de25089e67c7edf68"
-  integrity sha512-oeM1lpU/UvhTxw+g3cIfxXHyJRc/uidd3yK1P242gzHds0udQBYzs3y8j4gCCW+ZJ7ad0yctld8RYO+bdurlvw==
 
 set-function-length@^1.2.2:
   version "1.2.2"
