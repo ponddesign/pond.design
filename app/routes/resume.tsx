@@ -1,8 +1,10 @@
 import clsx from 'clsx';
-import type { HTMLProps } from 'react';
 import type { MetaFunction } from 'react-router';
 
-import resume from '../data/resume.json';
+import Heading from '~/components/Heading';
+import Section from '~/components/Section';
+import Tag from '~/components/Tag';
+import resume from '~/data/resume.json';
 
 export const meta: MetaFunction = () => {
   return [
@@ -14,21 +16,6 @@ export const meta: MetaFunction = () => {
       content: `${resume.basics.name}'s professional resumé as ${resume.basics.label}.`,
     },
   ];
-};
-
-const resumeStyles = {
-  h1: `font-serif text-2xl mb-4`,
-  h2: `font-extrabold mb-1`,
-  tag: `text-sm py-1 px-5 mb-3 inline-block rounded-sm`,
-  tagDateRange: `uppercase tracking-widest bg-tag-neutral-bg text-tag-neutral-fg`,
-  tagHighlight:
-    'uppercase tracking-widest bg-tag-highlight-bg text-tag-highlight-fg',
-  section: [
-    'py-12 sm:grid sm:grid-cols-4 sm:grid-flow-col sm:gap-4',
-    'container',
-    'mx-auto',
-  ],
-  sectionContent: `sm:col-span-3`,
 };
 
 const formatMonthYearUTC = (dateString: string) => {
@@ -55,8 +42,6 @@ const formatYearUTC = (dateString: string) =>
   }).format(new Date(dateString));
 
 export default function Index() {
-  if (process.env.NODE_ENV === 'development') console.log('resume', resume);
-
   return (
     <main
       className={clsx(
@@ -67,19 +52,19 @@ export default function Index() {
         'py-24',
       )}
     >
-      <div className={clsx(['resume', 'container', 'mx-auto', 'max-w-3xl'])}>
+      <div className="resume container mx-auto max-w-3xl">
         {/* INTRO */}
         <header className="container mx-auto mb-6">
-          <Section noDivider>
+          <Section divider={false}>
             <div>
-              <h1 className={clsx(resumeStyles.h1, 'text-2xl mb-4 font-serif')}>
+              <Heading level={1} variant="display" className="mb-4">
                 {resume.basics.name}
-              </h1>
-              <h2 className={clsx(resumeStyles.h2)}>{resume.basics.label}</h2>
+              </Heading>
+              <p className="mb-1 font-extrabold">{resume.basics.label}</p>
               <p>
                 <a
                   href={`mailto:${resume.basics.email}`}
-                  className={clsx('text-fg-subtle', 'hover:text-fg-accent')}
+                  className="text-fg-subtle hover:text-fg-accent"
                 >
                   {resume.basics.email}
                 </a>
@@ -89,186 +74,87 @@ export default function Index() {
           </Section>
         </header>
 
-        {/* EXPERIENCE */}
-        <Section className={clsx('experience')}>
-          <div>
-            <h1
-              className={clsx(
-                resumeStyles.h1,
-                'font-serif text-2xl mb-4 italic truncate text-ellipsis',
-              )}
+        <Section
+          title="Experience"
+          className="experience"
+          contentClassName="space-y-12"
+        >
+          {resume.work.map((job) => (
+            <article
+              key={`${job.name}-${job.position}-${job.startDate}-${job.endDate ?? 'present'}`}
             >
-              Experience
-            </h1>
-          </div>
-
-          <div className={clsx(resumeStyles.sectionContent, 'space-y-12')}>
-            {resume.work.map((job) => {
-              const formattedStartDate = formatMonthYearUTC(job.startDate);
-              const formattedEndDate = job.endDate
-                ? formatMonthYearUTC(job.endDate)
-                : 'Present';
-              return (
-                <article
-                  key={`${job.name}-${job.position}-${job.startDate}-${job.endDate ?? 'present'}`}
+              <div className="mb-6">
+                <p className="mb-2">
+                  <Tag variant="neutral" className="date-tag mb-3 mr-2">
+                    {formatMonthYearUTC(job.startDate)}
+                    {job.endDate && ` - ${formatMonthYearUTC(job.endDate)}`}
+                  </Tag>
+                  {!job.endDate && (
+                    <Tag variant="highlight" className="mb-3">
+                      Current Role
+                    </Tag>
+                  )}
+                </p>
+                <Heading
+                  level={3}
+                  variant="title"
+                  className="mb-1 text-fg-heading"
                 >
-                  {/* heading */}
-                  <div className="mb-6">
-                    {/* date ranges / badges */}
-                    <p className="mb-2">
-                      <span
-                        className={clsx(
-                          resumeStyles.tag,
-                          resumeStyles.tagDateRange,
-                          'date-tag mr-2',
-                        )}
-                      >
-                        {formattedStartDate}
-                        {job.endDate && ` - ${formattedEndDate}`}
-                      </span>
-                      {!job.endDate && (
-                        <span
-                          className={clsx(
-                            resumeStyles.tag,
-                            resumeStyles.tagHighlight,
-                          )}
-                        >
-                          Current Role
-                        </span>
-                      )}
-                    </p>
-                    <h2
-                      className={clsx(
-                        resumeStyles.h2,
-                        'font-extrabold space-y-4 text-4xl mb-0 text-fg-heading',
-                      )}
-                    >
-                      {job.position}
-                    </h2>
-                    <p className="font-serif text-2xl italic">
-                      {job.url ? (
-                        <a
-                          href={job.url}
-                          target="_blank"
-                          rel="noreferrer nofollow"
-                        >
-                          {job.name}
-                        </a>
-                      ) : (
-                        job.name
-                      )}
-                    </p>
-                  </div>
-
-                  {/* description */}
-                  {job.summary && (
-                    <div>
-                      {toParagraphs(job.summary).map((paragraph) => (
-                        <p key={paragraph} className="mb-4">
-                          {paragraph}
-                        </p>
-                      ))}
-                    </div>
+                  {job.position}
+                </Heading>
+                <p className="font-serif text-2xl italic">
+                  {job.url ? (
+                    <a href={job.url} target="_blank" rel="noreferrer nofollow">
+                      {job.name}
+                    </a>
+                  ) : (
+                    job.name
                   )}
-                </article>
-              );
-            })}
-          </div>
-        </Section>
+                </p>
+              </div>
 
-        {/* SKILLS */}
-        <Section className="skills">
-          <h1
-            className={clsx(resumeStyles.h1, 'font-serif text-2xl mb-4 italic')}
-          >
-            Skills
-          </h1>
-          <div className={clsx(resumeStyles.sectionContent, 'leading-loose')}>
-            {resume.skills.map((skill) => (
-              <span
-                key={skill.name}
-                className={clsx(
-                  resumeStyles.tag,
-                  'tracking-wide bg-tag-muted-bg mb-1 mr-2',
-                )}
-              >
-                {skill.name}
-              </span>
-            ))}
-          </div>
-        </Section>
-
-        {/* EDUCATION */}
-        <Section className={clsx('education')}>
-          <h1
-            className={clsx(resumeStyles.h1, 'font-serif text-2xl mb-4 italic')}
-          >
-            Education
-          </h1>
-
-          <div className={clsx(resumeStyles.sectionContent, '')}>
-            {resume.education.map((school) => {
-              if (!school.studyType) return null;
-
-              const schoolStartDate = formatYearUTC(school.startDate);
-              const schoolEndDate = school.endDate
-                ? formatYearUTC(school.endDate)
-                : 'Current';
-
-              return (
-                <div key={school.institution} className="school">
-                  {/* degree */}
-                  <p
-                    className={clsx(
-                      resumeStyles.tag,
-                      resumeStyles.tagDateRange,
-                    )}
-                  >
-                    {schoolStartDate}
-                    {schoolEndDate && ` - ${schoolEndDate}`}
+              {job.summary &&
+                toParagraphs(job.summary).map((paragraph) => (
+                  <p key={paragraph} className="mb-4">
+                    {paragraph}
                   </p>
-                  <h2
-                    className={clsx(
-                      resumeStyles.h2,
-                      'font-extrabold mb-4 font-sans text-4xl degree',
-                    )}
-                  >
-                    {school.studyType}
-                  </h2>
-                  {school.institution && (
-                    <p className="institution">{school.institution}</p>
-                  )}
-                  {school.area && <p className="area">{school.area}</p>}
-                </div>
-              );
-            })}
-          </div>
+                ))}
+            </article>
+          ))}
+        </Section>
+
+        <Section
+          title="Skills"
+          className="skills"
+          contentClassName="leading-loose"
+        >
+          {resume.skills.map((skill) => (
+            <Tag key={skill.name} variant="muted" className="mb-3 mr-2">
+              {skill.name}
+            </Tag>
+          ))}
+        </Section>
+
+        <Section title="Education" className="education">
+          {resume.education.map((school) =>
+            school.studyType ? (
+              <div key={school.institution} className="school">
+                <Tag as="p" variant="neutral" className="mb-3">
+                  {formatYearUTC(school.startDate)}
+                  {` - ${school.endDate ? formatYearUTC(school.endDate) : 'Current'}`}
+                </Tag>
+                <Heading level={3} variant="title" className="degree mb-4">
+                  {school.studyType}
+                </Heading>
+                {school.institution && (
+                  <p className="institution">{school.institution}</p>
+                )}
+                {school.area && <p className="area">{school.area}</p>}
+              </div>
+            ) : null,
+          )}
         </Section>
       </div>
     </main>
   );
 }
-
-type SectionProps = {
-  noDivider?: boolean;
-} & HTMLProps<HTMLTableSectionElement>;
-const Section = ({
-  children,
-  className,
-  noDivider = false,
-  ...props
-}: SectionProps) => (
-  <section
-    {...props}
-    className={clsx(resumeStyles.section, [
-      className,
-      {
-        'pt-0': noDivider,
-        'border-t': !noDivider,
-        'border-t-border-default': !noDivider,
-      },
-    ])}
-  >
-    {children}
-  </section>
-);
