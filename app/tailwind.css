@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 /* Design tokens: generated from ./tokens by `yarn tokens` — do not edit. */
-@import './styles/theme.css';
+@import "./styles/theme.css";

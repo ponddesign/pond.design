@@ -1,7 +1,7 @@
+import clsx from 'clsx';
 import type { HTMLProps } from 'react';
 import type { MetaFunction } from 'react-router';
 import { Link } from 'react-router';
-import clsx from 'clsx';
 
 import resume from '../data/resume.json';
 
@@ -22,7 +22,8 @@ const resumeStyles = {
   h2: `font-extrabold mb-1`,
   tag: `text-sm py-1 px-5 mb-3 inline-block rounded-sm`,
   tagDateRange: `uppercase tracking-widest bg-tag-neutral-bg text-tag-neutral-fg`,
-  tagHighlight: 'uppercase tracking-widest bg-tag-highlight-bg text-tag-highlight-fg',
+  tagHighlight:
+    'uppercase tracking-widest bg-tag-highlight-bg text-tag-highlight-fg',
   section: [
     'py-12 sm:grid sm:grid-cols-4 sm:grid-flow-col sm:gap-4',
     'container',
@@ -71,17 +72,12 @@ export default function Index() {
               <p>
                 <a
                   href={`mailto:${resume.basics.email}`}
-                  className={clsx(
-                    'text-fg-subtle',
-                    'hover:text-fg-accent',
-                  )}
+                  className={clsx('text-fg-subtle', 'hover:text-fg-accent')}
                 >
                   {resume.basics.email}
                 </a>
               </p>
-              <p className="text-fg-subtle">
-                {resume.basics.location.address}
-              </p>
+              <p className="text-fg-subtle">{resume.basics.location.address}</p>
             </div>
           </Section>
         </header>
@@ -158,6 +154,7 @@ export default function Index() {
                     <div>
                       {/* TODO: break job.summary into separate paragraphs per break */}
                       {job.summary.split('\n').map((paragraph, i) => (
+                        // biome-ignore lint/suspicious/noArrayIndexKey: static content; replaced by the paragraph fix in #91
                         <p key={i} className="mb-4">
                           {paragraph}
                         </p>

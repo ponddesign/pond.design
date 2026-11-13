@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-import LogoText from '~/components/icons/LogoText';
+import LogoText from '~/icons/logo-text.svg?react';
 
 export default function Header({ short = false }) {
   return (

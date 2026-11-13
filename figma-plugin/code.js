@@ -31,7 +31,8 @@ async function exportTokens() {
     collection.variableIds.map((id) => byId.get(id)).filter(Boolean);
 
   const primitivesCollection = find('Primitives');
-  if (!primitivesCollection) throw new Error('No "Primitives" collection found.');
+  if (!primitivesCollection)
+    throw new Error('No "Primitives" collection found.');
   const primitiveIds = new Set(primitivesCollection.variableIds);
 
   const primitives = {};
@@ -39,9 +40,17 @@ async function exportTokens() {
   for (const v of varsIn(primitivesCollection)) {
     const value = v.valuesByMode[primitiveMode];
     if (v.resolvedType === 'COLOR' && value && 'r' in value) {
-      primitives[v.name] = { type: 'color', value: toHex(value), description: v.description };
+      primitives[v.name] = {
+        type: 'color',
+        value: toHex(value),
+        description: v.description,
+      };
     } else if (v.resolvedType === 'STRING' && typeof value === 'string') {
-      primitives[v.name] = { type: 'string', value, description: v.description };
+      primitives[v.name] = {
+        type: 'string',
+        value,
+        description: v.description,
+      };
     }
   }
 
@@ -54,7 +63,10 @@ async function exportTokens() {
         if (!primitiveIds.has(value.id)) {
           throw new Error(`"${v.name}" must alias a Primitives variable.`);
         }
-        out[v.name] = { alias: byId.get(value.id).name, description: v.description };
+        out[v.name] = {
+          alias: byId.get(value.id).name,
+          description: v.description,
+        };
       } else if (value && 'r' in value) {
         out[v.name] = { value: toHex(value), description: v.description };
       }
@@ -69,7 +81,10 @@ async function exportTokens() {
       modes[mode.name.toLowerCase()] = readSemantic(combined, mode.modeId);
     }
   } else {
-    for (const [mode, name] of [['light', 'Color (Light)'], ['dark', 'Color (Dark)']]) {
+    for (const [mode, name] of [
+      ['light', 'Color (Light)'],
+      ['dark', 'Color (Dark)'],
+    ]) {
       const c = find(name) || (mode === 'light' ? combined : undefined);
       if (c) modes[mode] = readSemantic(c, c.modes[0].modeId);
     }
@@ -99,7 +114,10 @@ if (typeof figma !== 'undefined' && figma.showUI) {
         figma.ui.postMessage({ type: 'payload', payload });
       }
     } catch (error) {
-      figma.ui.postMessage({ type: 'error', message: String(error.message || error) });
+      figma.ui.postMessage({
+        type: 'error',
+        message: String(error.message || error),
+      });
     }
   };
 }
