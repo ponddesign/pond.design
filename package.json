@@ -41,7 +41,7 @@
     "@svgr/plugin-prettier": "^8.0.1",
     "@svgr/plugin-svgo": "^8.0.1",
     "@tailwindcss/vite": "^4.3.5",
-    "@trivago/prettier-plugin-sort-imports": "^4.2.0",
+    "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "@types/node": "^22.10.0",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
