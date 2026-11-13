@@ -11,6 +11,9 @@
     "tokens": "node scripts/build-tokens.mjs"
   },
   "dependencies": {
+    "@fontsource-variable/dm-sans": "^5.3.0",
+    "@fontsource/dm-mono": "^5.3.0",
+    "@fontsource/dm-serif-display": "^5.3.0",
     "@react-router/node": "7.18.5",
     "@vercel/analytics": "^2.0.1",
     "clsx": "^2.0.0",
