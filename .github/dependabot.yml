@@ -5,16 +5,7 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 10
-    # Hold React Router 8 and TypeScript 7 (React Router 7 supports TypeScript
-    # <= 6) until they're upgraded together in one PR, after the move to
-    # Cloudflare (#121). Then remove these rules.
     ignore:
-      - dependency-name: 'react-router'
-        versions: ['>=8']
-      - dependency-name: '@react-router/*'
-        versions: ['>=8']
-      - dependency-name: 'typescript'
-        versions: ['>=7']
       # Keep Node's types on the runtime's major (.nvmrc / engines.node), so
       # TypeScript can't accept APIs production doesn't have. Bump all three
       # together when moving to a new Node LTS.
