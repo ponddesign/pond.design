@@ -43,6 +43,23 @@ figma-plugin/     private Figma plugin that sends tokens to GitHub
 scripts/          token build/import and CI checks
 ```
 
+## Components
+
+Shared UI lives in `app/components/` and has a matching component in the
+[Pond Design System](https://www.figma.com/design/OQAuXo6GwDBMN5QIsoJdWJ/Pond-Design-System)
+Figma file (**Components** page). The Figma components use the same color
+variables and text styles, and their descriptions give the import path and props.
+
+| Component | Props | Figma |
+|---|---|---|
+| `Tag` | `variant`: `neutral` \| `muted` \| `highlight`, `as`: `span` \| `p` | Tag (3 variants) |
+| `Heading` | `level`: 1–6 (semantics), `variant`: `display` \| `section` \| `title` \| `subtitle` (look) | Heading (4 variants) |
+| `Section` | `title`, `divider`, `contentClassName` | Section (Divider toggle) |
+
+Components don't set their own outer margins or (for headings) text color;
+the page sets those. Figma Code Connect would show this code in Dev Mode, but
+it needs an Organization or Enterprise Figma plan.
+
 ## Routes and rendering
 
 Pages and files that never change (`/`, `/resume`, `robots.txt`,
