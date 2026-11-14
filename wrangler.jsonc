@@ -13,6 +13,10 @@
     "html_handling": "drop-trailing-slash",
     "not_found_handling": "none"
   },
+  // Required by `wrangler preview`, which Workers Builds runs for branches
+  // other than main (one Preview per branch, posted to the PR). Empty means
+  // previews use the settings above.
+  "previews": {},
   "observability": { "enabled": true },
   "upload_source_maps": true
 }
