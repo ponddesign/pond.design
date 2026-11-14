@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router';
 import { albumMonth, byYear, photoCount } from '~/albums/format';
 import { photoSrc } from '~/albums/media';
+import { albumPath, PHOTOS } from '~/albums/paths';
 import type { AlbumSummary } from '~/albums/types';
 import { Icon } from './icons';
 
@@ -16,6 +17,7 @@ export default function AlbumDrawer({
   current,
 }: {
   albums: AlbumSummary[];
+  /** The album being viewed, as its path. */
   current?: string;
 }) {
   // Fixed id: the A key toggles the drawer from the album page.
@@ -68,17 +70,17 @@ export default function AlbumDrawer({
               </h2>
               <ul className="px-2">
                 {items.map((album) => {
-                  const isCurrent = album.slug === current;
+                  const isCurrent = albumPath(album) === current;
                   return (
-                    <li key={album.slug}>
+                    <li key={albumPath(album)}>
                       <Link
-                        to={`/albums/${album.slug}`}
+                        to={albumPath(album)}
                         prefetch="intent"
                         aria-current={isCurrent ? 'page' : undefined}
                         className="flex items-center gap-3 rounded-md px-3 py-2 hover:bg-surface-subtle aria-[current=page]:bg-surface-subtle"
                       >
                         <img
-                          src={photoSrc(album.slug, album.cover, 480)}
+                          src={photoSrc(album, album.cover, 480)}
                           alt=""
                           width={64}
                           height={44}
@@ -109,7 +111,7 @@ export default function AlbumDrawer({
           ))}
         </nav>
         <Link
-          to="/albums"
+          to={PHOTOS}
           className="mx-5 mb-6 inline-flex items-center gap-2 font-medium text-fg-accent text-sm"
         >
           View all albums <Icon name="arrowRight" />

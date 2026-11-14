@@ -1,4 +1,12 @@
 import { albums } from '~/albums/data.server';
+import { albumPath, PHOTOS, yearPath } from '~/albums/paths';
+
+// Photo pages aren't listed: there are many, and each album links to them.
+const photoUrls = [
+  PHOTOS,
+  ...new Set(albums.map((album) => yearPath(album.year))),
+  ...albums.map(albumPath),
+];
 
 const buildTime = import.meta.env.BUILD_TIME;
 
@@ -14,14 +22,10 @@ export const loader = () => {
     <lastmod>${buildTime}</lastmod>
     <priority>1.0</priority>
   </url>
-  <url>
-    <loc>https://pond.design/albums</loc>
-    <lastmod>${buildTime}</lastmod>
-  </url>
-${albums
+${photoUrls
   .map(
-    (album) => `  <url>
-    <loc>https://pond.design/albums/${album.slug}</loc>
+    (path) => `  <url>
+    <loc>https://pond.design${path}</loc>
     <lastmod>${buildTime}</lastmod>
   </url>`,
   )

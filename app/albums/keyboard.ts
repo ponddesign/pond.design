@@ -9,7 +9,7 @@ export const ALBUMS_SHORTCUTS: ShortcutGroup[] = [
     keys: [
       [['←', '→', '↑', '↓'], 'Move between albums'],
       [['Enter'], 'Open album'],
-      [['Esc'], 'Back to pond.design'],
+      [['Esc'], 'Up one level'],
       [['/'], 'Show or hide shortcuts'],
     ],
   },
@@ -24,7 +24,7 @@ export const ALBUM_SHORTCUTS: ShortcutGroup[] = [
       [['Enter', 'E'], 'Open photo'],
       [['[', ']'], 'Older or newer album'],
       [['A'], 'Album list'],
-      [['Esc'], 'Back to all albums'],
+      [['Esc'], "Up to the year's albums"],
     ],
   },
   {

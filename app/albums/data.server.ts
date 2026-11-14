@@ -1,7 +1,7 @@
-import type { Album, AlbumSummary } from './types';
+import type { Album, AlbumFile, AlbumSummary } from './types';
 
 // Bundled at build time; only server code imports this module.
-const files = import.meta.glob<Album>('../data/albums/*.json', {
+const files = import.meta.glob<AlbumFile>('../data/albums/*.json', {
   eager: true,
   import: 'default',
 });
@@ -9,10 +9,23 @@ const files = import.meta.glob<Album>('../data/albums/*.json', {
 /** Public albums, newest first. */
 export const albums: Album[] = Object.values(files)
   .filter((album) => album.visibility === 'public')
+  .map((album) => ({ ...album, year: album.startDate?.slice(0, 4) ?? '0000' }))
   .sort((a, b) => (b.startDate ?? '').localeCompare(a.startDate ?? ''));
 
-export const getAlbum = (slug: string) =>
-  albums.find((album) => album.slug === slug);
+// An album's URL is /photos/:year/:slug, so the pair must be unique.
+const seen = new Set<string>();
+for (const album of albums) {
+  const key = `${album.year}/${album.slug}`;
+  if (seen.has(key))
+    throw new Error(`Two albums share the URL /photos/${key}; rename one.`);
+  seen.add(key);
+}
+
+export const getAlbum = (year: string, slug: string) =>
+  albums.find((album) => album.year === year && album.slug === slug);
+
+export const albumsInYear = (year: string) =>
+  albums.filter((album) => album.year === year);
 
 const PREVIEW_COUNT = 6;
 
@@ -28,6 +41,7 @@ export function summarize(album: Album): AlbumSummary {
   ).filter((photo) => photo !== undefined);
   return {
     slug: album.slug,
+    year: album.year,
     title: album.title,
     startDate: album.startDate,
     endDate: album.endDate,
@@ -37,4 +51,4 @@ export function summarize(album: Album): AlbumSummary {
   };
 }
 
-export const summaries = () => albums.map(summarize);
+export const summaries = (list: Album[] = albums) => list.map(summarize);

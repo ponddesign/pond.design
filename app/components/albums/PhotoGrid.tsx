@@ -1,25 +1,19 @@
-import {
-  type CSSProperties,
-  type MouseEvent,
-  useEffect,
-  useState,
-} from 'react';
+import { type CSSProperties, useEffect, useState } from 'react';
+import { Link } from 'react-router';
 import {
   averageColor,
-  largestSrc,
   photoSrc,
   photoSrcSet,
   placeholder,
   widthAtLeast,
 } from '~/albums/media';
-import type { Photo } from '~/albums/types';
+import { photoPath } from '~/albums/paths';
+import type { AlbumRef, Photo } from '~/albums/types';
 import { PhotoMeta } from './PhotoDetails';
 
 type PhotoGridProps = {
-  slug: string;
+  album: AlbumRef;
   photos: Photo[];
-  /** Opens the lightbox. Without JavaScript the link opens the full photo. */
-  onOpen: (index: number) => void;
 };
 
 /**
@@ -30,18 +24,13 @@ type PhotoGridProps = {
  * Hovering or focusing a photo shows its place, camera and exposure
  * (concept A). Touch screens skip the overlay; the lightbox has the details.
  */
-export default function PhotoGrid({ slug, photos, onOpen }: PhotoGridProps) {
+export default function PhotoGrid({ album, photos }: PhotoGridProps) {
   // Blurred placeholders are drawn in the browser; the server sends colors.
   const [hydrated, setHydrated] = useState(false);
   useEffect(() => setHydrated(true), []);
   return (
     <ul className="pd-justified">
       {photos.map((photo, index) => {
-        const open = (event: MouseEvent) => {
-          if (event.metaKey || event.ctrlKey || event.shiftKey) return;
-          event.preventDefault();
-          onOpen(index);
-        };
         const ratio = photo.width / photo.height;
         const e = photo.exposure;
         const exposure = e
@@ -60,14 +49,17 @@ export default function PhotoGrid({ slug, photos, onOpen }: PhotoGridProps) {
             style={{ '--ar': ratio } as CSSProperties}
             className="group relative"
           >
-            <a
-              href={largestSrc(slug, photo)}
-              onClick={open}
+            {/* A real page per photo: /photos/:year/:album/photo/:id. The state
+                tells the viewer it can close with history.back(). */}
+            <Link
+              to={photoPath(album, photo)}
+              state={{ fromGrid: true }}
+              preventScrollReset
               className="block overflow-hidden rounded-[2px] bg-surface-default outline-offset-2 focus-visible:outline-2 focus-visible:outline-fg-accent"
             >
               <img
-                src={photoSrc(slug, photo, widthAtLeast(photo, 960))}
-                srcSet={photoSrcSet(slug, photo)}
+                src={photoSrc(album, photo, widthAtLeast(photo, 960))}
+                srcSet={photoSrcSet(album, photo)}
                 sizes={`(max-width: 640px) ${Math.round(180 * ratio)}px, ${Math.round(300 * ratio * 1.15)}px`}
                 width={photo.width}
                 height={photo.height}
@@ -103,7 +95,7 @@ export default function PhotoGrid({ slug, photos, onOpen }: PhotoGridProps) {
                   )}
                 </div>
               )}
-            </a>
+            </Link>
           </li>
         );
       })}

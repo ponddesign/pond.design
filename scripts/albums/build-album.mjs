@@ -1,17 +1,21 @@
 #!/usr/bin/env node
 // Builds one photo album from a folder of JPEG exports.
 //
-//   yarn album <folder> --title "Family reunion" [--slug family-reunion-2026]
+//   yarn album <folder> --title "Family reunion" [--slug family-reunion]
 //                       [--description "…"] [--cover R0001306]
 //
 // For every photo it:
 //   - reads the caption/title (alt text), place, camera, lens and exposure;
 //   - writes AVIF sizes up to 5120 px on the long edge, with ALL metadata
 //     removed (no GPS, no camera serials) and colors converted to sRGB;
+//   - writes a 1200 px JPEG for link previews (social sites don't all read
+//     AVIF);
 //   - computes a ThumbHash placeholder.
-// Then it writes app/data/albums/<slug>.json.
+// Then it writes app/data/albums/<year>-<slug>.json. The album's URL is
+// /photos/<year>/<slug>, where the year is the album's first day.
 //
-// Proof of concept: images go to public/albums-media/<slug>/ (git-ignored).
+// Proof of concept: images go to public/photos-media/<year>/<slug>/
+// (git-ignored).
 // The GitHub Action will run this same code and upload to R2 instead.
 
 import { createHash } from 'node:crypto';
@@ -44,7 +48,7 @@ const { values: args, positionals } = parseArgs({
     slug: { type: 'string' },
     description: { type: 'string' },
     cover: { type: 'string' },
-    out: { type: 'string', default: join(ROOT, 'public', 'albums-media') },
+    out: { type: 'string', default: join(ROOT, 'public', 'photos-media') },
     concurrency: { type: 'string', default: '2' },
   },
 });
@@ -196,6 +200,15 @@ async function processPhoto(file, outDir) {
       .toFile(target); // sharp drops all metadata unless asked to keep it
   }
 
+  const share = join(outDir, `${base}-share.jpg`);
+  if (!existsSync(share))
+    await image
+      .clone()
+      .resize(1200, 1200, { fit: 'inside' })
+      .toColorspace('srgb')
+      .jpeg({ quality: 80, mozjpeg: true })
+      .toFile(share);
+
   const { alt, source: altSource } = altText(meta, file);
   const camera = cameraName(text(meta.Make), text(meta.Model));
   return {
@@ -233,13 +246,23 @@ async function pool(items, limit, fn) {
   return results;
 }
 
-const slug = args.slug ?? slugify(args.title);
-const outDir = join(args.out, slug);
-mkdirSync(outDir, { recursive: true });
-
+const slug = slugify(args.slug ?? args.title);
 const files = listJpegs(source);
 const empty = files.filter((f) => statSync(f).size === 0);
 const usable = files.filter((f) => statSync(f).size > 0);
+
+// The year (from the earliest photo) is part of the album's URL and folder.
+let earliest;
+for (const file of usable) {
+  const meta = await exifr
+    .parse(readHead(file), { reviveValues: false, translateValues: false })
+    .catch(() => undefined);
+  const t = meta && takenAt(meta);
+  if (t && (!earliest || Date.parse(t) < Date.parse(earliest))) earliest = t;
+}
+const year = earliest?.slice(0, 4) ?? String(new Date().getFullYear());
+const outDir = join(args.out, year, slug);
+mkdirSync(outDir, { recursive: true });
 console.log(
   `${usable.length} photos in ${source}${empty.length ? ` (${empty.length} empty file(s) skipped)` : ''}`,
 );
@@ -297,7 +320,7 @@ const album = {
 const dataDir = join(ROOT, 'app', 'data', 'albums');
 mkdirSync(dataDir, { recursive: true });
 writeFileSync(
-  join(dataDir, `${slug}.json`),
+  join(dataDir, `${year}-${slug}.json`),
   `${JSON.stringify(album, null, 2)}\n`,
 );
 
@@ -306,7 +329,7 @@ const fileNameAlt = unique.filter((r) => r.altSource === 'file name');
 const files_ = readdirSync(outDir);
 const bytes = files_.reduce((s, f) => s + statSync(join(outDir, f)).size, 0);
 console.log(`
-Album "${album.title}" → app/data/albums/${slug}.json
+Album "${album.title}" → /photos/${year}/${slug} (app/data/albums/${year}-${slug}.json)
   ${photos.length} photos, ${album.startDate} to ${album.endDate}${duplicates ? `, ${duplicates} duplicate(s) skipped` : ''}
   ${files_.length} image files, ${(bytes / 1e6).toFixed(0)} MB in ${relative(ROOT, outDir)}
   ${unique.filter((r) => r.hasGps).length} photo(s) had GPS (removed from every published file)

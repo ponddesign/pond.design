@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router';
-import { summaries } from '~/albums/data.server';
 import { byYear, photoCount } from '~/albums/format';
 import {
   ALBUMS_SHORTCUTS,
@@ -8,22 +7,28 @@ import {
   moveGridFocus,
   useKeys,
 } from '~/albums/keyboard';
-import AlbumCard from '~/components/albums/AlbumCard';
-import KeyboardHelp, {
-  ShortcutsButton,
-} from '~/components/albums/KeyboardHelp';
+import { PHOTOS, yearPath } from '~/albums/paths';
+import type { AlbumSummary } from '~/albums/types';
 import Heading from '~/components/Heading';
-import type { Route } from './+types/albums._index';
+import AlbumCard from './AlbumCard';
+import KeyboardHelp, { ShortcutsButton } from './KeyboardHelp';
 
-export const meta: Route.MetaFunction = () => [
-  { title: 'Albums — Pond Design' },
-  { name: 'description', content: 'Photo albums from pond.design.' },
-];
-
-export const loader = () => ({ albums: summaries() });
-
-export default function Albums({ loaderData }: Route.ComponentProps) {
-  const { albums } = loaderData;
+/**
+ * Albums grouped by year: the /photos page, and /photos/:year with a single
+ * group. Esc goes up one level.
+ */
+export default function AlbumIndex({
+  title,
+  albums,
+  up,
+  upLabel,
+}: {
+  title: string;
+  albums: AlbumSummary[];
+  /** Where Esc and the breadcrumb go. */
+  up: string;
+  upLabel: string;
+}) {
   const navigate = useNavigate();
   const [help, setHelp] = useState(false);
   useKeys((event) => {
@@ -32,18 +37,21 @@ export default function Albums({ loaderData }: Route.ComponentProps) {
       return true;
     }
     if (event.key === 'Escape') {
-      navigate('/');
+      navigate(up);
       return true;
     }
     return moveGridFocus(event.key, '[data-album-card]');
   }, !help);
+
+  const groups = byYear(albums);
+  const singleYear = groups.length === 1 && up === PHOTOS;
   let first = true;
   return (
     <main className="min-h-screen bg-surface-subtle px-6 py-12 text-fg-strong sm:px-10 sm:py-16">
       <div className="mx-auto max-w-6xl">
         <div className="flex items-center">
-          <Link to="/" className="text-fg-subtle text-sm hover:text-fg-accent">
-            pond.design
+          <Link to={up} className="text-fg-subtle text-sm hover:text-fg-accent">
+            {upLabel}
           </Link>
           <ShortcutsButton onClick={() => setHelp(true)} className="ml-auto" />
         </div>
@@ -53,7 +61,7 @@ export default function Albums({ loaderData }: Route.ComponentProps) {
             variant="display"
             className="text-5xl text-fg-heading"
           >
-            Albums
+            {title}
           </Heading>
           <p className="mt-1 text-fg-subtle">
             {albums.length === 1 ? '1 album' : `${albums.length} albums`} ·{' '}
@@ -62,28 +70,33 @@ export default function Albums({ loaderData }: Route.ComponentProps) {
         </header>
 
         {albums.length === 0 && (
-          <p className="text-fg-subtle">
-            No albums yet. Build one with <code>yarn album</code>.
-          </p>
+          <p className="text-fg-subtle">No albums yet.</p>
         )}
 
         <div className="space-y-16">
-          {byYear(albums).map(([year, items]) => (
-            <section key={year} aria-labelledby={`year-${year}`}>
-              <Heading
-                level={2}
-                variant="section"
-                id={`year-${year}`}
-                className="mb-6 text-fg-heading"
-              >
-                {year}
-              </Heading>
+          {groups.map(([year, items]) => (
+            <section
+              key={year}
+              aria-labelledby={singleYear ? undefined : `year-${year}`}
+            >
+              {!singleYear && (
+                <Heading
+                  level={2}
+                  variant="section"
+                  id={`year-${year}`}
+                  className="mb-6 text-fg-heading"
+                >
+                  <Link to={yearPath(year)} className="hover:text-fg-accent">
+                    {year}
+                  </Link>
+                </Heading>
+              )}
               <ul className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
                 {items.map((album) => {
                   const priority = first;
                   first = false;
                   return (
-                    <li key={album.slug}>
+                    <li key={`${album.year}/${album.slug}`}>
                       <AlbumCard album={album} priority={priority} />
                     </li>
                   );

@@ -29,7 +29,9 @@ export type Photo = {
   thumbHash: string;
 };
 
-export type Album = {
+/** An album file as written by the build script. */
+export type AlbumFile = {
+  /** URL name, unique within its year (no year in it). */
   slug: string;
   title: string;
   description?: string;
@@ -41,9 +43,16 @@ export type Album = {
   photos: Photo[];
 };
 
+/** An album as the site uses it: the year comes from its first day. */
+export type Album = AlbumFile & { year: string };
+
+/** Enough to build an album's URLs and media paths. */
+export type AlbumRef = Pick<Album, 'year' | 'slug'>;
+
 /** What lists of albums (index, drawer) need: no full photo list. */
 export type AlbumSummary = {
   slug: string;
+  year: string;
   title: string;
   startDate?: string;
   endDate?: string;

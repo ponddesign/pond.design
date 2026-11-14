@@ -1,27 +1,36 @@
 import { thumbHashToAverageRGBA, thumbHashToDataURL } from 'thumbhash';
-import type { Photo } from './types';
+import type { AlbumRef, Photo } from './types';
 
 /**
  * Where published photo sizes live. Locally they're served from
- * public/albums-media; production will point this at the R2 host
+ * public/photos-media; production will point this at the R2 host
  * (e.g. https://photos.pond.design).
  */
 export const MEDIA_BASE = (
-  import.meta.env.VITE_ALBUMS_MEDIA_BASE ?? '/albums-media'
+  import.meta.env.VITE_PHOTOS_MEDIA_BASE ?? '/photos-media'
 ).replace(/\/$/, '');
 
-export const photoSrc = (slug: string, photo: Photo, width: number) =>
-  `${MEDIA_BASE}/${slug}/${photo.base}-${width}.avif`;
+/** Published files live at <base>/<year>/<album>/<photo>-<width>.avif. */
+export const photoSrc = (album: AlbumRef, photo: Photo, width: number) =>
+  `${MEDIA_BASE}/${album.year}/${album.slug}/${photo.base}-${width}.avif`;
 
-export const photoSrcSet = (slug: string, photo: Photo) =>
-  photo.widths.map((w) => `${photoSrc(slug, photo, w)} ${w}w`).join(', ');
+export const photoSrcSet = (album: AlbumRef, photo: Photo) =>
+  photo.widths.map((w) => `${photoSrc(album, photo, w)} ${w}w`).join(', ');
+
+/** 1200 px JPEG for link previews (social sites don't all read AVIF). */
+export const shareImageSrc = (album: AlbumRef, photo: Photo) =>
+  `${MEDIA_BASE}/${album.year}/${album.slug}/${photo.base}-share.jpg`;
+
+/** Link previews need absolute URLs. */
+export const absoluteUrl = (src: string) =>
+  new URL(src, 'https://pond.design').href;
 
 /** Smallest published width that is at least `min` px (or the largest). */
 export const widthAtLeast = (photo: Photo, min: number) =>
   photo.widths.find((w) => w >= min) ?? photo.widths.at(-1) ?? photo.width;
 
-export const largestSrc = (slug: string, photo: Photo) =>
-  photoSrc(slug, photo, photo.widths.at(-1) ?? photo.width);
+export const largestSrc = (album: AlbumRef, photo: Photo) =>
+  photoSrc(album, photo, photo.widths.at(-1) ?? photo.width);
 
 const decode = (hash: string) =>
   Uint8Array.from(atob(hash), (c) => c.charCodeAt(0));

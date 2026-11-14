@@ -3,10 +3,11 @@ import { type PointerEvent, useRef, useState } from 'react';
 import { Link } from 'react-router';
 import { albumMonth, photoCount } from '~/albums/format';
 import { averageColor, photoSrc, widthAtLeast } from '~/albums/media';
+import { albumPath } from '~/albums/paths';
 import type { AlbumSummary } from '~/albums/types';
 
 /**
- * An album on the /albums page: key photo, title, month and photo count.
+ * An album on the /photos pages: key photo, title, month and photo count.
  * With a mouse, moving across the cover skims through a few photos from the
  * album (like iPhoto); touch and keyboard just show the key photo.
  * Figma: Albums — photo details explorations → Album card.
@@ -20,10 +21,10 @@ export default function AlbumCard({
 }) {
   const [active, setActive] = useState(0);
   const preloaded = useRef(false);
-  const { previews, slug } = album;
+  const { previews } = album;
   const src = (i: number) => {
     const photo = previews[i] ?? album.cover;
-    return photoSrc(slug, photo, widthAtLeast(photo, 960));
+    return photoSrc(album, photo, widthAtLeast(photo, 960));
   };
 
   const preload = () => {
@@ -48,7 +49,7 @@ export default function AlbumCard({
   const shown = previews[active] ?? album.cover;
   return (
     <Link
-      to={`/albums/${slug}`}
+      to={albumPath(album)}
       prefetch="intent"
       data-album-card
       className="group block rounded-[2px] outline-offset-4 focus-visible:outline-2 focus-visible:outline-fg-accent"

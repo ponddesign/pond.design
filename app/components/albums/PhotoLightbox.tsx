@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Lightbox, {
   type FullscreenRef,
   IconButton,
@@ -12,7 +12,7 @@ import 'yet-another-react-lightbox/styles.css';
 import 'yet-another-react-lightbox/plugins/counter.css';
 import { ALBUM_SHORTCUTS, isHelpKey, useKeys } from '~/albums/keyboard';
 import { largestSrc, photoSrc } from '~/albums/media';
-import type { Photo } from '~/albums/types';
+import type { AlbumRef, Photo } from '~/albums/types';
 import { Icon } from './icons';
 import KeyboardHelp from './KeyboardHelp';
 import { PhotoDetails } from './PhotoDetails';
@@ -26,7 +26,7 @@ declare module 'yet-another-react-lightbox' {
 }
 
 type PhotoLightboxProps = {
-  slug: string;
+  album: AlbumRef;
   photos: Photo[];
   index: number;
   onIndexChange: (index: number) => void;
@@ -49,7 +49,7 @@ const KeyboardIcon = () => (
  * remembered.
  */
 export default function PhotoLightbox({
-  slug,
+  album,
   photos,
   index,
   onIndexChange,
@@ -123,17 +123,23 @@ export default function PhotoLightbox({
   }, !help);
 
   const photo = photos[index];
-  const slides = photos.map((p) => ({
-    src: largestSrc(slug, p),
-    alt: p.alt,
-    width: p.width,
-    height: p.height,
-    srcSet: p.widths.map((w) => ({
-      src: photoSrc(slug, p, w),
-      width: w,
-      height: Math.round((w * p.height) / p.width),
-    })),
-  }));
+  // Stable across renders: a new array makes the lightbox re-sync to the
+  // `index` prop, which bounced paging back a photo while the URL updated.
+  const slides = useMemo(
+    () =>
+      photos.map((p) => ({
+        src: largestSrc(album, p),
+        alt: p.alt,
+        width: p.width,
+        height: p.height,
+        srcSet: p.widths.map((w) => ({
+          src: photoSrc(album, p, w),
+          width: w,
+          height: Math.round((w * p.height) / p.width),
+        })),
+      })),
+    [album, photos],
+  );
 
   return (
     <Lightbox
@@ -147,7 +153,7 @@ export default function PhotoLightbox({
       // Max zoom = 100%: one image pixel per screen pixel, as in Lightroom.
       zoom={{ ref: zoom, maxZoomPixelRatio: 1 }}
       fullscreen={{ ref: fullscreen }}
-      on={{ view: ({ index: i }) => onIndexChange(i) }}
+      on={{ view: ({ index: i }) => i !== index && onIndexChange(i) }}
       labels={{ Close: 'Close (Esc)' }}
       toolbar={{
         buttons: [
