@@ -1,10 +1,12 @@
 import dmSansLatin from '@fontsource-variable/dm-sans/files/dm-sans-latin-opsz-normal.woff2?url';
-import { Analytics } from '@vercel/analytics/react';
 import type { LinksFunction } from 'react-router';
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 import appleTouchIcon from './assets/apple-touch-icon.png';
 import favicon from './assets/favicon.svg';
 import './tailwind.css';
+
+// Cloudflare Web Analytics site token, set as a build variable in production.
+const analyticsToken = import.meta.env.VITE_CF_ANALYTICS_TOKEN;
 
 export const links: LinksFunction = () => [
   // favicon svg
@@ -48,10 +50,16 @@ export default function App() {
         <Links />
       </head>
       <body className="min-h-screen bg-surface-default text-fg-default">
-        <Analytics />
         <Outlet />
         <ScrollRestoration />
         <Scripts />
+        {analyticsToken && (
+          <script
+            defer
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={JSON.stringify({ token: analyticsToken })}
+          />
+        )}
       </body>
     </html>
   );

@@ -1,0 +1,18 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  // Must match the Worker's name in the Cloudflare dashboard (Workers Builds).
+  "name": "pond-design",
+  "main": "./workers/app.ts",
+  "compatibility_date": "2026-11-01",
+  "compatibility_flags": ["nodejs_compat"],
+  // Pre-rendered pages and built assets are served straight from
+  // build/client without running the Worker. The Worker only answers
+  // requests that match no file (server-rendered routes and 404s).
+  "assets": {
+    "directory": "./build/client",
+    "html_handling": "drop-trailing-slash",
+    "not_found_handling": "none"
+  },
+  "observability": { "enabled": true },
+  "upload_source_maps": true
+}

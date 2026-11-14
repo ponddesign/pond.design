@@ -15,5 +15,8 @@ node_modules
 
 .DS_Store
 
-# Vercel CLI (project link + local build output)
-.vercel
+# Cloudflare: local Wrangler state and secrets, and the generated runtime
+# types (`wrangler types`, run by `yarn typecheck`).
+.wrangler
+.dev.vars*
+worker-configuration.d.ts
