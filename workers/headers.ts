@@ -10,6 +10,10 @@ export const CONTENT_SECURITY_POLICY = [
   // Cloudflare Web Analytics loads its beacon from static.cloudflareinsights.com.
   "script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com",
   "style-src 'self'",
+  // Photo albums set per-photo layout values (aspect ratio, placeholder
+  // colour) in `style` attributes. This allows attributes only, not
+  // <style> elements or inline stylesheets.
+  "style-src-attr 'unsafe-inline'",
   "font-src 'self'",
   "img-src 'self' data:",
   "connect-src 'self' https://cloudflareinsights.com",
@@ -40,11 +44,17 @@ export function headersFile() {
   ].join('\n');
 }
 
-/** Adds the security headers to a response the Worker rendered. */
-export function withSecurityHeaders(response: Response) {
+/**
+ * Adds the security headers to a response the Worker rendered. The dev server
+ * skips the CSP: Vite injects CSS through inline <style> tags, which
+ * `style-src 'self'` would block, leaving pages unstyled.
+ */
+export function withSecurityHeaders(response: Response, { dev = false } = {}) {
   const headers = new Headers(response.headers);
-  for (const [name, value] of Object.entries(SECURITY_HEADERS))
+  for (const [name, value] of Object.entries(SECURITY_HEADERS)) {
+    if (dev && name === 'Content-Security-Policy') continue;
     if (!headers.has(name)) headers.set(name, value);
+  }
   return new Response(response.body, {
     status: response.status,
     statusText: response.statusText,

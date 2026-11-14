@@ -1,0 +1,190 @@
+/* Photo albums (#120). */
+
+/* Justified rows: each photo grows in proportion to its aspect ratio (--ar,
+   set per photo), so every photo in a row ends up the same height. The
+   pseudo-element soaks up the last row's spare space so it isn't stretched. */
+.pd-justified {
+  --row: 300px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.pd-justified > li {
+  flex-grow: var(--ar);
+  flex-basis: calc(var(--ar) * var(--row));
+}
+.pd-justified::after {
+  content: "";
+  flex-grow: 1000000;
+}
+@media (max-width: 640px) {
+  .pd-justified {
+    --row: 180px;
+    gap: 6px;
+  }
+}
+
+/* Concept A: details over the photo on hover or keyboard focus, only on
+   devices that can hover. */
+.pd-overlay {
+  opacity: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgb(0 0 0 / 0.78));
+  transition: opacity 150ms ease;
+}
+@media (hover: hover) {
+  .group:hover .pd-overlay,
+  .group:focus-within .pd-overlay {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pd-overlay {
+    transition: none;
+  }
+}
+
+/* Album drawer (popover): slides in from the left. */
+.pd-drawer {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: min(340px, 100vw);
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow-y: auto;
+  box-shadow: 0 0 40px rgb(0 0 0 / 0.2);
+  transform: translateX(-100%);
+  transition:
+    transform 220ms ease,
+    overlay 220ms allow-discrete,
+    display 220ms allow-discrete;
+}
+.pd-drawer:popover-open {
+  transform: none;
+}
+@starting-style {
+  .pd-drawer:popover-open {
+    transform: translateX(-100%);
+  }
+}
+.pd-drawer::backdrop {
+  background: rgb(0 0 0 / 0.35);
+}
+@media (prefers-reduced-motion: reduce) {
+  .pd-drawer {
+    transition: none;
+  }
+}
+
+/* Lightbox. */
+.pd-lightbox {
+  --yarl__color_backdrop: #0e1110;
+  --yarl__counter_filter: none;
+  --yarl__counter_margin: 16px 24px;
+  font-family: var(--font-sans);
+}
+.pd-details {
+  position: absolute;
+  z-index: 2;
+  overflow-y: auto;
+  background: #161a19;
+  color: rgb(255 255 255 / 0.9);
+  font-size: 14px;
+}
+
+/* Desktop (concept C): panel on the right; the photo shrinks to make room. */
+@media (min-width: 768px) {
+  .pd-details {
+    inset: 0 0 0 auto;
+    width: 360px;
+    padding: 88px 32px 32px;
+  }
+  .pd-lightbox--info .yarl__slide {
+    padding-right: calc(360px + 24px);
+  }
+  .pd-lightbox--info .yarl__navigation_next,
+  .pd-lightbox--info .yarl__toolbar {
+    right: 360px;
+  }
+  .pd-info-button[aria-pressed="true"] {
+    color: #fff;
+  }
+}
+
+/* Phones (concept E): a pill opens a sheet under the photo. */
+@media (max-width: 767px) {
+  .pd-details {
+    inset: auto 0 0 0;
+    max-height: min(55dvh, 440px);
+    padding: 12px 24px 32px;
+    border-radius: 20px 20px 0 0;
+  }
+  .pd-lightbox--info .yarl__slide {
+    padding-bottom: calc(min(55dvh, 440px) + 12px);
+  }
+  .pd-lightbox--info .yarl__navigation_prev,
+  .pd-lightbox--info .yarl__navigation_next {
+    display: none;
+  }
+  .pd-details-handle {
+    display: block;
+    width: 40px;
+    height: 4px;
+    margin: 0 auto 16px;
+    border-radius: 2px;
+    background: rgb(255 255 255 / 0.3);
+  }
+  .pd-details-pill {
+    position: absolute;
+    left: 50%;
+    bottom: max(24px, env(safe-area-inset-bottom));
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    background: rgb(255 255 255 / 0.14);
+    color: rgb(255 255 255 / 0.92);
+    font-size: 14px;
+    white-space: nowrap;
+    backdrop-filter: blur(8px);
+  }
+}
+
+/* Keyboard shortcuts are for devices with a pointer and keyboard. */
+@media (hover: none) {
+  .pd-keys-button {
+    display: none;
+  }
+}
+
+/* Keyboard shortcuts overlay ("/"). */
+.pd-help {
+  width: min(640px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  padding: 24px 28px 28px;
+  border: 1px solid rgb(255 255 255 / 0.1);
+  border-radius: 12px;
+  background: #161a19;
+  color: rgb(255 255 255 / 0.95);
+  font-family: var(--font-sans);
+  box-shadow: 0 20px 60px rgb(0 0 0 / 0.5);
+}
+.pd-help::backdrop {
+  background: rgb(0 0 0 / 0.55);
+}
+.pd-help kbd {
+  min-width: 26px;
+  padding: 2px 7px;
+  border: 1px solid rgb(255 255 255 / 0.18);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  background: rgb(255 255 255 / 0.06);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-align: center;
+}
