@@ -16,14 +16,4 @@ export default {
     // /.well-known/webfinger stays server-rendered: it must answer with
     // `application/jrd+json`, which a static file without an extension can't.
   ],
-  future: {
-    // Pre-rendering with the Cloudflare Vite plugin needs this on React
-    // Router 7 (it's the default in v8). Remove when upgrading.
-    unstable_previewServerPrerendering: true,
-    v8_middleware: true,
-    v8_splitRouteModules: true,
-    v8_viteEnvironmentApi: true,
-    v8_passThroughRequests: true,
-    v8_trailingSlashAwareDataRequests: true,
-  },
 } satisfies Config;

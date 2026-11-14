@@ -7,8 +7,8 @@ Cloudflare Workers, styled with Tailwind CSS 4 and design tokens synced from Fig
 
 | | |
 |---|---|
-| Framework | [React Router 7](https://reactrouter.com) (framework mode), React 19 |
-| Build | Vite 8, TypeScript 6 |
+| Framework | [React Router 8](https://reactrouter.com) (framework mode), React 19 |
+| Build | Vite 8, TypeScript 7 |
 | Styling | Tailwind CSS 4, with the theme generated from [design tokens](tokens/README.md) |
 | Design tokens | W3C DTCG JSON, built with Style Dictionary, sourced from the [Pond Design System](https://www.figma.com/design/OQAuXo6GwDBMN5QIsoJdWJ/Pond-Design-System) Figma file via the [sync plugin](figma-plugin/README.md) |
 | Fonts | DM Sans, DM Serif Display and DM Mono, self-hosted via [Fontsource](https://fontsource.org) (`app/styles/fonts.css`) |
