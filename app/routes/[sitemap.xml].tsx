@@ -1,4 +1,4 @@
-const buildTime = new Date().toISOString();
+const buildTime = import.meta.env.BUILD_TIME;
 
 export const loader = () => {
   const content = `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

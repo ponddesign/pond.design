@@ -1,6 +1,6 @@
-// Evaluated at build time for pre-rendered pages, so the year updates on the
-// next deploy.
-const currentYear = new Date().getFullYear();
+// The build's year, so it updates on the next deploy (and the server and
+// browser render the same text).
+const currentYear = new Date(import.meta.env.BUILD_TIME).getUTCFullYear();
 
 export default function Footer() {
   return (

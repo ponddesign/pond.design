@@ -20,6 +20,12 @@ const cloudflareHeaders = (): Plugin => ({
 });
 
 export default defineConfig({
+  // The build's timestamp, taken here in Node. Code running in the Workers
+  // runtime can't use `new Date()` outside a request (the clock reads
+  // 1970-01-01 there), and pages are pre-rendered in that runtime.
+  define: {
+    'import.meta.env.BUILD_TIME': JSON.stringify(new Date().toISOString()),
+  },
   plugins: [
     // Runs the server build in the Workers runtime, in dev too.
     cloudflare({ viteEnvironment: { name: 'ssr' } }),
