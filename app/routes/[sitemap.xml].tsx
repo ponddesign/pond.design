@@ -1,3 +1,5 @@
+import { albums } from '~/albums/data.server';
+
 const buildTime = import.meta.env.BUILD_TIME;
 
 export const loader = () => {
@@ -12,6 +14,18 @@ export const loader = () => {
     <lastmod>${buildTime}</lastmod>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://pond.design/albums</loc>
+    <lastmod>${buildTime}</lastmod>
+  </url>
+${albums
+  .map(
+    (album) => `  <url>
+    <loc>https://pond.design/albums/${album.slug}</loc>
+    <lastmod>${buildTime}</lastmod>
+  </url>`,
+  )
+  .join('\n')}
 </urlset>
     `;
 

@@ -20,3 +20,8 @@ node_modules
 .wrangler
 .dev.vars*
 worker-configuration.d.ts
+
+# Photo albums proof of concept: processed images and album files stay local
+# until the R2 pipeline lands (#120).
+/public/albums-media/
+/app/data/albums/*.json

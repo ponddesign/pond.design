@@ -1,4 +1,16 @@
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import type { Config } from '@react-router/dev/config';
+
+// Public albums in app/data/albums/*.json (see scripts/albums/build-album.mjs).
+const albumPaths = () => {
+  const dir = 'app/data/albums';
+  if (!existsSync(dir)) return [];
+  return readdirSync(dir)
+    .filter((file) => file.endsWith('.json'))
+    .map((file) => JSON.parse(readFileSync(`${dir}/${file}`, 'utf8')))
+    .filter((album) => album.visibility === 'public')
+    .map((album) => `/albums/${album.slug}`);
+};
 
 export default {
   appDirectory: 'app',
@@ -7,9 +19,11 @@ export default {
   // are pre-rendered at build time and served as static assets, without
   // running the Worker.
   ssr: true,
-  prerender: [
+  prerender: () => [
     '/',
     '/resume',
+    '/albums',
+    ...albumPaths(),
     '/robots.txt',
     '/sitemap.xml',
     '/site.webmanifest',
