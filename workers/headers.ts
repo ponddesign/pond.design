@@ -10,6 +10,10 @@ export const CONTENT_SECURITY_POLICY = [
   // Cloudflare Web Analytics loads its beacon from static.cloudflareinsights.com.
   "script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com",
   "style-src 'self'",
+  // Photo albums set per-photo layout values (aspect ratio, placeholder
+  // colour) in `style` attributes. This allows attributes only, not
+  // <style> elements or inline stylesheets.
+  "style-src-attr 'unsafe-inline'",
   "font-src 'self'",
   "img-src 'self' data:",
   "connect-src 'self' https://cloudflareinsights.com",
