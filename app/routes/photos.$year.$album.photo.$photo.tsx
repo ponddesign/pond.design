@@ -37,12 +37,16 @@ export const loader = ({ params }: Route.LoaderArgs) => {
   const index = album?.photos.findIndex((p) => p.id === params.photo) ?? -1;
   const photo = album?.photos[index];
   if (!album || !photo) throw data(null, { status: 404 });
-  // Small on purpose: the album itself comes from the parent route.
+  // Small on purpose: just this photo and its neighbours' ids. The full
+  // photo list comes from the album route.
+  const n = album.photos.length;
   return {
     album: { year: album.year, slug: album.slug, title: album.title },
     photo,
     index,
-    count: album.photos.length,
+    count: n,
+    prev: album.photos[(index - 1 + n) % n]?.id,
+    next: album.photos[(index + 1) % n]?.id,
   };
 };
 
@@ -50,7 +54,7 @@ export const loader = ({ params }: Route.LoaderArgs) => {
 let hydrated = false;
 
 export default function PhotoPage({ loaderData }: Route.ComponentProps) {
-  const { album, help, setHelp } = useAlbumOutlet();
+  const { album, photos, help, setHelp } = useAlbumOutlet();
   const navigate = useNavigate();
   const location = useLocation();
   const [ready, setReady] = useState(hydrated);
@@ -70,7 +74,7 @@ export default function PhotoPage({ loaderData }: Route.ComponentProps) {
   // Paging through photos replaces the history entry, so Back (or closing)
   // returns to the grid in one step.
   const go = (i: number) => {
-    const photo = album.photos[i];
+    const photo = photos?.[i];
     if (!photo || i === index) return;
     setIndex(i);
     navigate(photoPath(album, photo), {
@@ -84,15 +88,13 @@ export default function PhotoPage({ loaderData }: Route.ComponentProps) {
       ? navigate(-1)
       : navigate(albumPath(album), { replace: true, preventScrollReset: true });
 
-  const fallback = (
-    <PhotoStatic album={album} photos={album.photos} index={loaderData.index} />
-  );
-  if (!ready) return fallback;
+  const fallback = <PhotoStatic {...loaderData} />;
+  if (!ready || !photos) return fallback;
   return (
     <Suspense fallback={fallback}>
       <PhotoLightbox
         album={album}
-        photos={album.photos}
+        photos={photos}
         index={index}
         onIndexChange={go}
         onClose={close}
@@ -109,17 +111,19 @@ export default function PhotoPage({ loaderData }: Route.ComponentProps) {
  */
 function PhotoStatic({
   album,
-  photos,
+  photo,
   index,
+  count,
+  prev,
+  next,
 }: {
   album: AlbumRef;
-  photos: Photo[];
+  photo: Photo;
   index: number;
+  count: number;
+  prev?: string;
+  next?: string;
 }) {
-  const photo = photos[index];
-  if (!photo) return null;
-  const prev = photos[(index - 1 + photos.length) % photos.length];
-  const next = photos[(index + 1) % photos.length];
   const link = 'rounded-full p-3 text-white/80 hover:text-white';
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0e1110] p-6">
@@ -135,7 +139,7 @@ function PhotoStatic({
         className="max-h-full max-w-full object-contain"
       />
       <p className="absolute top-6 left-8 font-mono text-sm text-white/70">
-        {index + 1} / {photos.length}
+        {index + 1} / {count}
       </p>
       <Link
         to={albumPath(album)}
@@ -146,7 +150,7 @@ function PhotoStatic({
       </Link>
       {prev && (
         <Link
-          to={photoPath(album, prev)}
+          to={photoPath(album, { id: prev })}
           aria-label="Previous photo"
           className={`absolute left-2 ${link}`}
         >
@@ -155,7 +159,7 @@ function PhotoStatic({
       )}
       {next && (
         <Link
-          to={photoPath(album, next)}
+          to={photoPath(album, { id: next })}
           aria-label="Next photo"
           className={`absolute right-2 ${link}`}
         >

@@ -1,5 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { data, Link, Outlet, useNavigate, useParams } from 'react-router';
+import {
+  data,
+  Link,
+  Outlet,
+  useFetcher,
+  useNavigate,
+  useParams,
+} from 'react-router';
 import { albums, getAlbum, summaries } from '~/albums/data.server';
 import { dateRange, photoCount } from '~/albums/format';
 import {
@@ -46,11 +53,24 @@ export const meta: Route.MetaFunction = ({ loaderData }) => {
 export const loader = ({ params }: Route.LoaderArgs) => {
   const album = getAlbum(params.year, params.album);
   if (!album) throw data(null, { status: 404 });
+  // Opened straight at a photo URL: send only the album's header, so the
+  // pre-rendered photo page stays a few KB. The page then loads the full
+  // album (one cached file shared by every photo) in the background.
+  // Opening photos from the grid never re-runs this loader.
+  if (params.photo)
+    return {
+      partial: true as const,
+      album: { ...album, photos: [] },
+      albums: [],
+      newer: undefined,
+      older: undefined,
+    };
   // Albums are newest first.
   const i = albums.indexOf(album);
   const ref = (a?: Album) =>
     a && { year: a.year, slug: a.slug, title: a.title };
   return {
+    partial: false as const,
     album,
     albums: summaries(),
     newer: ref(albums[i - 1]),
@@ -61,7 +81,18 @@ export const loader = ({ params }: Route.LoaderArgs) => {
 const GRID = '.pd-justified a';
 
 export default function AlbumPage({ loaderData }: Route.ComponentProps) {
-  const { album, newer, older } = loaderData;
+  const fetcher = useFetcher<typeof loader>();
+  const albumUrl = albumPath(loaderData.album);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: load once per album
+  useEffect(() => {
+    if (loaderData.partial && !fetcher.data && fetcher.state === 'idle')
+      fetcher.load(albumUrl);
+  }, [loaderData.partial, albumUrl]);
+  const full = loaderData.partial ? fetcher.data : loaderData;
+  const album = full?.album ?? loaderData.album;
+  /** Undefined until the full album has loaded. */
+  const photos = full ? album.photos : undefined;
+  const { newer, older } = full ?? {};
   const { photo: openPhoto } = useParams();
   const navigate = useNavigate();
   const [help, setHelp] = useState(false);
@@ -130,7 +161,7 @@ export default function AlbumPage({ loaderData }: Route.ComponentProps) {
     <main className="min-h-screen bg-surface-subtle px-4 py-8 text-fg-strong sm:px-10 sm:py-12">
       <div className="mx-auto max-w-[1600px]">
         <div className="flex items-center gap-4">
-          <AlbumDrawer albums={loaderData.albums} current={albumPath(album)} />
+          <AlbumDrawer albums={full?.albums ?? []} current={albumUrl} />
           <Link
             to={yearPath(album.year)}
             className="text-fg-subtle text-sm hover:text-fg-accent"
@@ -149,13 +180,13 @@ export default function AlbumPage({ loaderData }: Route.ComponentProps) {
             {album.title}
           </Heading>
           <p className="mt-1 text-fg-subtle">
-            {dateRange(album.startDate, album.endDate)} ·{' '}
-            {photoCount(album.photos.length)}
+            {dateRange(album.startDate, album.endDate)}
+            {photos && ` · ${photoCount(photos.length)}`}
           </p>
           {album.description && <p className="mt-4">{album.description}</p>}
         </header>
 
-        <PhotoGrid album={album} photos={album.photos} />
+        {photos && <PhotoGrid album={album} photos={photos} />}
 
         {(newer || older) && (
           <nav
@@ -187,7 +218,9 @@ export default function AlbumPage({ loaderData }: Route.ComponentProps) {
       </div>
 
       {/* The photo viewer: /photos/:year/:album/photo/:photo */}
-      <Outlet context={{ album, help, setHelp } satisfies AlbumOutlet} />
+      <Outlet
+        context={{ album, photos, help, setHelp } satisfies AlbumOutlet}
+      />
 
       {!openPhoto && (
         <KeyboardHelp
