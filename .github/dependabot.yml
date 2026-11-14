@@ -16,6 +16,11 @@ updates:
         versions: ['>=8']
       - dependency-name: 'typescript'
         versions: ['>=7']
+      # Keep Node's types on the runtime's major (.nvmrc / engines.node), so
+      # TypeScript can't accept APIs production doesn't have. Bump all three
+      # together when moving to a new Node LTS.
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
     groups:
       # These packages are released in lockstep and must stay on the same
       # version — never let them be bumped independently.

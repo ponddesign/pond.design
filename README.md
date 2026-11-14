@@ -17,7 +17,7 @@ Vercel, styled with Tailwind CSS 4 and design tokens synced from Figma.
 
 ## Development
 
-Requires Node 24 (see `.nvmrc`) and Yarn 1.
+Requires Node 26 (see `.nvmrc`) and Yarn 1.
 
 ```sh
 yarn install
