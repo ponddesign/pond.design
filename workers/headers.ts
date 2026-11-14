@@ -44,11 +44,17 @@ export function headersFile() {
   ].join('\n');
 }
 
-/** Adds the security headers to a response the Worker rendered. */
-export function withSecurityHeaders(response: Response) {
+/**
+ * Adds the security headers to a response the Worker rendered. The dev server
+ * skips the CSP: Vite injects CSS through inline <style> tags, which
+ * `style-src 'self'` would block, leaving pages unstyled.
+ */
+export function withSecurityHeaders(response: Response, { dev = false } = {}) {
   const headers = new Headers(response.headers);
-  for (const [name, value] of Object.entries(SECURITY_HEADERS))
+  for (const [name, value] of Object.entries(SECURITY_HEADERS)) {
+    if (dev && name === 'Content-Security-Policy') continue;
     if (!headers.has(name)) headers.set(name, value);
+  }
   return new Response(response.body, {
     status: response.status,
     statusText: response.statusText,
