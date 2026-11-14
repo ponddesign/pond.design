@@ -1,7 +1,17 @@
-import { Link } from 'react-router';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router';
 import { summaries } from '~/albums/data.server';
 import { byYear, photoCount } from '~/albums/format';
+import {
+  ALBUMS_SHORTCUTS,
+  isHelpKey,
+  moveGridFocus,
+  useKeys,
+} from '~/albums/keyboard';
 import AlbumCard from '~/components/albums/AlbumCard';
+import KeyboardHelp, {
+  ShortcutsButton,
+} from '~/components/albums/KeyboardHelp';
 import Heading from '~/components/Heading';
 import type { Route } from './+types/albums._index';
 
@@ -14,13 +24,29 @@ export const loader = () => ({ albums: summaries() });
 
 export default function Albums({ loaderData }: Route.ComponentProps) {
   const { albums } = loaderData;
+  const navigate = useNavigate();
+  const [help, setHelp] = useState(false);
+  useKeys((event) => {
+    if (isHelpKey(event)) {
+      setHelp(true);
+      return true;
+    }
+    if (event.key === 'Escape') {
+      navigate('/');
+      return true;
+    }
+    return moveGridFocus(event.key, '[data-album-card]');
+  }, !help);
   let first = true;
   return (
     <main className="min-h-screen bg-surface-subtle px-6 py-12 text-fg-strong sm:px-10 sm:py-16">
       <div className="mx-auto max-w-6xl">
-        <Link to="/" className="text-fg-subtle text-sm hover:text-fg-accent">
-          pond.design
-        </Link>
+        <div className="flex items-center">
+          <Link to="/" className="text-fg-subtle text-sm hover:text-fg-accent">
+            pond.design
+          </Link>
+          <ShortcutsButton onClick={() => setHelp(true)} className="ml-auto" />
+        </div>
         <header className="mt-6 mb-12">
           <Heading
             level={1}
@@ -67,6 +93,11 @@ export default function Albums({ loaderData }: Route.ComponentProps) {
           ))}
         </div>
       </div>
+      <KeyboardHelp
+        open={help}
+        onClose={() => setHelp(false)}
+        groups={ALBUMS_SHORTCUTS}
+      />
     </main>
   );
 }

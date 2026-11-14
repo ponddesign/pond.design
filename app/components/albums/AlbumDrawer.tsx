@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router';
 import { albumMonth, byYear, photoCount } from '~/albums/format';
 import { photoSrc } from '~/albums/media';
@@ -18,7 +18,8 @@ export default function AlbumDrawer({
   albums: AlbumSummary[];
   current?: string;
 }) {
-  const id = useId();
+  // Fixed id: the A key toggles the drawer from the album page.
+  const id = 'album-drawer';
   const drawer = useRef<HTMLDivElement>(null);
   const { pathname } = useLocation();
 

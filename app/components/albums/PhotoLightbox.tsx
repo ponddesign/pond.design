@@ -1,19 +1,27 @@
 import clsx from 'clsx';
-import { useEffect, useState } from 'react';
-import Lightbox, { IconButton } from 'yet-another-react-lightbox';
+import { useEffect, useRef, useState } from 'react';
+import Lightbox, {
+  type FullscreenRef,
+  IconButton,
+  type ZoomRef,
+} from 'yet-another-react-lightbox';
 import Counter from 'yet-another-react-lightbox/plugins/counter';
+import Fullscreen from 'yet-another-react-lightbox/plugins/fullscreen';
 import Zoom from 'yet-another-react-lightbox/plugins/zoom';
 import 'yet-another-react-lightbox/styles.css';
 import 'yet-another-react-lightbox/plugins/counter.css';
+import { ALBUM_SHORTCUTS, isHelpKey, useKeys } from '~/albums/keyboard';
 import { largestSrc, photoSrc } from '~/albums/media';
 import type { Photo } from '~/albums/types';
 import { Icon } from './icons';
+import KeyboardHelp from './KeyboardHelp';
 import { PhotoDetails } from './PhotoDetails';
 
 declare module 'yet-another-react-lightbox' {
   interface Labels {
     'Show details (I)'?: string;
     'Hide details (I)'?: string;
+    'Keyboard shortcuts (/)'?: string;
   }
 }
 
@@ -23,10 +31,16 @@ type PhotoLightboxProps = {
   index: number;
   onIndexChange: (index: number) => void;
   onClose: () => void;
+  /** The "/" shortcuts overlay; shared with the album page. */
+  help: boolean;
+  onHelpChange: (open: boolean) => void;
 };
 
 const INFO_KEY = 'pond.albums.info';
 const InfoIcon = () => <Icon name="info" size={28} className="yarl__icon" />;
+const KeyboardIcon = () => (
+  <Icon name="keyboard" size={28} className="yarl__icon" />
+);
 
 /**
  * Full-screen viewer. Desktop: an "i" button (or the I key) opens the info
@@ -40,7 +54,11 @@ export default function PhotoLightbox({
   index,
   onIndexChange,
   onClose,
+  help,
+  onHelpChange,
 }: PhotoLightboxProps) {
+  const zoom = useRef<ZoomRef>(null);
+  const fullscreen = useRef<FullscreenRef>(null);
   const [info, setInfo] = useState(false);
   useEffect(() => setInfo(localStorage.getItem(INFO_KEY) === 'open'), []);
   const toggleInfo = () =>
@@ -49,14 +67,60 @@ export default function PhotoLightbox({
       return !open;
     });
 
-  useEffect(() => {
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key.toLowerCase() === 'i' && !event.metaKey && !event.ctrlKey)
+  // Lightroom-style keys. Esc is handled by the lightbox itself.
+  useKeys((event) => {
+    if (isHelpKey(event)) {
+      onHelpChange(true);
+      return true;
+    }
+    const z = zoom.current;
+    switch (event.key) {
+      case 'i':
+      case 'I':
         toggleInfo();
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  });
+        return true;
+      case 'z':
+      case 'Z':
+        // Toggle between fit and 100% (one image pixel per screen pixel).
+        if (!z || z.disabled) return true;
+        z.changeZoom(z.zoom > z.minZoom ? z.minZoom : z.maxZoom);
+        return true;
+      case '+':
+      case '=':
+        z?.zoomIn();
+        return true;
+      case '-':
+      case '_':
+        z?.zoomOut();
+        return true;
+      case 'f':
+      case 'F': {
+        const f = fullscreen.current;
+        if (f && !f.disabled) (f.fullscreen ? f.exit : f.enter)();
+        return true;
+      }
+      case 'g':
+      case 'G':
+        onClose();
+        return true;
+      // The lightbox handles arrows itself when it has focus (and stops them
+      // there); these catch the ones that reach the page, e.g. right after
+      // opening with the keyboard.
+      case 'ArrowLeft':
+        onIndexChange((index - 1 + photos.length) % photos.length);
+        return true;
+      case 'ArrowRight':
+        onIndexChange((index + 1) % photos.length);
+        return true;
+      case 'Home':
+        onIndexChange(0);
+        return true;
+      case 'End':
+        onIndexChange(photos.length - 1);
+        return true;
+    }
+    return false;
+  }, !help);
 
   const photo = photos[index];
   const slides = photos.map((p) => ({
@@ -77,10 +141,12 @@ export default function PhotoLightbox({
       close={onClose}
       index={index}
       slides={slides}
-      plugins={[Counter, Zoom]}
+      plugins={[Counter, Fullscreen, Zoom]}
       className={clsx('pd-lightbox', info && 'pd-lightbox--info')}
       carousel={{ finite: false, preload: 2, padding: '24px' }}
-      zoom={{ maxZoomPixelRatio: 2 }}
+      // Max zoom = 100%: one image pixel per screen pixel, as in Lightroom.
+      zoom={{ ref: zoom, maxZoomPixelRatio: 1 }}
+      fullscreen={{ ref: fullscreen }}
       on={{ view: ({ index: i }) => onIndexChange(i) }}
       labels={{ Close: 'Close (Esc)' }}
       toolbar={{
@@ -92,6 +158,13 @@ export default function PhotoLightbox({
             onClick={toggleInfo}
             aria-pressed={info}
             className="pd-info-button max-md:hidden"
+          />,
+          <IconButton
+            key="keys"
+            label="Keyboard shortcuts (/)"
+            icon={KeyboardIcon}
+            onClick={() => onHelpChange(true)}
+            className="pd-keys-button"
           />,
           'close',
         ],
@@ -122,6 +195,12 @@ export default function PhotoLightbox({
                   <PhotoDetails photo={photo} />
                 </aside>
               )}
+              {/* Inside the lightbox: it makes the rest of the page inert. */}
+              <KeyboardHelp
+                open={help}
+                onClose={() => onHelpChange(false)}
+                groups={ALBUM_SHORTCUTS}
+              />
             </>
           ),
       }}

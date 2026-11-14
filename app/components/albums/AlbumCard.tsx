@@ -50,6 +50,7 @@ export default function AlbumCard({
     <Link
       to={`/albums/${slug}`}
       prefetch="intent"
+      data-album-card
       className="group block rounded-[2px] outline-offset-4 focus-visible:outline-2 focus-visible:outline-fg-accent"
     >
       <div

@@ -39,6 +39,12 @@ const paths = {
   chevronRight: <path d="m9 18 6-6-6-6" />,
   menu: <path d="M4 5h16M4 12h16M4 19h16" />,
   arrowRight: <path d="M5 12h14m-7-7 7 7-7 7" />,
+  keyboard: (
+    <>
+      <rect width="20" height="16" x="2" y="4" rx="2" />
+      <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h.01M12 12h.01M16 12h.01M7 16h10" />
+    </>
+  ),
 } as const;
 
 export type IconName = keyof typeof paths;
