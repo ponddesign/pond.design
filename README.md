@@ -1,7 +1,7 @@
 # pond.design
 
 Source for [pond.design](https://pond.design): a React Router site deployed on
-Vercel, styled with Tailwind CSS 4 and design tokens synced from Figma.
+Cloudflare Workers, styled with Tailwind CSS 4 and design tokens synced from Figma.
 
 ## Stack
 
@@ -13,7 +13,7 @@ Vercel, styled with Tailwind CSS 4 and design tokens synced from Figma.
 | Design tokens | W3C DTCG JSON, built with Style Dictionary, sourced from the [Pond Design System](https://www.figma.com/design/OQAuXo6GwDBMN5QIsoJdWJ/Pond-Design-System) Figma file via the [sync plugin](figma-plugin/README.md) |
 | Fonts | DM Sans, DM Serif Display and DM Mono, self-hosted via [Fontsource](https://fontsource.org) (`app/styles/fonts.css`) |
 | Lint and format | [Biome](https://biomejs.dev) |
-| Hosting | Vercel. Static pages are pre-rendered at build time; server rendering stays on for future dynamic routes. |
+| Hosting | [Cloudflare Workers](https://developers.cloudflare.com/workers/) with static assets. Static pages are pre-rendered at build time; a Worker renders everything else. |
 
 ## Development
 
@@ -23,6 +23,7 @@ Requires Node 26 (see `.nvmrc`) and Yarn 1.
 yarn install
 yarn dev        # start the dev server
 yarn build      # production build (pre-renders static routes)
+yarn preview    # build, then serve it in the Workers runtime (workerd)
 yarn typecheck  # generate route types, then run tsc
 yarn lint       # Biome lint + format check
 yarn format     # apply Biome fixes and formatting
@@ -41,6 +42,7 @@ app/
 tokens/           design tokens, synced from Figma
 figma-plugin/     private Figma plugin that sends tokens to GitHub
 scripts/          token build/import and CI checks
+workers/          Cloudflare Worker entry and response headers
 ```
 
 ## Components
@@ -64,7 +66,20 @@ it needs an Organization or Enterprise Figma plan.
 
 Pages and files that never change (`/`, `/resume`, `robots.txt`,
 `sitemap.xml`, `site.webmanifest`) are listed under `prerender` in
-`react-router.config.ts` and served as static files. Everything else, including
-`/.well-known/webfinger`, is server-rendered on Vercel Functions. To add a
-dynamic route (for example an auth callback), create it under `app/routes` and
-leave it out of `prerender`.
+`react-router.config.ts` and served as static assets, without running the
+Worker. Everything else, including `/.well-known/webfinger` and 404s, is
+server-rendered by the Worker (`workers/app.ts`). To add a dynamic route (for
+example an auth callback), create it under `app/routes` and leave it out of
+`prerender`. Loaders reach Cloudflare bindings (R2, D1, KV, …) with
+`context.get(cloudflareContext)` from `app/cloudflare.ts`; declare bindings in
+`wrangler.jsonc` and run `yarn typecheck` to regenerate their types.
+
+## Deployment and headers
+
+Cloudflare Workers Builds deploys `main` to production and gives every other
+branch a preview URL. Security headers (CSP and friends) live in
+`workers/headers.ts`: the build writes them to `build/client/_headers` for static
+assets, and the Worker adds them to the responses it renders.
+
+Cloudflare Web Analytics is on when the `VITE_CF_ANALYTICS_TOKEN` build variable
+is set.

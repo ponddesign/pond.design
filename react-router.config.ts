@@ -1,11 +1,11 @@
 import type { Config } from '@react-router/dev/config';
-import { vercelPreset } from '@vercel/react-router/vite';
 
 export default {
   appDirectory: 'app',
   // Server rendering stays on so future routes (auth callbacks, user
-  // settings, …) can run on Vercel Functions. Routes that never change are
-  // pre-rendered at build time and served from the CDN instead.
+  // settings, …) can run in the Cloudflare Worker. Routes that never change
+  // are pre-rendered at build time and served as static assets, without
+  // running the Worker.
   ssr: true,
   prerender: [
     '/',
@@ -16,17 +16,13 @@ export default {
     // /.well-known/webfinger stays server-rendered: it must answer with
     // `application/jrd+json`, which a static file without an extension can't.
   ],
-  presets: [vercelPreset()],
-  // Opt in to React Router v8 behavior now, so the v8 upgrade is a version
-  // bump once @vercel/react-router supports it.
   future: {
+    // Pre-rendering with the Cloudflare Vite plugin needs this on React
+    // Router 7 (it's the default in v8). Remove when upgrading.
+    unstable_previewServerPrerendering: true,
     v8_middleware: true,
     v8_splitRouteModules: true,
-    // Off: with the Vercel preset's per-function server bundles this flag
-    // makes the build fail moving server assets into build/client
-    // (React Router 7.18.5, @vercel/react-router 1.3.7). Re-test when
-    // upgrading either package.
-    v8_viteEnvironmentApi: false,
+    v8_viteEnvironmentApi: true,
     v8_passThroughRequests: true,
     v8_trailingSlashAwareDataRequests: true,
   },
