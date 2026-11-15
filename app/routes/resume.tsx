@@ -5,6 +5,13 @@ import Heading from '~/components/Heading';
 import Section from '~/components/Section';
 import Tag from '~/components/Tag';
 import resume from '~/data/resume.json';
+import {
+  formatMonthYearUTC,
+  formatYearUTC,
+  RESUME_PDF_PATH,
+  resumePdfFileName,
+  toParagraphs,
+} from '~/resume/format';
 
 export const meta: MetaFunction = () => {
   return [
@@ -17,29 +24,6 @@ export const meta: MetaFunction = () => {
     },
   ];
 };
-
-const formatMonthYearUTC = (dateString: string) => {
-  const date = new Date(dateString);
-  return new Intl.DateTimeFormat('en-US', {
-    month: '2-digit',
-    year: 'numeric',
-    timeZone: 'UTC',
-  }).format(date);
-};
-
-// Summaries separate paragraphs with blank lines; split on any run of line
-// breaks so blank lines don't render as empty <p> elements.
-const toParagraphs = (text: string) =>
-  text
-    .split(/\n+/)
-    .map((paragraph) => paragraph.trim())
-    .filter(Boolean);
-
-const formatYearUTC = (dateString: string) =>
-  new Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    timeZone: 'UTC',
-  }).format(new Date(dateString));
 
 export default function Index() {
   return (
@@ -70,6 +54,15 @@ export default function Index() {
                 </a>
               </p>
               <p className="text-fg-subtle">{resume.basics.location.address}</p>
+              <p className="mt-4">
+                <a
+                  href={RESUME_PDF_PATH}
+                  download={resumePdfFileName(resume.basics.name)}
+                  className="font-extrabold underline decoration-1 underline-offset-4 hover:text-fg-accent"
+                >
+                  Download PDF
+                </a>
+              </p>
             </div>
           </Section>
         </header>
