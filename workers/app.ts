@@ -11,6 +11,8 @@ export default {
   async fetch(request, env, ctx) {
     const context = new RouterContextProvider();
     context.set(cloudflareContext, { env, ctx });
-    return withSecurityHeaders(await requestHandler(request, context));
+    return withSecurityHeaders(await requestHandler(request, context), {
+      dev: import.meta.env.DEV,
+    });
   },
 } satisfies ExportedHandler<Env>;
