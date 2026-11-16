@@ -40,10 +40,24 @@ export function headersFile() {
   ].join('\n');
 }
 
+/**
+ * The dev server's version of the policy. Vite adds imported CSS as inline
+ * `<style>` tags so it can hot-reload it, which `style-src 'self'` blocks.
+ * The build links CSS files instead, so production keeps the strict policy.
+ */
+const DEV_SECURITY_HEADERS: Record<string, string> = {
+  ...SECURITY_HEADERS,
+  'Content-Security-Policy': CONTENT_SECURITY_POLICY.replace(
+    "style-src 'self'",
+    "style-src 'self' 'unsafe-inline'",
+  ),
+};
+
 /** Adds the security headers to a response the Worker rendered. */
-export function withSecurityHeaders(response: Response) {
+export function withSecurityHeaders(response: Response, { dev = false } = {}) {
   const headers = new Headers(response.headers);
-  for (const [name, value] of Object.entries(SECURITY_HEADERS))
+  const securityHeaders = dev ? DEV_SECURITY_HEADERS : SECURITY_HEADERS;
+  for (const [name, value] of Object.entries(securityHeaders))
     if (!headers.has(name)) headers.set(name, value);
   return new Response(response.body, {
     status: response.status,
