@@ -39,6 +39,7 @@ app/
   icons/          SVGs, imported as components with `?react`
   styles/         generated Tailwind theme (from tokens/, do not edit)
   data/           resume content (JSON Resume format)
+  resume/         resumé formatting and the PDF version
 tokens/           design tokens, synced from Figma
 figma-plugin/     private Figma plugin that sends tokens to GitHub
 scripts/          token build/import and CI checks
@@ -73,6 +74,17 @@ example an auth callback), create it under `app/routes` and leave it out of
 `prerender`. Loaders reach Cloudflare bindings (R2, D1, KV, …) with
 `context.get(cloudflareContext)` from `app/cloudflare.ts`; declare bindings in
 `wrangler.jsonc` and run `yarn typecheck` to regenerate their types.
+
+### Resumé PDF
+
+The **Download PDF** link on `/resume` serves `/resume.pdf`. It's built from
+`app/data/resume.json`, the same data as the page, with
+[react-pdf](https://react-pdf.org) (`app/resume/pdf.ts`). The build writes it
+into the static assets, and the dev server renders it on each request, so
+editing the JSON updates both the page and the PDF. Both use the formatting
+in `app/resume/format.ts`, so dates and paragraphs match. The PDF's layout and
+colors are set in `pdf.ts`. When you change the page's design, update them by
+hand.
 
 ## Deployment and headers
 
